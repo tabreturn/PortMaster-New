@@ -1,0 +1,34 @@
+{
+    "version": "2",
+    "name": "dry.path.zip",
+    "items": [
+        "Dry Path.sh",
+        "drypath"
+    ],
+    "items_opt": null,
+    "attr": {
+        "title": "Dry Path",
+        "porter": [
+            "tabreturn"
+        ],
+        "desc": "Dry path is a 2D / 3D exploration third person platformer game. After the crash of your airship you are the only survivor in a mysterious desert, the air is dry, and the water is lacking. Game files are already included and ready to go.\n\nDPAD = Movement\nB = Jump\nA = Interact\n",
+        "inst": "",
+        "genres": [
+            "adventure"
+        ],
+        "image": null,
+        "rtr": false,
+        "runtime": "frt_3.2.3.squashfs",
+        "reqs": []
+    },
+    "status": {
+        "source": "Unknown",
+        "md5": null,
+        "status": "Installed"
+    },
+    "files": {
+        "port.json": "drypath/drypath.port.json",
+        "Dry Path.sh": "Dry Path.sh",
+        "drypath": "drypath"
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "version": "2",
+    "name": "guardian.sphere.zip",
+    "items": [
+        "Guardian Sphere.sh",
+        "guardiansphere"
+    ],
+    "items_opt": null,
+    "attr": {
+        "title": "Guardian Sphere",
+        "porter": [
+            "tabreturn"
+        ],
+        "desc": "Shoot 'em up in which you use your life point to buy full of upgrades and make your Guardian strong enough to deal with waves of invaders. Game files are already included and ready to go.\n\nDPAD = Movement\nB = Shoot A\n = Cancel\n",
+        "inst": "",
+        "genres": [
+            "action"
+        ],
+        "image": null,
+        "rtr": false,
+        "runtime": "frt_3.2.3.squashfs",
+        "reqs": []
+    },
+    "status": {
+        "source": "Unknown",
+        "md5": null,
+        "status": "Installed"
+    },
+    "files": {
+        "port.json": "guardiansphere/guardiansphere.port.json",
+        "Guardian Sphere.sh": "Guardian Sphere.sh",
+        "guardian": "guardian"
+    }
+}
