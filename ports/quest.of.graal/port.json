@@ -1,0 +1,36 @@
+{
+    "version": "2",
+    "name": "Quest of Graal DX.zip",
+    "items": [
+        "Quest of Graal DX.sh",
+        "questofgraaldx"
+    ],
+    "items_opt": null,
+    "attr": {
+        "title": "Quest of Graal DX",
+        "porter": [
+            "tabreturn"
+        ],
+        "desc": "Quest of Graal is a multiplayer platform racing game. But you can play alone against AI. Discover the history of Arthur and Merlin's quest for the Graal by unlocking storybook chapters as you play, racing through more than 20 levels using weapons, magic items, and golden statues (which unleash special player abilities) to make it through the mayhem.",
+        "inst": "You can purchase Quest of Graal DX at: https://pixel-boy.itch.io/quest-of-graal-dx . Download the Linux version and extract it, and place the Quest Of Graal LINUX.pck file in the gamedata directory. This has been tested with the Quest Of Graal LINUX.rar Mar 11, 2022 release.",
+        "genres": [
+            "action",
+            "platformer",
+            "racing"
+        ],
+        "image": null,
+        "rtr": false,
+        "runtime": "frt_3.5.2.squashfs",
+        "reqs": []
+    },
+    "status": {
+        "source": "Unknown",
+        "md5": null,
+        "status": "Installed"
+    },
+    "files": {
+        "port.json": "questofgraaldx/questofgraaldx.port.json",
+        "Quest of Graal DX.sh": "Quest of Graal DX.sh",
+        "questofgraaldx": "questofgraaldx"
+    }
+}
