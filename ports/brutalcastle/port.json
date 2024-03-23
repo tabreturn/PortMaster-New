@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "name": "brutalcastle.zip",
+    "items": [
+        "Brutal Castle.sh",
+        "brutalcastle"
+    ],
+    "items_opt": [],
+    "attr": {
+        "title": "Brutal Castle",
+        "porter": [
+            "tabreturn"
+        ],
+        "desc": "Brutal Castle is an epic beat 'em up about fire-breathing living castle which outrageously fights against giant monsters to survive in a cruel medieval world of the war of all against all!",
+        "inst": "All files included and ready to run. Thanks to Skinner Space for the fantastic game and permission to distribute the files.",
+        "genres": [
+            "action"
+        ],
+        "image": null,
+        "rtr": true,
+        "exp": false,
+        "runtime": "frt_3.3.4.squashfs",
+        "reqs": [],
+        "arch": []
+    }
+}

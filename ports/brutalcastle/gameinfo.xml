@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Brutal Castle.sh</path>
+    <name>Brutal Castle</name>
+    <desc>Brutal Castle is an epic beat 'em up about fire-breathing living castle which outrageously fights against giant monsters to survive in a cruel medieval world of the war of all against all!</desc>
+    <releasedate>20210514T000000</releasedate>
+    <developer>Skinner Space</developer>
+    <publisher>self-published</publisher>
+    <genre>Action</genre>
+    <image>./brutalcastle/screenshot.png</image>
+  </game>
+</gameList>
