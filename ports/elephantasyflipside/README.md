@@ -8,8 +8,8 @@ Tested using *Elephantasy_Flipside_ITCH.zip* version 4 (Mar 16, 2023). Thanks to
 | Button     | Action               |
 | ---------- | -------------------- |
 | D-PAD      | Directional movement |
-| B          | Jump                 |
-| X          | Inventory            |
-| Y          | Use 1                |
-| A          | Use 2                |
+| A          | Jump                 |
+| B          | Use 1                |
+| X          | Use 2                |
+| Y          | Inventory            |
 
