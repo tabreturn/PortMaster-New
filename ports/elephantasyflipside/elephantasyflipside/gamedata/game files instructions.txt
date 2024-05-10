@@ -1,0 +1,8 @@
+COPY THE FOLLOWING INTO THIS FOLDER
+
+data.win
+gamedata.ini
+options.ini
+roomdata.ini
+rooms_default
+
