@@ -35,10 +35,8 @@ cd $GAMEDIR
 
 # patch if it hasn't been patched yet
 if [ -f "$GAMEDIR/gamedata/data.win" ]; then
-  $controlfolder/xdelta3 -d -s "$GAMEDIR/gamedata/data.win" "$GAMEDIR/elephantasyflipside.patch" "$GAMEDIR/gamedata/game.droid"
-  if [ $? -eq 0 ]; then
-    rm "$GAMEDIR/gamedata/data.win"
-  fi
+  ./xdelta3 -d -s "gamedata/data.win" "elephantasyflipside.patch" "gamedata/game.droid"
+  rm "$GAMEDIR/gamedata/data.win"
 fi
 
 # Make sure uinput is accessible so we can make use of the gptokeyb controls
