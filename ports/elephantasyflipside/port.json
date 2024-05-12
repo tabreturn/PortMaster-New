@@ -9,7 +9,8 @@
     "attr": {
         "title": "Elephantasy: Flipside",
         "porter": [
-            "tabreturn"
+            "tabreturn",
+            "Kompaan"
         ],
         "desc": "In Elephantasy: Flipside, you play as a tiny Elephant named Belle who loves to collect shiny gems and magical items. Luckily for Belle (and you), there are a wide array of items to use around the game's world, some new and some familiar to veterans of the first Elephantasy game.",
         "inst": "You can purchase Elephantasy: Flipside at: https://linker.itch.io/eleflipside. Download the *Elephantasy_Flipside_ITCH.zip* version and extract it, and place the data.win, all .ini files, and rooms_default folder file in the port's gamedata directory. Tested using *Elephantasy_Flipside_ITCH.zip* version 4 (Mar 16, 2023).",
