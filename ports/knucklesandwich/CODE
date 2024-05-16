@@ -1,0 +1,21 @@
+// Declare and initialize base dimensions
+var www = 320;
+var hhh = 240;
+
+// Calculate the scaling factor
+if window_get_fullscreen() {
+    // Get the maximum scaling factor that fits within the display dimensions
+    var scale_x = display_get_width() / www;
+    var scale_y = display_get_height() / hhh;
+    
+    // Use the smaller scaling factor to ensure both dimensions fit
+    global.screen_size = min(scale_x, scale_y);
+} else {
+    // Set screen size for windowed mode
+    global.screen_size = 2;
+}
+
+// Resize application surface and window
+surface_resize(application_surface, www * global.screen_size, hhh * global.screen_size);
+window_set_size(www * global.screen_size, hhh * global.screen_size);
+
