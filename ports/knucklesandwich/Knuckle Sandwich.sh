@@ -34,7 +34,6 @@ cd $GAMEDIR
 
 # check for and extract knucklesandwich.exe
 if [ -f "knucklesandwich.exe" ]; then
-    mkdir gamedata
     7z x knucklesandwich.exe -ogamedata -r
 
     # patch game.droid
