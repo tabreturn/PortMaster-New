@@ -1,4 +1,3 @@
-Build: 12804307
+DepotDownloader -app 1012570 -depot 1012572 -manifest 5720277990085998436 -username <STEAM_USERNAME> -password <STEAM_PASSWORD>
 
-./DepotDownloader -app 1012570 -depot 1012572 -manifest 7262024743855396436
-
+First run takes a little longer to start (while patching etc.)

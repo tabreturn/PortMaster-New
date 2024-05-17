@@ -32,40 +32,50 @@ exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
 cd $GAMEDIR
 
+# if knucklesandwich.exe in gamedata, move it
+mv gamedata/knucklesandwich.exe .
+
 # check for and extract knucklesandwich.exe
 if [ -f "knucklesandwich.exe" ]; then
-    7z x knucklesandwich.exe -ogamedata -r
+    7z x -mhe=off knucklesandwich.exe -ogamedata -r
 
-    # patch game.droid
-    $controlfolder/xdelta3 -d -s "gamedata/data.win" "knucklesandwich.xdelta3" "gamedata/game.droid"
-    rm "gamedata/data.win"
+    # get data.win checksum
+    checksum=$(md5sum "gamedata/data.win" | awk '{ print $1 }')
 
-    # prepare to bundle assets
-    mkdir -p ./assets
-    mv ./gamedata/*.ogg ./assets/ || exit 1
-    mv ./gamedata/*.dat ./assets/ || exit 1
+    if [ "$checksum" == "3c782109a381af3540f42a0f89870b29" ]; then
+        # apply build 12804307 path
+        $controlfolder/xdelta3 -d -s "gamedata/data.win" "knucklesandwich.5720277990085998436.xdelta3" "gamedata/game.droid"
+        rm "gamedata/data.win"
 
-    # zip the contents of ./game.apk including the .ogg and .dat files
-    zip -r -0 ./knucklesandwich.apk ./assets/ || exit 1
-    rm -Rf "$GAMEDIR/assets/" || exit 1
+        # prepare to bundle assets
+        mkdir -p ./assets
+        mv ./gamedata/*.ogg ./assets/ || exit 1
+        mv ./gamedata/*.dat ./assets/ || exit 1
 
-    # rename and move frames/temp/textures assets
-    cd gamedata
-    mkdir -p frames temp textures
-    for file in frames@*; do
-        mv "$file" "frames/${file/frames@/}"
-    done
-    for file in temp@*; do
-        mv "$file" "temp/${file/temp@/}"
-    done
-    for file in textures@*; do
-        mv "$file" "textures/${file/textures@/}"
-    done
-    cd ..
+        # zip the contents of ./game.apk including the .ogg and .dat files
+        zip -r -0 ./knucklesandwich.apk ./assets/ || exit 1
+        rm -Rf "$GAMEDIR/assets/" || exit 1
 
-    # delete unnecessary files
-    rm ./gamedata/*.exe ./gamedata/*.dll
-    rm knucklesandwich.exe
+        # rename and move frames/temp/textures assets
+        cd gamedata
+        mkdir -p frames temp textures
+        for file in frames@*; do
+            mv "$file" "frames/${file/frames@/}"
+        done
+        for file in temp@*; do
+            mv "$file" "temp/${file/temp@/}"
+        done
+        for file in textures@*; do
+            mv "$file" "textures/${file/textures@/}"
+        done
+        cd ..
+        # delete unnecessary files
+        rm ./gamedata/*.exe ./gamedata/*.dll
+        rm knucklesandwich.exe
+    else
+      echo "checksum does not match; wrong build/version of game"
+    fi
+
 fi
 
 # ensure uinput is accessible so we can make use of the gptokeyb controls
