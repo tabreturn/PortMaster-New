@@ -37,12 +37,13 @@ mv gamedata/knucklesandwich.exe .
 
 # check for and extract knucklesandwich.exe
 if [ -f "knucklesandwich.exe" ]; then
-    7z x -mhe=off knucklesandwich.exe -ogamedata -r
+    ./7z x -mhe=off knucklesandwich.exe -ogamedata -r
 
     # get data.win checksum
     checksum=$(md5sum "gamedata/data.win" | awk '{ print $1 }')
 
     if [ "$checksum" == "3c782109a381af3540f42a0f89870b29" ]; then
+
         # apply build 12804307 path
         $controlfolder/xdelta3 -d -s "gamedata/data.win" "knucklesandwich.5720277990085998436.xdelta3" "gamedata/game.droid"
         rm "gamedata/data.win"
@@ -56,8 +57,9 @@ if [ -f "knucklesandwich.exe" ]; then
         zip -r -0 ./knucklesandwich.apk ./assets/ || exit 1
         rm -Rf "$GAMEDIR/assets/" || exit 1
 
-        # rename and move frames/temp/textures assets
         cd gamedata
+
+        # rename and move frames/temp/textures assets
         mkdir -p frames temp textures
         for file in frames@*; do
             mv "$file" "frames/${file/frames@/}"
@@ -68,10 +70,23 @@ if [ -f "knucklesandwich.exe" ]; then
         for file in textures@*; do
             mv "$file" "textures/${file/textures@/}"
         done
+
+        #pngquant frames/textures assets
+        for img in frames/*.png; 
+        do 
+          ../pngquant --ext .png --force --quality 40-60 --speed 1 --skip-if-larger "$img"
+        done
+        for img in textures/*.png; 
+        do 
+          ../pngquant --ext .png --force --quality 40-60 --speed 1 --skip-if-larger "$img"
+        done
+
         cd ..
+
         # delete unnecessary files
         rm ./gamedata/*.exe ./gamedata/*.dll
         rm knucklesandwich.exe
+
     else
       echo "checksum does not match; wrong build/version of game"
     fi
