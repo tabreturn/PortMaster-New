@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Knuckle Sandwich.sh</path>
+    <name>Knuckle Sandwich</name>
+    <desc>Guide a young man through his first day in Bright City, an island paradise with a dark secret. Find a job, make friends, and solve a mystery involving a gang and a cult. Defeat enemies in turn-based battles by completing unique minigames like rhythm games, shoot-'em-ups, memory puzzles, and quick-time events.</desc>
+    <releasedate>20231103T000000</releasedate>
+    <developer>Andy Brophy</developer>
+    <publisher>Dinko, SUPERHOT PRESENTS</publisher>
+    <genre>RPG</genre>
+    <image>./knucklesandwich/screenshot.png</image>
+  </game>
+</gameList>
+

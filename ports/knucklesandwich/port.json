@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "name": "knucklesandwich.zip",
+    "items": [
+        "Knuckle Sandwich.sh",
+        "knucklesandwich"
+    ],
+    "items_opt": [],
+    "attr": {
+        "title": "Knuckle Sandwich",
+        "porter": [
+            "tabreturn"
+        ],
+        "desc": "Guide a young man through his first day in Bright City, an island paradise with a dark secret. Find a job, make friends, and solve a mystery involving a gang and a cult. Defeat enemies in turn-based battles by completing unique minigames like rhythm games, shoot-'em-ups, memory puzzles, and quick-time events.",
+        "inst": "You'll need to purchase the game from https://store.steampowered.com/app/1012570/Knuckle_Sandwich. You'll need a specific release, which you can obtain using a tool like DepotDownloader (https://github.com/SteamRE/DepotDownloader). There are also GUIs for DepotDownloader, like https://depotdownloader.00pium.net. The command may vary depending on your system, but the `-app`, `-depot`, and `-manifest` digits must match those below:\n\n`./DepotDownloader -app 1012570 -depot 1012572 -manifest 5720277990085998436 -username <STEAM_USERNAME> -password <STEAM_PASSWORD>`\n\nOnce you've grabbed this, place the knucklesandwich.exe in the port's gamedata folder.",
+        "genres": [
+            "rpg"
+        ],
+        "image": null,
+        "rtr": false,
+        "exp": false,
+        "runtime": null,
+        "reqs": [],
+        "arch": [
+            "arm64"
+        ]
+    }
+}
