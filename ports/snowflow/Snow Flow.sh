@@ -19,7 +19,7 @@ source $controlfolder/device_info.txt
 
 get_controls
 
-GAMEDIR=/$directory/ports/unofficial/snowflow
+GAMEDIR=/$directory/ports/snowflow
 CONFDIR="$GAMEDIR/conf/"
 
 # Ensure the conf directory exists
