@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Snow Flow.sh</path>
+    <name>Snow Flow</name>
+    <desc>Walk around as a penguin, leave marks in the snow, and listen to some chill, electronic music. Maybe find your mate along the way ...</desc>
+    <releasedate>20240721T000000</releasedate>
+    <developer>Jon Topielski</developer>
+    <publisher>self-published</publisher>
+    <genre>Other</genre>
+    <image>./snowflow/screenshot.png</image>
+  </game>
+</gameList>
+

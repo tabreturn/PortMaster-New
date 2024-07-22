@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "name": "snowflow.zip",
+    "items": [
+        "Snow Flow.sh",
+        "snowflow"
+    ],
+    "items_opt": [],
+    "attr": {
+        "title": "Snow Flow",
+        "porter": [
+            "tabreturn"
+        ],
+        "desc": "Walk around as a penguin, leave marks in the snow, and listen to some chill, electronic music. Maybe find your mate along the way ...",
+        "inst": "All files included and ready to run. Thanks to [Jon Topielski](https://jontopielski.itch.io) for the fantastic game and permission to distribute the files.",
+        "genres": [
+            "other"
+        ],
+        "image": null,
+        "rtr": true,
+        "exp": false,
+        "runtime": "frt_3.5.2.squashfs",
+        "reqs": [],
+        "arch": []
+    }
+}
+
