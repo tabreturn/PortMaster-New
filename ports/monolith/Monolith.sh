@@ -68,10 +68,14 @@ fi
 # Make sure uinput is accessible so we can make use of the gptokeyb controls
 $ESUDO chmod 666 /dev/uinput
 
-$GPTOKEYB "gmloader" -c ./monolith.gptk &
+if [ "${ANALOG_STICKS}" == 1 ]; then
+  GPTK="monolith_singlestick.gptk"
+else
+  GPTK="monolith.gptk"
+fi
 
+$GPTOKEYB "gmloader" -c "./$GPTK" &
 $ESUDO chmod +x "$GAMEDIR/gmloader"
-
 ./gmloader game.apk
 
 $ESUDO kill -9 $(pidof gptokeyb)
