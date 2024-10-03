@@ -46,7 +46,7 @@ if [ -f "./Monolith.exe" ]; then
   echo "Extraction complete."
   # Delete unneeded files
   rm -f ./Monolith.exe
-  rm -f ./gamedata/*.exe ./gamedata/*.ini ./gamedata/*.dll
+  rm -f ./gamedata/*.exe ./gamedata/*.dll
 fi
 
 # Check if there are .ogg files in ./gamedata
@@ -55,7 +55,7 @@ if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ]; then
     mv ./gamedata/*.ogg ./assets/
     echo "Moved .ogg files from ./gamedata to ./assets/"
     # Zip the contents of ./sm.apk including the new .ogg files
-    zip -r ./game.apk ./game.apk ./assets/
+    zip -r -0 ./game.apk ./game.apk ./assets/
     echo "Zipped contents to ./game.apk"
 fi
 
