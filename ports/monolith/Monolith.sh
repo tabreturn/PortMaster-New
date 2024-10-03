@@ -31,12 +31,22 @@ export GMLOADER_PLATFORM="os_linux"
 # We log the execution of the script into log.txt
 exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
-cd $GAMEDIR
-
 if [ -f "${controlfolder}/libgl_${CFWNAME}.txt" ]; then 
   source "${controlfolder}/libgl_${CFW_NAME}.txt"
 else
   source "${controlfolder}/libgl_default.txt"
+fi
+
+cd $GAMEDIR
+
+# Extract Monolith.exe 7-zip archive if it exists
+if [ -f "./Monolith.exe" ]; then
+  echo "Extracting Monolith.exe..."
+  ./7zzs x "./Monolith.exe" -o"./gamedata/"
+  echo "Extraction complete."
+  # Delete unneeded files
+  rm -f ./Monolith.exe
+  rm -f ./gamedata/*.exe ./gamedata/*.ini ./gamedata/*.dll
 fi
 
 # Check if there are .ogg files in ./gamedata
@@ -44,7 +54,6 @@ if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ]; then
     # Move all .ogg files from ./gamedata to ./assets
     mv ./gamedata/*.ogg ./assets/
     echo "Moved .ogg files from ./gamedata to ./assets/"
-
     # Zip the contents of ./sm.apk including the new .ogg files
     zip -r ./game.apk ./game.apk ./assets/
     echo "Zipped contents to ./game.apk"
