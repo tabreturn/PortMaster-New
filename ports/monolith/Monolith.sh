@@ -51,12 +51,13 @@ fi
 
 # Check if there are .ogg files in ./gamedata
 if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ]; then
-    # Move all .ogg files from ./gamedata to ./assets
-    mv ./gamedata/*.ogg ./assets/
-    echo "Moved .ogg files from ./gamedata to ./assets/"
-    # Zip the contents of ./sm.apk including the new .ogg files
-    zip -r -0 ./game.apk ./game.apk ./assets/
-    echo "Zipped contents to ./game.apk"
+  # Move all .ogg files from ./gamedata to ./assets
+  mv ./gamedata/*.ogg ./assets/
+  echo "Moved .ogg files from ./gamedata to ./assets/"
+  # Zip the contents of ./sm.apk including the new .ogg files
+  zip -r -0 ./game.apk ./game.apk ./assets/
+  rm -f ./assets/*.ogg
+  echo "Zipped contents to ./game.apk"
 fi
 
 # Check for file existence before trying to manipulate them:
