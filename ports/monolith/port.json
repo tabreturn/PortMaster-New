@@ -1,23 +1,22 @@
 {
     "version": 3,
-    "name": "flaskoman.zip",
+    "name": "monolith.zip",
     "items": [
-        "Flaskoman.sh",
-        "flaskoman"
+        "Monolith.sh",
+        "monolith"
     ],
     "items_opt": null,
     "attr": {
-        "title": "Flaskoman",
+        "title": "Monolith",
         "porter": [
             "tabreturn"
         ],
-        "desc": "Flaskoman is a puzzle platformer in a steampunk laboratory. Use mysterious liquids to activate lab mechanism and your abilities.",
+        "desc": "Descending in the darkness of a long-abandoned facility, a lone ship searches for wealth, power, and the scattered pieces of the past.",
         "desc_md": null,
-        "inst": "Purchase the game from Steam (https://store.steampowered.com/app/1645940/Flaskoman) and copy the game files to the port gamedata directory.",
-        "inst_md": "Purchase the game from [Steam](https://store.steampowered.com/app/1645940/Flaskoman) and copy the game files to the port `gamedata` directory.",
+        "inst": "Purchase the game from itch.io (https://team-d-13.itch.io/monolith), grab the Windows version (Monolith.exe), and and copy it to the port directory.",
+        "inst_md": "Purchase the game from [itch.io](https://team-d-13.itch.io/monolith), grab the Windows version (Monolith.exe), and and copy it to the port directory.",
         "genres": [
-            "puzzle",
-            "platformer"
+            "action"
         ],
         "image": {},
         "rtr": false,
