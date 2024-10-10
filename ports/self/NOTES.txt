@@ -1,2 +1,0 @@
-- use l3 (click left stick) to start
-- patch to skip over initial screen (that asks for a click)

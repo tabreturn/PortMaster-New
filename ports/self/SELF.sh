@@ -31,13 +31,16 @@ export GMLOADER_PLATFORM="os_linux"
 
 cd $GAMEDIR
 
+# Check if "data.win" exists and its MD5 checksum matches the specified value then apply patch
+if [ -f "gamedata/data.win" ]; then
+    $SUDO $controlfolder/xdelta3 -d -s "./gamedata/data.win" "./gamedata/patch.xdelta3" "./gamedata/data_patched.win"
+    rm -r "./gamedata/data.win"
+fi
+
 # Check for file existence before trying to manipulate them:
-[ -f "./gamedata/data.win" ] && mv gamedata/data.win gamedata/game.droid
-[ -f "./gamedata/game.win" ] && mv gamedata/game.win gamedata/game.droid
-[ -f "./gamedata/game.unx" ] && mv gamedata/game.unx gamedata/game.droid
+[ -f "./gamedata/data_patched.win" ] && mv gamedata/data_patched.win gamedata/game.droid
 
-
-$GPTOKEYB "gmloader" -c ./tempuslocus.gptk &
+$GPTOKEYB "gmloader" -c ./self.gptk &
 
 $ESUDO chmod +x "$GAMEDIR/gmloader"
 pm_platform_helper $GAMEDIR/gmloader
