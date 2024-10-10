@@ -4,6 +4,10 @@ Thanks to Team D-13 for creating this game, which you can purchase on [itch.io](
 
 This has been tested with Monolith.exe Windows full version (Jan 13, 2019). The Demo will work, too.
 
+The game starts at a resolution of 640 × 480, but you can change this in the OPTIONS > VIDEO menu. 
+
+ROCKNIX users: you may need to realign the reticle with the mouse cursor -- move the mouse cursor to the top left corner to do this.
+
 
 # Controls
 
