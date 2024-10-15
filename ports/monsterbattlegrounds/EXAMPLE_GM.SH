@@ -16,31 +16,44 @@ source $controlfolder/control.txt
 # device_info.txt will be included by default
 
 [ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
+
 get_controls
 
-export PORT_32BIT="Y"
-GAMEDIR="/$directory/ports/tempuslocus"
+GAMEDIR=/$directory/ports/akeyspath
+CONFDIR="$GAMEDIR/conf/"
 
-export LD_LIBRARY_PATH="/usr/lib32:$GAMEDIR/libs:$LD_LIBRARY_PATH"
-export GMLOADER_DEPTH_DISABLE=1
-export GMLOADER_SAVEDIR="$GAMEDIR/gamedata/"
-export GMLOADER_PLATFORM="os_linux"
+# Ensure the conf directory exists
+mkdir -p "$GAMEDIR/conf"
 
-# We log the execution of the script into log.txt
-> "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
+# Set the XDG environment variables for config & savefiles
+export XDG_DATA_HOME="$CONFDIR"
+export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
 cd $GAMEDIR
 
-# Check for file existence before trying to manipulate them:
-[ -f "./gamedata/data.win" ] && mv gamedata/data.win gamedata/game.droid
-[ -f "./gamedata/game.win" ] && mv gamedata/game.win gamedata/game.droid
-[ -f "./gamedata/game.unx" ] && mv gamedata/game.unx gamedata/game.droid
+runtime="frt_3.3.4"
+if [ ! -f "$controlfolder/libs/${runtime}.squashfs" ]; then
+  # Check for runtime if not downloaded via PM
+  if [ ! -f "$controlfolder/harbourmaster" ]; then
+    echo "This port requires the latest PortMaster to run, please go to https://portmaster.games/ for more info." > /dev/tty0
+    sleep 5
+    exit 1
+  fi
+  $ESUDO $controlfolder/harbourmaster --quiet --no-check runtime_check "${runtime}.squashfs"
+fi
 
+# Setup Godot
+godot_dir="$HOME/godot"
+godot_file="$controlfolder/libs/${runtime}.squashfs"
+$ESUDO mkdir -p "$godot_dir"
+$ESUDO umount "$godot_file" || true
+$ESUDO mount "$godot_file" "$godot_dir"
+PATH="$godot_dir:$PATH"
 
-$GPTOKEYB "gmloader" -c ./tempuslocus.gptk &
+export FRT_NO_EXIT_SHORTCUTS=FRT_NO_EXIT_SHORTCUTS
 
-$ESUDO chmod +x "$GAMEDIR/gmloader"
-pm_platform_helper $GAMEDIR/gmloader
-./gmloader game.apk
+$GPTOKEYB "$runtime" -c "./akeyspath.gptk" &
+"$runtime" $GODOT_OPTS --main-pack "gamedata/a_keys_path_v0.7_patched.pck"
 
+$ESUDO umount "$godot_dir"
 pm_finish
