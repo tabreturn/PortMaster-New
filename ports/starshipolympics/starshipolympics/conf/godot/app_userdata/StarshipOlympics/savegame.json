@@ -1,0 +1,21 @@
+{
+  "/root/global": {
+    "custom_win": 3,
+    "enable_analytics": false,
+    "enable_camera": false,
+    "flood": "off",
+    "full_screen": true,
+    "glow_enable": false,
+    "graphics_quality": "minimum",
+    "language": "english",
+    "laser": "off",
+    "master_volume": 50,
+    "music_volume": 50,
+    "rumbling": false,
+    "sessions_played": 0,
+    "sfx_volume": 50,
+    "shown_cards_from_deck": {},
+    "time_scale": "1.0",
+    "version": "0.14.1-alpha"
+  }
+}
