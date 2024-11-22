@@ -5,7 +5,7 @@ Thanks to [Connor, Logan, Matt](https://mmatt-ugh.itch.io/the-saloon) for creati
 
 ## Controls
 
-| Button | Action |
-| ------ | ------ |
-| D-PAD  | Move   |
-| A/B    | Roll   |
+| Button  | Action |
+| ------- | ------ |
+| L-STICK | Move   |
+| A       | Roll   |
