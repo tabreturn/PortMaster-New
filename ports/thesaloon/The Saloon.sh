@@ -32,6 +32,13 @@ export GMLOADER_PLATFORM="os_linux"
 cd $GAMEDIR
 
 # Prepare files
+if [ -n "$(ls ./gamedata/*.ogg 2>/dev/null)" ]; then
+  mv ./gamedata/*.ogg ./assets/
+  echo "Moved .ogg files from ./gamedata to ./assets/"
+  zip -r -0 ./game.apk ./game.apk ./assets/
+  rm -f ./assets/*.ogg
+  echo "Zipped contents to ./game.apk"
+fi
 [ -f "./gamedata/data.win" ] && mv gamedata/data.win gamedata/game.droid
 [ -f "./gamedata/gmtk2022.exe" ] && rm -f gamedata/gmtk2022.exe
 
