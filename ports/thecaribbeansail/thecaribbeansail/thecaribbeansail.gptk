@@ -1,20 +1,21 @@
-back = \"
-start = \"
+back = esc
+start = enter
 
-up = \"
-down = \"
-left = \"
-right = \"
+up = up
+down = down
+left = left
+right = right
 
-left_analog_up = \"
-left_analog_down = \"
-left_analog_left = \"
-left_analog_right = \"
+left_analog_up = mouse_movement_up
+deadzone_mode = scaled_radial
+deadzone = 2000
+deadzone_scale = 8
+deadzone_delay = 16
 
-a = \"
+a = mouse_left
 b = \"
 x = \"
-y = \"
+y = mouse_right
 
 right_analog_up = \"
 right_analog_down = \"

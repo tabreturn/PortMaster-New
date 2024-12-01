@@ -2,6 +2,6 @@
   "save_dir" : "gamedata",
   "apk_path" : "thecaribbeansail.port",
   "show_cursor" : false,
-  "disable_controller" : false,
+  "disable_controller" : true,
   "force_platform" : "os_windows"
 }
