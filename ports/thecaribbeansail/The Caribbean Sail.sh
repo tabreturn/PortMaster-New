@@ -25,7 +25,7 @@ cd $GAMEDIR
 $ESUDO chmod +x -R $GAMEDIR/*
 
 # Exports
-export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$GAMEDIR/libs:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/lib32:$GAMEDIR/lib:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
 # Display loading splash
@@ -40,8 +40,8 @@ fi
 
 # Assign configs and load the game
 $GPTOKEYB "gmloader.aarch64" -c "thecaribbeansail.gptk" &
-pm_platform_helper "gmloader.aarch64"
-./gmloader.aarch64 -c gmloader.json
+pm_platform_helper "gmloader.armhf"
+./gmloader.armhf -c gmloader.json
 
 # Cleanup
 pm_finish
