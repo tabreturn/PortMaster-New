@@ -22,7 +22,7 @@ right_analog_down = \"
 right_analog_left = \"
 right_analog_right = \"
 
-l1 = \"
+l1 = mouse_right
 l2 = \"
 r1 = \"
-r2 = \"
+r2 = mouse_left
