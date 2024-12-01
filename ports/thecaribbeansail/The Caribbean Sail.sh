@@ -31,11 +31,12 @@ export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 # Display loading splash
 $ESUDO ./tools/splash "splash.png" 2000
 
-# Prepare game files
-[ -f "./gamedata/data.win" ] && mv gamedata/data.win gamedata/game.droid
-[ -f "./gamedata/game.win" ] && mv gamedata/game.win gamedata/game.droid
-[ -f "./gamedata/game.unx" ] && mv gamedata/game.unx gamedata/game.droid
-rm -f gamedata/*.{dll,exe}
+# Patch file
+if [ -f "./gamedata/OH_MY_GOD__LOOK_AT_THIS_KNIGHT.exe" ]; then
+  $controlfolder/xdelta3 -d -s "./gamedata/data.win" "./gamedata/patch.xdelta3" "./gamedata/game.droid"
+  [ $? -eq 0 ] && rm "./gamedata/data.win" || pm_message "Patching of data.win has failed"
+  rm -f gamedata/*.{dll,exe}
+fi
 
 # Assign configs and load the game
 $GPTOKEYB "gmloader.aarch64" -c "thecaribbeansail.gptk" &
