@@ -32,7 +32,7 @@ export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 $ESUDO ./tools/splash "splash.png" 2000
 
 # Patch file
-if [ -f "./gamedata/OH_MY_GOD__LOOK_AT_THIS_KNIGHT.exe" ]; then
+if [ -f "./gamedata/data.win" ]; then
   $controlfolder/xdelta3 -d -s "./gamedata/data.win" "./gamedata/patch.xdelta3" "./gamedata/game.droid"
   [ $? -eq 0 ] && rm "./gamedata/data.win" || pm_message "Patching of data.win has failed"
   rm -f gamedata/*.{dll,exe}
