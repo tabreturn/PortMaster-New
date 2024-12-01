@@ -1,22 +1,22 @@
 {
   "version": 3,
-  "name": "GAMEFOLDER.zip",
+  "name": "thecaribbeansail.zip",
   "items": [
-    "GAMENAME.sh",
-    "GAMEFOLDER"
+    "The Caribbean Sail.sh",
+    "thecaribbeansail"
   ],
   "items_opt": null,
   "attr": {
-    "title": "GAMENAME",
+    "title": "The Caribbean Sail",
     "porter": [
       "tabreturn"
     ],
-    "desc": "...",
+    "desc": "Name your crew, purchase supplies, sail the world, harpoon fish, plunder your enemies, die horribly, unlock a new Captain and do it all over again!",
     "desc_md": null,
-    "inst": "Purchase the game at itch.io (URL), grab the Windows version (FILE), extract and and copy it into GAMEFOLDER/gamedata folder.",
-    "inst_md": "...",
+    "inst": "Purchase the game at itch.io (https://victorian-clambake.itch.io/the-caribbean-sail), grab the Windows version (The Caribbean Sail - V1.7.1.6.zip), extract, and copy the game files into the thecaribbeansail/gamedata folder.",
+    "inst_md": "Purchase the game at [itch.io](https://victorian-clambake.itch.io/the-caribbean-sail), grab the Windows version (*The Caribbean Sail - V1.7.1.6.zip*), extract, and copy the game files into the `thecaribbeansail/gamedata` folder.",
     "genres": [
-      "GENRE"
+      "Adventure"
     ],
     "image": {},
     "rtr": false,
@@ -24,7 +24,7 @@
     "runtime": null,
     "reqs": [],
     "arch": [
-      "ARCHITECTURE"
+      "armhf"
     ]
   }
 }

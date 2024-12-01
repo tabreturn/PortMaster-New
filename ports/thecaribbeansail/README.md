@@ -1,6 +1,8 @@
 # Notes
 
-Thanks to [CREATOR](URL) for creating this fantastic game, which you can purchase at [STORE](URL)
+Thanks to [Victorian Clambake](https://victorian-clambake.itch.io) for creating this fantastic game, which you can purchase at [itch.io](https://victorian-clambake.itch.io/the-caribbean-sail)
+
+Working with version: `The Caribbean Sail - V1.7.1.6.zip`, *Jan 01, 2024*
 
 
 ## Controls
