@@ -35,7 +35,7 @@ $ESUDO ./tools/splash "splash.png" 2000
 if [ -f "./gamedata/data.win" ]; then
   $controlfolder/xdelta3 -d -s "./gamedata/data.win" "./gamedata/patch.xdelta3" "./gamedata/game.droid"
   [ $? -eq 0 ] && rm "./gamedata/data.win" || pm_message "Patching of data.win has failed"
-  rm -f gamedata/*.{dll,exe}
+  rm -f gamedata/*.{dll,exe,win}
 fi
 
 # Assign configs and load the game
