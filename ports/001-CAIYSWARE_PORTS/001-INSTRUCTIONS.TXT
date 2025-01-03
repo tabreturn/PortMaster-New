@@ -1,11 +1,11 @@
 VERSIONS/MANIFESTS
 
-Echo of the Wilds   | older ver.  | -app 305780 -depot 305781 -manifest 4931655817216216628
-Skelly Selest       | latest ver. | -app 685400 -depot 685401 -manifest 6760717428475222891
-Spirits Abyss       | latest ver. | -app 1078200 -depot 1078201 -manifest 4112682953630298997
-Straima             | older ver.  | -app 399140 -depot 399141 -manifest 1301436181352473801
-Straimium Immortaly | latest ver. | -app 515650 -depot 515651 -manifest 5524786472254553935
-Voids Vigil         | latest ver. | -app 2738940 -depot 2738941 -manifest 2193834778632142499
+Echo of the Wilds   | old ver. | -app 305780 -depot 305781 -manifest 4931655817216216628
+Skelly Selest       | cur ver. | -app 685400 -depot 685401 -manifest 6760717428475222891
+Spirits Abyss       | cur ver. | -app 1078200 -depot 1078201 -manifest 4112682953630298997
+Straima             | old ver. | -app 399140 -depot 399141 -manifest 1301436181352473801
+Straimium Immortaly | cur ver. | -app 515650 -depot 515651 -manifest 5524786472254553935
+Voids Vigil         | cur ver. | -app 2738940 -depot 2738941 -manifest 2193834778632142499
 
-* latest ver. as of 2025-01-01
+* cur ver. (current version) as of 2025-01-01
 
