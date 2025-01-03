@@ -1,4 +1,4 @@
-VERSIONS
+VERSIONS/MANIFESTS
 
 Echo of the Wilds   | older ver.  | -app 305780 -depot 305781 -manifest 4931655817216216628
 Skelly Selest       | latest ver. | -app 685400 -depot 685401 -manifest 6760717428475222891
