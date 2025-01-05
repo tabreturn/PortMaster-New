@@ -1,4 +1,7 @@
-2. EDIT Data > General Info > Flags
+0. Maybe and RP5 port
+
+
+1. EDIT Data > General Info > Flags
 ```
 Sizeable, SyncVertex1, Scale, ScreenKey
 ```
