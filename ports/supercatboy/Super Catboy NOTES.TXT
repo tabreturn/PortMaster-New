@@ -1,0 +1,68 @@
+2. EDIT Data > General Info > Flags
+```
+Sizeable, SyncVertex1, Scale, ScreenKey
+```
+
+2. REMOVE ALL CODE FOR sh_CRT_Windows_full_shader SHADER
+
+
+3. CODE CHANGE TO gml_Object_obj_draw_screen_Create_0.gml
+```
+depth = -16000
+hfactor = 1
+crt_filter = 0
+ideal_width = 480
+ideal_height = 270
+ideal_aspect_ratio = ideal_width / ideal_height
+display_width = display_get_width()
+display_height = display_get_height()
+display_aspect_ratio = display_width / display_height
+zoom = 1
+global.max_zoom = 1
+if (display_aspect_ratio < ideal_aspect_ratio)
+    global.max_zoom = display_width / ideal_width
+else
+    global.max_zoom = display_height / ideal_height
+show_debug_message("max_zoom: " + string(global.max_zoom))
+if (global.screen_scale == -1 || global.screen_scale == 0)
+    zoom = global.max_zoom
+else
+    zoom = global.screen_scale
+if (global.screen_fullscreen == 2)
+    screen_set_fullscreen(0)
+else
+    screen_set_fullscreen(1)
+if window_get_fullscreen()
+{
+    screen_xoff = 100000
+    screen_yoff = 100000
+}
+else
+{
+    screen_xoff = 100000
+    screen_yoff = 100000
+}
+for (var i = rm_lorenfahrt_test; i <= room_last; i++)
+{
+    if room_exists(i)
+        room_set_view_enabled(i, true)
+}
+window_set_size((ideal_width * zoom), (ideal_height * zoom))
+surface_resize(application_surface, ideal_width, ideal_height)
+application_surface_draw_enable(true)
+alarm[0] = 1
+shader_to_use = sh_CRT_Windows_full_shader
+crt_surface_scale = 3
+crt_surface_width = ideal_width * crt_surface_scale
+crt_surface_height = ideal_height * crt_surface_scale
+uni_crt_sizes = shader_get_uniform(shader_to_use, "u_crt_sizes")
+distort = shader_get_uniform(shader_to_use, "distort")
+distortion = shader_get_uniform(shader_to_use, "distortion")
+border = shader_get_uniform(shader_to_use, "border")
+var_distort = true
+var_distortion_ammount = 0.12
+var_border = true
+surface_width = ideal_width
+surface_height = ideal_height
+crt_advanced = 0
+```
