@@ -40,7 +40,7 @@ if [ -n "$(ls ./gamedata/*.dat 2>/dev/null)" ]; then
 fi
 
 # Delete unneeded files and rename data.win
-rm -f gamedata/*.{dll,exe}
+rm -f gamedata/*.{dll,exe,html,sav}
 [ -f "./gamedata/data.win" ] && mv gamedata/data.win gamedata/game.droid
 
 # Display loading splash
