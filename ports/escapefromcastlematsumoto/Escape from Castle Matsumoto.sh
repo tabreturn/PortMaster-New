@@ -24,9 +24,9 @@ BINARY=efcm
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
 # setup conf directory
-$ESUDO rm -rf ~/.local/share/Escape\ From\ Castle\ Matsumoto
-mkdir -p ~/.local/share
-ln -sfv "$GAMEDIR/conf" ~/.local/share/Escape\ From\ Castle\ Matsumoto
+CONFDIR="$GAMEDIR/conf"
+$ESUDO mkdir -p "$CONFDIR"
+bind_directories "$HOME/.local/share/Escape From Castle Matsumoto" "$CONFDIR"
 
 cd $GAMEDIR
 
