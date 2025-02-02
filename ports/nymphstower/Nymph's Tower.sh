@@ -32,6 +32,7 @@ export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 if [ -f "Nymph's Tower.exe" ]; then
   mkdir -p gamedata
   unzip "Nymph's Tower.exe" -d gamedata
+  unzip "compressed_audio.zip"
   cp -r compressed_audio/* gamedata/
   rm "Nymph's Tower.exe"
 fi
