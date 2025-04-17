@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./REPOSE.sh</path>
+    <name>REPOSE</name>
+    <desc>A descent into pixel-art purgatory, where recovering oxygen tanks might be the least of your worries. Cynthia says she cares—but are you sure anyone here is telling the truth?</desc>
+    <releasedate>20250129T000000</releasedate>
+    <developer>Akupara Games</developer>
+    <publisher>Akupara Games</publisher>
+    <genre>Adventure, Shooter</genre>
+    <image>./repose/screenshot.png</image>
+  </game>
+</gameList>

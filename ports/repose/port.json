@@ -1,0 +1,39 @@
+{
+  "version": 4,
+  "name": "repose.zip",
+  "items": [
+    "REPOSE.sh",
+    "repose"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "REPOSE",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "A descent into pixel-art purgatory, where recovering oxygen tanks might be the least of your worries. Cynthia says she cares—but are you sure anyone here is telling the truth?",
+    "desc_md": null,
+    "inst": "Grab the game at itch.io (https://akuparagames.itch.io/repose). Download it (a .zip file), extract, and copy the contents to this port's `gamedata/assets` folder. Tested with RE_DRMFree_1.0.0.1.zip",
+    "inst_md": "Grab the game at [itch.io](https://akuparagames.itch.io/repose). Download it (a .zip file), extract, and copy archive contents to this port's `gamedata/assets` folder. Tested with **RE_DRMFree_1.0.0.1.zip**",
+    "genres": [
+      "adventure",
+      "fps"
+    ],
+    "image": {},
+    "rtr": false,
+    "exp": false,
+    "runtime": [],
+    "store": [
+      {
+        "name": "itch.io",
+        "url": "https://akuparagames.itch.io/repose"
+      }
+    ],
+    "availability": "paid",
+    "reqs": [],
+    "arch": [
+      "aarch64"
+    ],
+    "min_glibc": ""
+  }
+}
