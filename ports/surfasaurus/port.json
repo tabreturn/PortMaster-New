@@ -1,0 +1,36 @@
+{
+  "version": 4,
+  "name": "surfasaurus.zip",
+  "items": [
+    "Surfasaurus.sh",
+    "surfasaurus"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Surfasaurus",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "A community simulation game where you play as a lovable brown T-rex on a tropical island, striving to become the world's first surfing dinosaur. With real-time events, a deep customization system, and a detailed surfing mechanic to impress judges and outscore your rival, you'll ride the waves through an underdog story like no other.",
+    "desc_md": null,
+    "inst": "Purchase at itch.io (https://redtrianglegames.itch.io/surfasaurus), download, extract, and copy surfasaurus.rpg to this port's folder.",
+    "inst_md": "Purchase at [itch.io](https://redtrianglegames.itch.io/surfasaurus), download, extract, and copy `surfasaurus.rpg` to this port's folder.",
+    "genres": [
+      "rpg"
+    ],
+    "image": {},
+    "rtr": false,
+    "exp": false,
+    "runtime": null,
+    "store": [
+      {
+        "name": "itch.io",
+        "url": "https://redtrianglegames.itch.io/surfasaurus"
+      }
+    ],
+    "availability": "full",
+    "reqs": [],
+    "arch": [],
+    "min_glibc": ""
+  }
+}

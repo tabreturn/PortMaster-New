@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Surfasaurus.sh</path>
+    <name>Surfasaurus</name>
+    <desc>A community simulation game where you play as a lovable brown T-rex on a tropical island, striving to become the world's first surfing dinosaur. With real-time events, a deep customization system, and a detailed surfing mechanic to impress judges and outscore your rival, you'll ride the waves through an underdog story like no other.</desc>
+    <releasedate>20230506T000000</releasedate>
+    <developer>Red Triangle Games</developer>
+    <publisher>Self-Published</publisher>
+    <genre>RPG</genre>
+    <image>./surfasaurus/screenshot.png</image>
+  </game>
+</gameList>
