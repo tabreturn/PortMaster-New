@@ -1,0 +1,34 @@
+*General info*
+
+Default window size: 480 x 360
+Options: Scale: 0
+
+---
+
+*gml_Object_obj_settings_persistent_Step_0.gml*
+
+if (fstrigger == 1)
+{
+    window_set_fullscreen(false);
+    window_set_fullscreen(false);
+    fstrigger = 0;
+}
+
+
+---
+
+*gml_Object_obj_camera_Other_4.gml*
+
+camera_set_view_size(view_camera[0], 480, 360);
+camera_set_view_pos(view_camera[0], 80, 0);
+view_set_wport(0, 480);
+view_set_hport(0, 360);
+window_set_size(480, 360);
+window_set_fullscreen(false);
+
+
+---
+
+# PROBLEMS
+
+I'm unable to stop the graphics scaling with the window
