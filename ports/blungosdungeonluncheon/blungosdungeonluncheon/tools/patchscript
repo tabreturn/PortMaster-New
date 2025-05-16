@@ -55,7 +55,7 @@ zip_archive() {
   echo "Zip assets to $DATAFILE."
   zip -r -0 $DATAFILE ./assets/
   echo "Delete assets folder."
-  #rm -Rf "$DATADIR/assets"
+  #rm -Rf "$DATADIR/assets" -------------------- TEMP COMMENT TO CHECK AUDIOGROUP FILE SIZES
 }
 
 install_complete() {

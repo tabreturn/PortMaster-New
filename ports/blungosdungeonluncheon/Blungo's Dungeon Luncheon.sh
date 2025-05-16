@@ -29,6 +29,7 @@ export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$GAMEDIR/lib:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 $ESUDO chmod +x $GAMEDIR/gmloadernext.aarch64
 
+# COMMENT TO SWITCH TO PATCHSCRIPT
 # prepare game files
 #if [ -f ./assets/data.win ]; then
 #  mv "./assets/data.win" "./assets/game.droid"
