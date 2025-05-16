@@ -54,7 +54,7 @@ if [ ! -f install_completed ]; then
     exit 1  # exit to prevent further execution
   fi
 else
-  pm_message "Patching process already completed. Skipping."
+  echo "Patching process already completed. Skipping."
 fi
 
 # assign configs and load the game
