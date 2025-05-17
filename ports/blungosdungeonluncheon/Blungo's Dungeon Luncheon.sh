@@ -41,7 +41,7 @@ $ESUDO chmod +x $GAMEDIR/gmloadernext.aarch64
 export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$GAMEDIR/libs:$LD_LIBRARY_PATH"
 export PATCHER_FILE="$GAMEDIR/tools/patchscript"
 export PATCHER_GAME="Blungo's Dungeon Luncheon"
-export PATCHER_TIME="less that a minute"
+export PATCHER_TIME="... NOT SURE ..."
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
 # check if install_completed to skip patching
