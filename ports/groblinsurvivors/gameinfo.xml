@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Groblin Survivors.sh</path>
+    <name>Groblin Survivors</name>
+    <desc>The slimes are coming ... Build defenses to slay the horde of baddies coming your way! Dodge, weave, and stumble your way through the waves of blades and spells making their way to cleave right through Your Groblinness!</desc>
+    <releasedate>20241216T000000</releasedate>
+    <developer>FartFish</developer>
+    <publisher>FartFish</publisher>
+    <genre>Action, Survival</genre>
+    <image>./groblinsurvivors/screenshot.png</image>
+  </game>
+</gameList>

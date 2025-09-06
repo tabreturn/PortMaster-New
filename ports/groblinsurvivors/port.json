@@ -1,0 +1,40 @@
+{
+  "version": 4,
+  "name": "groblinsurvivors.zip",
+  "items": [
+    "Groblin Survivors.sh",
+    "groblinsurvivors"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Groblin Survivors",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "The slimes are coming ... Build defenses to slay the horde of baddies coming your way! Dodge, weave, and stumble your way through the waves of blades and spells making their way to cleave right through Your Groblinness!",
+    "desc_md": null,
+    "inst": "Ready to run.",
+    "inst_md": null,
+    "genres": [
+      "action"
+    ],
+    "image": {},
+    "rtr": true,
+    "exp": false,
+    "runtime": [
+      "frt_4.3.squashfs",
+      "weston_pkg_0.2.squashfs"
+    ],
+    "store": [
+      {
+        "name": "itch.io",
+        "url": "https://fartfish.itch.io/groblin-survivors",
+        "developerurl": "https://fartfish.itch.io"
+      }
+    ],
+    "availability": "full",
+    "reqs": [],
+    "arch": [],
+    "min_glibc": ""
+  }
+}
