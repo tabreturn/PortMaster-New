@@ -13,8 +13,8 @@
     ],
     "desc": "Push the buttons (left and right arrow key) to somehow pedal the bike. The game resets if you hit your head or reach the goal.",
     "desc_md": null,
-    "inst": "Download the Linux game free from itch.io (https://ottoojala.itch.io/basicbiking), extract, and copy basicbiking.pck to the port's folder.",
-    "inst_md": "Download the **Linux** game free from [itch.io](https://ottoojala.itch.io/basicbiking), extract, and copy `basicbiking.pck` to the port's folder.",
+    "inst": "Download the Linux game free from ottoojala.com (https://ottoojala.com), extract, and copy basicbiking.pck to the port's folder.",
+    "inst_md": "Download the **Linux** game free from [ottoojala.com](https://ottoojala.com), extract, and copy `basicbiking.pck` to the port's folder.",
     "genres": [
       "sport"
     ],
@@ -27,8 +27,8 @@
     ],
     "store": [
       {
-        "name": "itch.io",
-        "gameurl": "https://ottoojala.itch.io/basicbiking",
+        "name": "ottoojala.com",
+        "gameurl": "https://ottoojala.com",
         "developerurl": "https://ottoojala.com"
       }
     ],
