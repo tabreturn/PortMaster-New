@@ -13,8 +13,8 @@
     ],
     "desc": "One-button pong with gravity. You control your paddle by making your player jump by pressing the button. You can spam the button to fly.",
     "desc_md": null,
-    "inst": "Download the Windows game free from itch.io (https://ottoojala.itch.io/ottos-tennis-game), extract, and copy ottostennis.pck to the port's folder.",
-    "inst_md": "Download the **Windows** game free from [itch.io](https://ottoojala.itch.io/ottos-tennis-game), extract, and copy `ottostennis.pck` to the port's folder.",
+    "inst": "Download the Windows game free from ottoojala.com (https://ottoojala.com), extract, and copy ottostennis.pck to the port's folder.",
+    "inst_md": "Download the **Windows** game free from [ottoojala.com](https://ottoojala.com), extract, and copy `ottostennis.pck` to the port's folder.",
     "genres": [
       "sport"
     ],
@@ -26,8 +26,8 @@
     ],
     "store": [
       {
-        "name": "itch.io",
-        "gameurl": "https://ottoojala.itch.io/ottos-tennis-game",
+        "name": "ottoojala.com",
+        "gameurl": "https://ottoojala.com",
         "developerurl": "https://ottoojala.com"
       }
     ],
