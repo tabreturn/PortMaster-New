@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Turret vs Turret.sh</path>
+    <name>Turret vs Turret</name>
+    <desc>1 or 2 player retro artillery mini game! Press and hold the button to lock barrel angle; release the button to lock force and shoot. First to five wins.</desc>
+    <releasedate>20241001T000000</releasedate>
+    <developer>Otto Ojala</developer>
+    <publisher>Otto Ojala</publisher>
+    <genre>Sport</genre>
+    <image>./turretvsturret/screenshot.png</image>
+  </game>
+</gameList>

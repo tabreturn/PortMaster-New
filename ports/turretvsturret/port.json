@@ -1,0 +1,39 @@
+{
+  "version": 4,
+  "name": "turretvsturret.zip",
+  "items": [
+    "Turret vs Turret.sh",
+    "turretvsturret"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Turret vs Turret",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "1 or 2 player retro artillery mini game! Press and hold the button to lock barrel angle; release the button to lock force and shoot. First to five wins.",
+    "desc_md": null,
+    "inst": "Download the Linux game free from itch.io (https://ottoojala.itch.io/turret-vs-turret), extract, and copy tvst.pck to the port's folder.",
+    "inst_md": "Download the **Linux** game free from [itch.io](https://ottoojala.itch.io/turret-vs-turret), extract, and copy `tvst.pck` to the port's folder.",
+    "genres": [
+      "sport"
+    ],
+    "image": {},
+    "rtr": false,
+    "exp": false,
+    "runtime": [
+      "frt_3.5.2.squashfs"
+    ],
+    "store": [
+      {
+        "name": "itch.io",
+        "gameurl": "https://ottoojala.itch.io/turret-vs-turret",
+        "developerurl": "https://ottoojala.com"
+      }
+    ],
+    "availability": "free",
+    "reqs": [],
+    "arch": [],
+    "min_glibc": ""
+  }
+}
