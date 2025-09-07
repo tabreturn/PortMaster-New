@@ -1,0 +1,40 @@
+{
+  "version": 4,
+  "name": "basicbiking.zip",
+  "items": [
+    "Basic Biking.sh",
+    "basicbiking"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Basic Biking",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "Push the buttons (left and right arrow key) to somehow pedal the bike. The game resets if you hit your head or reach the goal.",
+    "desc_md": null,
+    "inst": "Download the Linux game free from itch.io (https://ottoojala.itch.io/basicbiking), extract, and copy basicbiking.pck to the port's folder.",
+    "inst_md": "Download the **Linux** game free from [itch.io](https://ottoojala.itch.io/basicbiking), extract, and copy `basicbiking.pck` to the port's folder.",
+    "genres": [
+      "sport"
+    ],
+    "image": {},
+    "rtr": false,
+    "exp": false,
+    "runtime": [
+      "frt_4.2.2.squashfs",
+      "weston_pkg_0.2.squashfs"
+    ],
+    "store": [
+      {
+        "name": "itch.io",
+        "gameurl": "https://ottoojala.itch.io/basicbiking",
+        "developerurl": "https://ottoojala.com"
+      }
+    ],
+    "availability": "free",
+    "reqs": [],
+    "arch": [],
+    "min_glibc": ""
+  }
+}

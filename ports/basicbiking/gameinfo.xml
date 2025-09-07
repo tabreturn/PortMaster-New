@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Basic Biking.sh</path>
+    <name>Basic Biking</name>
+    <desc>Push the buttons (left and right arrow key) to somehow pedal the bike. The game resets if you hit your head or reach the goal.</desc>
+    <releasedate>20240313T000000</releasedate>
+    <developer>Otto Ojala</developer>
+    <publisher>Otto Ojala</publisher>
+    <genre>Sport</genre>
+    <image>./basicbiking/screenshot.png</image>
+  </game>
+</gameList>
