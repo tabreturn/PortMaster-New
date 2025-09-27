@@ -57,7 +57,7 @@ if [ ! -f "$controlfolder/libs/${godot_runtime}.squashfs" ]; then
   $ESUDO $controlfolder/harbourmaster --quiet --no-check runtime_check "${godot_runtime}.squashfs"
 fi
 if [[ "$PM_CAN_MOUNT" != "N" ]]; then
-    $ESUDO umount "${godot_dir}"
+  $ESUDO umount "${godot_dir}"
 fi
 $ESUDO mount "$controlfolder/libs/${godot_runtime}.squashfs" "${godot_dir}"
 
