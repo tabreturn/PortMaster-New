@@ -20,10 +20,10 @@ left = left
 right = right
 
 left_analog_up = mouse_movement_up
-deadzone_mode = scaled_radial
+deadzone_mode = radial
 deadzone = 2000
 deadzone_scale = 8
-deadzone_delay = 16
+deadzone_delay = 10
 
 right_analog_up = \"
 right_analog_down = \"
