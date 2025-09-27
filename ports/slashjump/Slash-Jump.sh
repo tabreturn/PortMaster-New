@@ -19,8 +19,7 @@ get_controls
 GAMEDIR=/$directory/ports/slashjump
 godot_runtime="godot_4.2.2"
 godot_executable="godot422.$DEVICE_ARCH"
-pck_filename="SlashJump.pck"
-gptk_filename="slashjump.gptk"
+pck_filename="SlashJump_patched.pck"
 
 # logging
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
@@ -64,28 +63,25 @@ $ESUDO mount "$controlfolder/libs/${godot_runtime}.squashfs" "${godot_dir}"
 
 cd $GAMEDIR
 
-# check if *not* rocknix ...
-if [[ "$CFW_NAME" != "ROCKNIX" ]]; then
-  pck_filename="SlashJump_particles.pck"
-  # only patch if SlashJump_patched.pck doesn't exist
-  if [ ! -f "./$pck_filename" ] && [ -f "./SlashJump.pck" ]; then
-    $controlfolder/xdelta3 -d -s "./SlashJump.pck" "./patch_particles.xdelta3" "./$pck_filename"
-    if [ $? -ne 0 ]; then
-      echo "Patching of SlashJump.pck has failed"
-    fi
+# only patch if SlashJump_patched.pck doesn't exist
+if [ ! -f "./$pck_filename" ] && [ -f "./SlashJump.pck" ]; then
+  $controlfolder/xdelta3 -d -s "./SlashJump.pck" "./patch.xdelta3" "./$pck_filename"
+  if [ $? -ne 0 ]; then
+    echo "Patching of SlashJump.pck has failed"
   fi
+fi
+
+# select appropriate .gptk
+if [[ "$CFW_NAME" = "muOS" ]]; then
+  gptk_filename="slashjump_muos.gptk"
+  show_cursor="CRUSTY_SHOW_CURSOR=1"
+else
+  gptk_filename="slashjump.gptk"
+  show_cursor=""
 fi
 
 # check for rocknix ...
 if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
-  pck_filename="SlashJump_no_particles.pck"
-  # only patch if SlashJump_patched.pck doesn't exist
-  if [ ! -f "./$pck_filename" ] && [ -f "./SlashJump.pck" ]; then
-    $controlfolder/xdelta3 -d -s "./SlashJump.pck" "./patch_no_particles.xdelta3" "./$pck_filename"
-    if [ $? -ne 0 ]; then
-      echo "Patching of SlashJump.pck has failed"
-    fi
-  fi
   # display message and exit if libmali
   if ! glxinfo | grep "OpenGL version string" >/dev/null; then
     pm_message "This Port does not support the libMali graphics driver. Switch to Panfrost to continue."
@@ -98,7 +94,7 @@ $GPTOKEYB "$godot_executable" -c "$GAMEDIR/$gptk_filename" &
 # start westonpack and godot
 # put CRUSTY_SHOW_CURSOR=1 after "env" if you need a mouse cursor
 # LD_PRELOAD is put here because godot runtime links against libegl.so, and crusty is interfering with that on some systems
-$ESUDO env $weston_dir/westonwrap.sh headless noop kiosk crusty_x11egl \
+$ESUDO env $show_cursor $weston_dir/westonwrap.sh headless noop kiosk crusty_x11egl \
 LD_PRELOAD= XDG_DATA_HOME=$CONFDIR $godot_dir/$godot_executable \
 --resolution ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT} -f \
 --rendering-driver opengl3_es --audio-driver ALSA --main-pack $GAMEDIR/$pck_filename
