@@ -41,7 +41,7 @@ if [ ! -f "$controlfolder/libs/${weston_runtime}.squashfs" ]; then
   $ESUDO $controlfolder/harbourmaster --quiet --no-check runtime_check "${weston_runtime}.squashfs"
 fi
 if [[ "$PM_CAN_MOUNT" != "N" ]]; then
-    $ESUDO umount "${weston_dir}"
+  $ESUDO umount "${weston_dir}"
 fi
 $ESUDO mount "$controlfolder/libs/${weston_runtime}.squashfs" "${weston_dir}"
 
