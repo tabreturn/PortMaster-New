@@ -71,15 +71,6 @@ if [ ! -f "./$pck_filename" ] && [ -f "./SlashJump.pck" ]; then
   fi
 fi
 
-# select appropriate .gptk
-if [[ "$CFW_NAME" = "muOS" ]]; then
-  gptk_filename="slashjump_muos.gptk"
-  show_cursor="CRUSTY_SHOW_CURSOR=1"
-else
-  gptk_filename="slashjump.gptk"
-  show_cursor=""
-fi
-
 # check for rocknix ...
 if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
   # display message and exit if libmali
@@ -90,11 +81,16 @@ if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
   fi
 fi
 
-$GPTOKEYB "$godot_executable" -c "$GAMEDIR/$gptk_filename" &
+# gptokeyb1 is unresponsive on muos
+if [[ "$CFW_NAME" = "muOS" ]]; then
+  $GPTOKEYB2 "$godot_executable" -x &
+else
+  $GPTOKEYB "$godot_executable" &
+fi
 # start westonpack and godot
 # put CRUSTY_SHOW_CURSOR=1 after "env" if you need a mouse cursor
 # LD_PRELOAD is put here because godot runtime links against libegl.so, and crusty is interfering with that on some systems
-$ESUDO env $show_cursor $weston_dir/westonwrap.sh headless noop kiosk crusty_x11egl \
+$ESUDO env $weston_dir/westonwrap.sh headless noop kiosk crusty_x11egl \
 LD_PRELOAD= XDG_DATA_HOME=$CONFDIR $godot_dir/$godot_executable \
 --resolution ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT} -f \
 --rendering-driver opengl3_es --audio-driver ALSA --main-pack $GAMEDIR/$pck_filename
