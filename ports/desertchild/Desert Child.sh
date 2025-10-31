@@ -24,21 +24,28 @@ cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 $ESUDO chmod +x $GAMEDIR/gmloadernext.aarch64
 
-# prepare game files
-if [ -f "./assets/data.win" ]; then
-  pm_message "Preparing game files ..."
-  # prepare files
-  mv "./assets/data.win" "./assets/game.droid"
-  rm -f ./assets/*.exe ./assets/*.dll
-  # archive .port
-  pm_message "Finalizing .port file ..."
-  zip -r -0 "desertchild.port" "./assets/"
-  rm -rf "./assets/"
-fi
-
 # exports
 export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$GAMEDIR/lib:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
+
+# check if the patching needs to be applied
+if [ ! -f "$GAMEDIR/patchlog.txt" ] && [ -f "$GAMEDIR/assets/data.win" ]; then
+  if [ -f "$controlfolder/utils/patcher.txt" ]; then
+    set -o pipefail
+    export ESUDO
+    export DEVICE_RAM
+    export PATCHER_FILE="$GAMEDIR/tools/patchscript"
+    export PATCHER_GAME="$(basename "${0%.*}")"
+    export PATCHER_TIME="a few minutes"
+    source "$controlfolder/utils/patcher.txt"
+    $ESUDO umount "$DOTNETDIR"
+  else
+    pm_message "This port requires the latest version of PortMaster."
+    pm_finish
+    exit 1
+  fi
+fi
+
 
 $GPTOKEYB "gmloadernext.aarch64" & #-c "___.gptk" &
 pm_platform_helper "$GAMEDIR/gmloadernext.aarch64"
