@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Abducted Intelligence.sh</path>
+    <name>Abducted Intelligence</name>
+    <desc>An unknown entity has taken Cornbankle ... but why? Can he escape their gelatinous, horrifying grasp? Though he's actually the smartest person in the game, everyone -- including himself -- believes he's the dumbest, a living embodiment of the Dunning–Kruger Effect.
+</desc>
+    <releasedate>20240922T000000</releasedate>
+    <developer>Babar &amp; jfrisby </developer>
+    <publisher>jfrisby</publisher>
+    <genre>Point-and-Click Adventure</genre>
+    <image>./abductedintelligence/screenshot.png</image>
+  </game>
+</gameList>

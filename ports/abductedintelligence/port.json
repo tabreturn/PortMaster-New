@@ -1,0 +1,37 @@
+{
+  "version": 4,
+  "name": "abductedintelligence.zip",
+  "items": [
+    "Abducted Intelligence.sh",
+    "abductedintelligence"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Abducted Intelligence",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "An unknown entity has taken Cornbankle ... but why? Can he escape their gelatinous, horrifying grasp? Though he's actually the smartest person in the game, everyone -- including himself -- believes he's the dumbest, a living embodiment of the Dunning–Kruger Effect.",
+    "desc_md": null,
+    "inst": "Ready to run.",
+    "inst_md": null,
+    "genres": [
+      "adventure"
+    ],
+    "image": {},
+    "rtr": true,
+    "exp": false,
+    "runtime": [],
+    "store": [
+      {
+        "name": "itch.io",
+        "gameurl": "https://jfrisby.itch.io/abducted-intelligence",
+        "developerurl": "https://jfrisby.itch.io"
+      }
+    ],
+    "availability": "full",
+    "reqs": [],
+    "arch": ["aarch64"],
+    "min_glibc": ""
+  }
+}
