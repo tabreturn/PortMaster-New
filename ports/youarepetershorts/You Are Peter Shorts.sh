@@ -24,20 +24,24 @@ cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 $ESUDO chmod +x $GAMEDIR/gmloadernext.aarch64
 
-# prepare game files
-if [ -f "./assets/data.win" ]; then
-  pm_message "Preparing game files ..."
-  mv "./assets/data.win" "./assets/game.droid"
-  rm -f ./assets/*.exe ./assets/*.dll
-  # archive .port
-  pm_message "Finalizing .port file ..."
-  zip -r -0 "youarepetershorts.port" "./assets/"
-  rm -rf "./assets/"
-fi
-
 # exports
-export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$GAMEDIR/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$GAMEDIR/lib:$GAMEDIR/libs:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
+export ESUDO
+export controlfolder
+
+# check if we need to patch the game
+if [ ! -f install_completed ]; then
+  if [ -f "$controlfolder/utils/patcher.txt" ]; then
+    export PATCHER_FILE="$GAMEDIR/tools/patchscript"
+    export PATCHER_GAME="You Are Peter Shorts"
+    export PATCHER_TIME="a few minutes"
+    source "$controlfolder/utils/patcher.txt"
+    $ESUDO kill -9 $(pidof gptokeyb)
+  else
+    pm_message "This port requires the latest version of PortMaster."
+  fi
+fi
 
 $GPTOKEYB "gmloadernext.aarch64" & #-c "overbowed.gptk" &
 pm_platform_helper "$GAMEDIR/gmloadernext.aarch64"
