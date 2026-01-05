@@ -4,31 +4,12 @@ local items = {}
 local selected = 1
 
 local ui = {
-  padding   = 24,
+  padding = 24,
   fontTitle = nil,
   fontDesc  = nil,
   fontHint  = nil,
-  maxImageW = 680,
-  maxImageH = 460,
 }
 
--- -----------------------------------------------------------------------------
--- Helpers
--- -----------------------------------------------------------------------------
-local function clamp(x, a, b)
-  if x < a then return a end
-  if x > b then return b end
-  return x
-end
-
-local function wrapIndex(i, n)
-  if n <= 0 then return 1 end
-  return ((i - 1) % n) + 1
-end
-
--- -----------------------------------------------------------------------------
--- Load metadata (one-time)
--- -----------------------------------------------------------------------------
 local function loadItems()
   items = {}
 
@@ -41,70 +22,32 @@ local function loadItems()
 
   for _, f in ipairs(files) do
     if f:match("%.lua$") then
-      local ok, chunkOrErr = pcall(love.filesystem.load, "metadata/" .. f)
-      if ok and chunkOrErr then
-        local ok2, def = pcall(chunkOrErr)
-        if ok2 and type(def) == "table" then
-          def._source = "metadata/" .. f
+      local okLoad, chunk = pcall(love.filesystem.load, "metadata/" .. f)
+      if okLoad and chunk then
+        local okRun, def = pcall(chunk)
+        if okRun and type(def) == "table" then
+          def.title = def.title or f:gsub("%.lua$", "")
+          def.desc  = def.desc  or ""
 
-          -- Auto-load image: same folder + same basename as metadata file
-          -- metadata/Foo.lua -> metadata/Foo.png
-          do
-            local src  = def._source
-            local dir  = src:match("^(.-/)") or ""   -- includes trailing "/"
-            local base = src:match("([^/]+)%.lua$")
-
-            def._img = nil
-            def._imgPath = nil
-            def._imgExists = false
-            def._imgErr = nil
-
-            if dir ~= "" and base then
-              local imgPath = dir .. base .. ".png"
-              def._imgPath = imgPath
-              def._imgExists = love.filesystem.getInfo(imgPath) ~= nil
-
-              if def._imgExists then
-                local okImg, imgOrErr = pcall(love.graphics.newImage, imgPath)
-                if okImg then
-                  def._img = imgOrErr
-                else
-                  def._imgErr = tostring(imgOrErr)
-                end
-              end
-            end
+          local base = f:match("^(.*)%.lua$")
+          local imgPath = base and ("metadata/" .. base .. ".png") or nil
+          if imgPath and love.filesystem.getInfo(imgPath) then
+            local okImg, img = pcall(love.graphics.newImage, imgPath)
+            if okImg then def._img = img end
           end
 
-          def.title  = def.title  or f:gsub("%.lua$", "")
-          def.desc   = def.desc   or ""
-          def.script = def.script or ""
-
-          table.insert(items, def)
+          items[#items + 1] = def
         end
       end
     end
   end
 
   if #items == 0 then
-    table.insert(items, {
-      title  = "No items found",
-      desc   = "Create metadata/*.lua files.",
-      script = "",
-    })
+    items[1] = { title = "No items found", desc = "Create metadata/*.lua files." }
   end
 
-  selected = clamp(selected, 1, #items)
-end
-
--- -----------------------------------------------------------------------------
--- launch_me.sh writer
--- -----------------------------------------------------------------------------
-local function osReadFile(path)
-  local f = io.open(path, "r")
-  if not f then return nil end
-  local data = f:read("*a")
-  f:close()
-  return data
+  if selected < 1 then selected = 1 end
+  if selected > #items then selected = #items end
 end
 
 local function osWriteFile(path, data)
@@ -116,7 +59,6 @@ local function osWriteFile(path, data)
 end
 
 local function bashQuote(s)
-  -- Safe-ish for typical filenames; avoids breaking quotes in bash strings.
   s = tostring(s or "")
   return s:gsub("\\", "\\\\"):gsub('"', '\\"'):gsub("\n", " ")
 end
@@ -125,51 +67,44 @@ local function runSelected()
   local it = items[selected]
   if not it then return end
 
-  -- Require the metadata fields we need
   local gameJar = it.game_jar
-  local gptk    = it.gptk_filename
-
   if not gameJar or gameJar == "" then return end
+
+  local gptk = it.gptk_filename
   if not gptk or gptk == "" then gptk = "default.gptk" end
 
-  -- Folder LOVE was launched from (OS path)
-  local baseDir   = love.filesystem.getSourceBaseDirectory()
-  local dstScript = baseDir .. "/launch_me.sh"
+  local baseDir = love.filesystem.getSourceBaseDirectory()
+  local dst = baseDir .. "/launch_me.sh"
 
   local contents = ([[#!/bin/bash
-
 GAME_JAR="%s"
 gptk_filename="%s"
-
 myscript=$(realpath "$0")
 mydir=$(dirname "$myscript")
 cd "$mydir"
 source ./launch.shellscript
-exit
 ]]):format(bashQuote(gameJar), bashQuote(gptk))
 
-  if not osWriteFile(dstScript, contents) then return end
-  os.execute(string.format("chmod +x %q", dstScript))
-
+  if not osWriteFile(dst, contents) then return end
+  os.execute(string.format("chmod +x %q", dst))
   love.event.quit()
 end
 
--- -----------------------------------------------------------------------------
--- LOVE callbacks
--- -----------------------------------------------------------------------------
 function love.load()
   ui.fontTitle = love.graphics.newFont(34)
   ui.fontDesc  = love.graphics.newFont(20)
   ui.fontHint  = love.graphics.newFont(14)
-
   loadItems()
 end
 
 function love.keypressed(key)
+  local n = #items
   if key == "left" then
-    selected = wrapIndex(selected - 1, #items)
+    selected = selected - 1
+    if selected < 1 then selected = n end
   elseif key == "right" then
-    selected = wrapIndex(selected + 1, #items)
+    selected = selected + 1
+    if selected > n then selected = 1 end
   elseif key == "return" or key == "kpenter" then
     runSelected()
   elseif key == "escape" then
@@ -177,30 +112,17 @@ function love.keypressed(key)
   end
 end
 
--- -----------------------------------------------------------------------------
--- Drawing
--- -----------------------------------------------------------------------------
 local function drawCenteredImage(img, cx, cy, maxW, maxH)
   local iw, ih = img:getWidth(), img:getHeight()
   local s = math.min(maxW / iw, maxH / ih, 1)
   love.graphics.draw(img, cx - (iw*s)/2, cy - (ih*s)/2, 0, s, s)
 end
 
-local function drawChevron(x, y, dir, size)
-  -- dir = -1 (left) or +1 (right)
-  local s = size
+local function drawChevron(x, y, dir, s)
   if dir < 0 then
-    love.graphics.line(
-      x + s, y - s,
-      x,     y,
-      x + s, y + s
-    )
+    love.graphics.line(x + s, y - s, x, y, x + s, y + s)
   else
-    love.graphics.line(
-      x - s, y - s,
-      x,     y,
-      x - s, y + s
-    )
+    love.graphics.line(x - s, y - s, x, y, x - s, y + s)
   end
 end
 
@@ -210,66 +132,33 @@ function love.draw()
 
   local it = items[selected] or {}
 
-  -- Header
   love.graphics.setFont(ui.fontHint)
   love.graphics.setColor(1, 1, 1, 0.7)
-  love.graphics.print(
-    "LEFT/RIGHT: browse  |  START/A: launch  |  SELECT: quit",
-    ui.padding, ui.padding
-  )
+  love.graphics.print("LEFT/RIGHT: browse  |  ENTER: launch  |  ESC: quit", ui.padding, ui.padding)
 
-  -- Top-right indicator: "N / total"
-  do
-    local total = #items
-    local label = string.format("%d / %d", selected, total)
-    local tw = ui.fontHint:getWidth(label)
-    love.graphics.print(label, w - ui.padding - tw, ui.padding)
-  end
+  local label = string.format("%d / %d", selected, #items)
+  love.graphics.print(label, w - ui.padding - ui.fontHint:getWidth(label), ui.padding)
 
-  -- Card region (used for layout math)
   local cardX = ui.padding
   local cardY = ui.padding * 2 + 10
   local cardW = w - ui.padding * 2
   local cardH = h - cardY - ui.padding
 
-  -- Image area
   local cx = cardX + cardW / 2
   local cy = cardY + cardH * 0.35
-  local maxW = math.min(ui.maxImageW, cardW - 80)
-  local maxH = math.min(ui.maxImageH, cardH * 0.6)
+  local maxW = cardW - 80
+  local maxH = cardH * 0.6
 
   if it._img then
     love.graphics.setColor(1, 1, 1, 0.95)
-    drawCenteredImage(it._img, cx, cy, maxW - 20, maxH - 20)
-  else
-    -- No image: show on-screen debug
-    love.graphics.setFont(ui.fontDesc)
-    love.graphics.setColor(1, 1, 1, 0.45)
-    love.graphics.printf("No image", cx - maxW/2, cy - 30, maxW, "center")
-
-    love.graphics.setFont(ui.fontHint)
-    love.graphics.setColor(1, 1, 1, 0.45)
-
-    local p  = it._imgPath or "(no path computed)"
-    local ex = it._imgExists and "yes" or "no"
-
-    love.graphics.printf(("expected: %s"):format(p), cx - maxW/2, cy + 2,  maxW, "center")
-    love.graphics.printf(("exists in LOVE fs: %s"):format(ex), cx - maxW/2, cy + 20, maxW, "center")
-
-    if it._imgErr then
-      love.graphics.printf(("load error: %s"):format(it._imgErr), cx - maxW/2, cy + 38, maxW, "center")
-    end
+    drawCenteredImage(it._img, cx, cy, maxW, maxH)
   end
 
-  -- Left / Right chevrons
   love.graphics.setColor(1, 1, 1, 0.25)
   love.graphics.setLineWidth(4)
-  local chevronY = cy
-  local chevronSize = 26
-  drawChevron(cardX + 32, chevronY, -1, chevronSize)
-  drawChevron(cardX + cardW - 32, chevronY, 1, chevronSize)
+  drawChevron(cardX + 32,        cy, -1, 26)
+  drawChevron(cardX + cardW - 32, cy,  1, 26)
 
-  -- Text
   local textY = cardY + cardH * 0.65
 
   love.graphics.setFont(ui.fontTitle)
@@ -280,4 +169,3 @@ function love.draw()
   love.graphics.setColor(1, 1, 1, 0.75)
   love.graphics.printf(it.desc or "", cardX + 60, textY + 52, cardW - 120, "center")
 end
-
