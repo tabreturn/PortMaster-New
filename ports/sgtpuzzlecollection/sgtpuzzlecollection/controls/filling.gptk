@@ -1,0 +1,114 @@
+[config]
+deadzone_triggers = 3000
+mouse_scale = 6114
+mouse_delay = 16
+mouse_slow_scale = 30
+
+deadzone_mode = axial
+deadzone = 1000
+deadzone_scale = 7
+deadzone_delay = 16
+
+
+[controls]
+# Clear any defaults
+overlay = clear
+
+
+
+l1 = mouse_right
+r1 = mouse_left
+l2 = u 
+r2 = r
+
+left_analog = mouse_movement
+
+up = up
+down = down
+left = left
+right = right
+
+
+menu = ctrl
+start = q
+
+x = 0 # blank the tile
+
+# the initial state is "one". Dunno if we can start in that state, so we'll just restate the "one" state here. 
+a = 9
+a = set_state nine
+b = 2
+b = set_state two
+y = 1
+
+[controls:one]
+overlay = controls
+a = 9
+a = set_state nine
+b = 2
+b = set_state two
+y = 1
+
+[controls:two]
+overlay = controls
+a = 1
+a = set_state one
+b = 3
+b = set_state three
+y = 2
+
+[controls:three]
+overlay = controls
+a = 2
+a = set_state two
+b = 4
+b = set_state four 
+y = 3
+
+[controls:four]
+overlay = controls
+a = 3
+a = set_state three
+b = 5
+b = set_state five 
+y = 4
+
+[controls:five]
+overlay = controls
+a = 4
+a = set_state four
+b = 6
+b = set_state six 
+y = 5
+
+[controls:six]
+overlay = controls
+a = 5
+a = set_state five
+b = 7
+b = set_state seven 
+y = 6
+
+[controls:seven]
+overlay = controls
+a = 6
+a = set_state six
+b = 8
+b = set_state eight 
+y = 7
+
+[controls:eight]
+overlay = controls
+a = 7
+a = set_state seven
+b = 9
+b = set_state nine 
+y = 8
+
+[controls:nine]
+overlay = controls
+a = 8
+a = set_state eight
+b = 1
+b = set_state one
+y = 9

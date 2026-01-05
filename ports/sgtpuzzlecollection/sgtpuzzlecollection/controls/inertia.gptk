@@ -1,0 +1,40 @@
+[config]
+deadzone_triggers = 3000
+mouse_scale = 6114
+mouse_delay = 16
+mouse_slow_scale = 30
+
+deadzone_mode = axial
+deadzone = 1000
+deadzone_scale = 7
+deadzone_delay = 16
+
+
+[controls]
+# Clear any defaults
+overlay = clear
+
+a = end
+b = pagedown
+x = home
+y = pageup
+
+
+l1 = mouse_right
+r1 = mouse_left
+l2 = u 
+r2 = r
+
+left_analog = mouse_movement
+
+up = up
+down = down
+left = left
+right = right
+
+
+menu = ctrl
+start = q
+
+
+
