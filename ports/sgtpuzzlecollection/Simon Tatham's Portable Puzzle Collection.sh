@@ -49,6 +49,8 @@ pm_platform_helper "$LOVE_BINARY"
 $LOVE_RUN "$GAMEDIR/menu.love"
 
 # run selected game
+JAR=$(sed -n 's/^GAME_JAR="\?\([^"]*\)"\?$/\1/p' launch_me.sh)
+pm_message "Launching $JAR ..."
 $GAMEDIR/launch_me.sh
 
 # cleanup
