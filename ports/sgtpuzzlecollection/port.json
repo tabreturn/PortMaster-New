@@ -1,0 +1,40 @@
+{
+  "version": 4,
+  "name": "sgtpuzzlecollection.zip",
+  "items": [
+    "___.sh",
+    "sgtpuzzlecollection"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "___",
+    "porter": [
+      "___"
+    ],
+    "desc": "___",
+    "desc_md": null,
+    "inst": "Ready to run.",
+    "inst_md": null,
+    "genres": [
+      "puzzle"
+    ],
+    "image": {},
+    "rtr": true,
+    "exp": false,
+    "runtime": [
+      "weston_pkg_0.2.squashfs",
+      "zulu8.86.0.25-ca-jdk8.0.452-linux.squashfs"
+    ],
+    "store": [
+      {
+        "name": "___",
+        "gameurl": "___",
+        "developerurl": "___"
+      }
+    ],
+    "availability": "full",
+    "reqs": [],
+    "arch": [],
+    "min_glibc": ""
+  }
+}
