@@ -1,0 +1,40 @@
+END USER LICENSE AGREEMENT
+--------------------------
+
+"Escape From Castle Matsumoto" (c) 2024 by Mausimus (itchio@mausimus.net)
+
+All rights reserved.
+
+Mausimus grants you a personal, non-transferable, non-exclusive licence
+to use "Escape From Castle Matsumoto" Software free of charge.
+
+You are permitted to showcase screenshots and gameplay of
+"Escape From Castle Matsumoto" publicly or privately including on social
+media, video sharing and streaming platforms as long as you
+do not misrepresent the origin and authorship of the Software.
+
+You are not permitted to edit, alter, modify, adapt, translate
+or otherwise change the whole or any part of the Software nor permit
+the whole or any part of the Software to be combined with or become
+incorporated in any other software, nor decompile, disassemble or
+reverse engineer the Software or attempt to do any such things.
+
+You are not permitted to host or redistribute "Escape From Castle
+Matsumoto" Software without written permission from Mausimus. You may
+however freely embed and redistribute links to official homepages
+"https://mausimus.itch.io/efcm" and
+"https://store.steampowered.com/app/2490030".
+
+You are not permitted to sell or rent "Escape From Castle Matsumoto"
+Software, individually or as part of a larger package without permission
+written from Mausimus.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF THIRD PARTY RIGHTS. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+HOLDERS INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL
+INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING
+FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
