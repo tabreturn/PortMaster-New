@@ -12,23 +12,24 @@ else
   controlfolder="/roms/ports/PortMaster"
 fi
 
+# controls
+source $controlfolder/control.txt
+[ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
+get_controls
+
 # script variables
 GAMEDIR="/$directory/ports/escapefromcastlematsumoto"
 BINARY=efcm
 
-# controls and logging
-source $controlfolder/control.txt
-[ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
-get_controls
+# logs
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
 # setup conf directory
 CONFDIR="$GAMEDIR/conf"
-$ESUDO mkdir -p "$CONFDIR"
 bind_directories "$HOME/.local/share/Escape From Castle Matsumoto" "$CONFDIR"
 
 # exports
-export LD_LIBRARY_PATH="$GAMEDIR/libs.aarch64:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$GAMEDIR/libs:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
 # run game
