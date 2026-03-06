@@ -27,12 +27,12 @@ BINARY="RatcheteerDX"
 cd "$GAMEDIR"
 
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
-#if using Demo vesrsion mv to standard filename 
+#if using Demo version mv to standard filename 
 if [ -f "$DATADIR/RatcheteerDX-Demo" ]; then
   mv  $DATADIR/RatcheteerDX-Demo $DATADIR/$BINARY
 fi
 
-# Create XDG dirs and set premissions
+# Create XDG dirs and set permissions
 CONFDIR="$GAMEDIR/conf/config"
 $ESUDO mkdir -p "${CONFDIR}"
 LOCALDIR="$GAMEDIR/conf/local"
@@ -45,9 +45,6 @@ $ESUDO chmod a+x "$DATADIR/$BINARY"
 if [[ "$CFW_NAME" = "ROCKNIX" ]] || [[ "$CFW_NAME" = "AmberELEC" ]]; then
   audio_backend=alsa
 fi
-
-# Start game 
-pushd $DATADIR/x86-64/
 
 $GPTOKEYB "$BINARY" &
 $GAMEDIR/box64/box64 ./gamedata/$BINARY
