@@ -47,7 +47,7 @@ if [ ! -f patchlog.txt ] || [ -f "$GAMEDIR/assets/data.win" ]; then
 fi
 
 # Assign gptokeyb and load the game
-$GPTOKEYB2 "gmlnext.aarch64" -c "exvitro.gptk" &
+$GPTOKEYB2 "gmlnext.aarch64" -c "controls.ini" &
 pm_platform_helper "$GAMEDIR/gmlnext.aarch64"
 ./gmlnext.aarch64 -c gmloader.json
 
