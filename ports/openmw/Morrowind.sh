@@ -29,18 +29,35 @@ export OSG_NOTIFY_LEVEL=ERROR
 export OPENMW_DEBUG_LEVEL=ERROR
 export OPENMW_RECAST_MAX_LOG_LEVEL=ERROR
 
-# Fix some shit.
-if echo "$CFW_NAME" | grep -q "ArkOS"; then
-    if [[ $CFW_NAME == *"AeUX"* ]] && [[ $DEVICE_CPU == "Cortex-A35" ]]; then
-        export DEVICE_CPU="RK3326"
-    fi
-    export CFW_NAME="ArkOS"
-fi
-
 # Logging
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
 cd $GAMEDIR
+
+export PATH="$GAMEDIR/bin.${DEVICE_ARCH}:$PATH"
+
+# Arch library paths.
+export LD_LIBRARY_PATH="$GAMEDIR/libs.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
+
+# CFW Specific
+[ -e "$GAMEDIR/libs.${CFW_NAME}.${DEVICE_ARCH}" ] && export LD_LIBRARY_PATH="$GAMEDIR/libs.${CFW_NAME}.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
+[ -e "$GAMEDIR/libs.${CFW_NAME}" ] && export LD_LIBRARY_PATH="$GAMEDIR/libs.${CFW_NAME}:$LD_LIBRARY_PATH"
+
+# Detect dArkOS before normalization — it needs crusty cursor overlay unlike stock ArkOS.
+IS_DARKOS=false
+if echo "$CFW_NAME" | grep -qi "darkos"; then
+    IS_DARKOS=true
+fi
+
+# Normalize ArkOS variants after CFW-specific libs are resolved.
+if [[ "$CFW_NAME" == *"AeUX"* ]]; then
+    export CFW_NAME="ArkOS"
+    if [[ "$DEVICE_CPU" == "Cortex-A35" ]]; then
+        export DEVICE_CPU="RK3326"
+    fi
+elif echo "$CFW_NAME" | grep -q "ArkOS"; then
+    export CFW_NAME="ArkOS"
+fi
 
 # Extract a pre-computed navmesh.db if it exists, and we can.
 if [ -f "$controlfolder/7zzs.${DEVICE_ARCH}" ]; then
@@ -135,17 +152,10 @@ for directory in "$GAMEDIR/data" "$GAMEDIR"; do
     done
 done
 
-MOD_COUNT="$(ls -1 "$GAMEDIR/mods" | wc -l)"
-
-if [ -n "$INSTALLER_FILE" ] || [ "$MOD_COUNT" -gt "0" ]; then
+if [ -n "$INSTALLER_FILE" ]; then
     export PATCHER_FILE="$GAMEDIR/patchscript"
     export PATCHER_GAME="$(basename "${0%.*}")"
-    if [ -n "$INSTALLER_FILE" ]; then
-        export PATCHER_TIME="about 6 minutes"
-    else
-        # Who knows with mods.
-        export PATCHER_TIME="an amount of time"
-    fi
+    export PATCHER_TIME="about 6 minutes"
 
     if [ -f "$controlfolder/utils/patcher.txt" ]; then
         source "$controlfolder/utils/patcher.txt"
@@ -186,13 +196,6 @@ else
     source "${controlfolder}/libgl_default.txt"
 fi
 
-# Arch library paths.
-export LD_LIBRARY_PATH="$GAMEDIR/libs.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
-
-# CFW Specific
-[ -e "$GAMEDIR/libs.${CFW_NAME}.${DEVICE_ARCH}" ] && LD_LIBRARY_PATH="$GAMEDIR/libs.${CFW_NAME}.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
-[ -e "$GAMEDIR/libs.${CFW_NAME}" ] && LD_LIBRARY_PATH="$GAMEDIR/libs.${CFW_NAME}:$LD_LIBRARY_PATH"
-
 # More settings.
 PRELOAD="$GAMEDIR/libcrusty.so"
 
@@ -210,58 +213,148 @@ elif [ "$CFW_NAME" = "ROCKNIX" ]; then
     # ~~Shows a cursor at least, enjoy the flickering. owo~~ FIXED THAANKS BINARY <3
     SDL_VIDEODRIVER=x11
 
-    if ! glxinfo | grep "OpenGL version string"; then
-        pm_message "This Port does not support the libMali graphics driver. Switch to Panfrost to continue."
-        sleep 5
-        exit 1
+    if [ "$CFW_VERSION" -gt "20250517" ]; then
+        # This .so breaks shit on the testing build.
+        rm -f "$GAMEDIR/libs.aarch64/libX11.so.6"
     fi
 
-    # Cursor auto-hide if on rocknix
-    swaymsg 'seat * hide_cursor 1'
+    if [ -e /usr/bin/gpudriver ]; then
+        GPUDRIVER=$(/usr/bin/gpudriver)
+
+        if [ "$GPUDRIVER" = "libmali" ]; then
+            pm_message "This Port does not support the libMali graphics driver. Switch to Panfrost to continue."
+            sleep 5
+            exit 1
+        fi
+    else
+        if ! glxinfo | grep "OpenGL version string"; then
+            pm_message "This Port does not support the libMali graphics driver. Switch to Panfrost to continue."
+            sleep 5
+            exit 1
+        fi
+    fi
+
+    if [[ "$UI_SERVICE" == *"sway"* ]]; then
+        # Cursor auto-hide if on rocknix
+        swaymsg 'seat * hide_cursor 1'
+    else
+        # On the OGU this breaks stuff.
+        PRELOAD=""
+    fi
 
     # Fixes weird sound on ROCKNIX - thanks bmdhacks!
     ROCKNIX_QUANTUM_SAVE="$(pw-metadata -n settings | grep 'clock.force-quantum' | cut -d"'" -f 4)"
     pw-metadata -n settings 0 clock.force-quantum 960
-elif [ "$CFW_NAME" = "knulli" ]; then
-    # POTATO MODE ACTIVATED
-    export LIBGL_RECOMPTEX=1
-    export LIBGL_SHRINK=3
-
 elif [ "$CFW_NAME" = "AmberELEC" ]; then
     # THIS IS SO FUCKING DUMB
     CRUSTY_CURSOR_FILE=$GAMEDIR/blank_cursor.bmp
 
-elif [ "$CFW_NAME" = "ArkOS" ] && [ "$DEVICE_CPU" = "Cortex-A35" ] || [ "$DEVICE_CPU" = "RK3326" ]; then
+elif { [ "$CFW_NAME" = "ArkOS" ] && { [ "$DEVICE_CPU" = "Cortex-A35" ] || [ "$DEVICE_CPU" = "RK3326" ]; }; } && [ "$IS_DARKOS" = false ]; then
     # THIS IS SO FUCKING DUMB
     CRUSTY_CURSOR_FILE=$GAMEDIR/blank_cursor.bmp
 fi
 
-if [ "$DEVICE_RAM" -gt "1" ]; then
-    # Disable on more than 1gb ram.
-    export LIBGL_RECOMPTEX=0
-    export LIBGL_SHRINK=0
-fi
+# MOUNT POINT YO
+MOUNT_POINT="/tmp/pm_python3"
 
-# Setup texture potato-ification
-if [ "$LIBGL_SHRINK" -gt 0 ]; then
-    mkdir -p "$LIBGL_TEXPATH"
-
-    if [ -f "$LIBGL_TEXPATH/shrinky_dink" ] && [ "$(< "$LIBGL_TEXPATH"/shrinky_dink)" -ne "$LIBGL_SHRINK" ]; then
-        rm -fR "$LIBGL_TEXPATH"/*
+## MOD MANAGER -- Not yet compiled for x86_64
+if [ ! -f "$GAMEDIR/skip_openmw_esmm" ] && [ -f "$GAMEDIR/bin.$DEVICE_ARCH/openmw_esmm" ]; then
+    if [ ! -f "mlox_base.txt" ]; then
+        # Fetch mlox rules as we cannot distribute them.
+        curl https://raw.githubusercontent.com/DanaePlays/mlox-rules/main/mlox_base.txt -o mlox_base.txt
+        curl https://raw.githubusercontent.com/DanaePlays/mlox-rules/main/mlox_user.txt -o mlox_user.txt
     fi
 
-    echo "$LIBGL_SHRINK" > "$LIBGL_TEXPATH/shrinky_dink"
+    # --- Python Version Check ---
+    MIN_MINOR_VERSION=9
 
-    echo "===================================="
-    echo "= LIBGL_SHRINK=$LIBGL_SHRINK"
-    echo "===================================="
+    echo "--- Checking system Python version ---"
+    # Get version string like "3.7.5" from an output like "Python 3.7.5"
+    # The 2>&1 redirects stderr to stdout, as some pythons write version info there.
+    VERSION_STRING=$(python3 --version 2>&1 | awk '{print $2}')
+
+    # Extract major and minor version numbers
+    MAJOR_VERSION=$(echo "$VERSION_STRING" | cut -d'.' -f1)
+    MINOR_VERSION=$(echo "$VERSION_STRING" | cut -d'.' -f2)
+
+    runtime="python_3.11"
+
+    # Check if the version is less than 3.8
+    if [ "$PM_CAN_MOUNT" = "Y" ] && { [ "$MAJOR_VERSION" -lt 3 ] || { [ "$MAJOR_VERSION" -eq 3 ] && [ "$MINOR_VERSION" -lt "$MIN_MINOR_VERSION" ]; } }; then
+        echo "System Python is version $VERSION_STRING, which is older than 3.8. A custom environment is required."
+        USE_PYTHON_SQUASHFS=true
+
+        if [ ! -f "$controlfolder/libs/${runtime}.squashfs" ]; then
+            # LETS DO THIS
+            source "${controlfolder}/PortMasterDialog.txt"
+
+            hasip=$(PortMasterIPCheck)
+            if [[ -z "${hasip}" ]]; then
+                # No internet connection, do not initialize with harbourmaster backend.
+                PortMasterDialogInit "no-harbour"
+                PortMasterDialogMessageBox "Runtime ${runtime}.squashfs is missing, no internet connection available.\n\nPlease manually download ${runtime}.squashfs and place it in the 'PortMaster/libs/' directory."
+                PortMasterDialogExit
+                exit 1
+            fi
+
+            # Dont check for updates.
+            PortMasterDialogInit "no-check"
+
+            PortMasterDialog "messages_begin"
+
+            PortMasterDialog "message" "Downloading ${runtime}.squashfs."
+
+            RUN_RESULT=$(PortMasterDialogCheckRuntime "${runtime}.squashfs")
+
+            if [[ "$RUN_RESULT" != "OKAY" ]]; then
+                PortMasterDialogMessageBox "Unable to download ${runtime}.squashfs.\n\nPlease manually download ${runtime}.squashfs and place it in the 'PortMaster/libs/' directory."
+                PortMasterDialogExit
+                exit 1
+            fi 
+
+            PortMasterDialog "message" "Success."
+            sleep 3
+            PortMasterDialogExit
+        fi
+
+        $ESUDO mkdir -p "$MOUNT_POINT"
+        if mountpoint -q "$MOUNT_POINT"; then
+          $ESUDO umount "$MOUNT_POINT"
+          echo "Unmounted $MOUNT_POINT"
+        fi
+        $ESUDO mount "$controlfolder/libs/${runtime}.squashfs" "$MOUNT_POINT"
+
+        export PATH="$MOUNT_POINT/bin:$PATH"
+        export LD_LIBRARY_PATH="$MOUNT_POINT/libs:$LD_LIBRARY_PATH"
+        export PYTHONHOME="$MOUNT_POINT"
+    else
+        echo "System Python is version $VERSION_STRING. No custom environment needed."
+    fi
+
+    $GPTOKEYB "openmw_esmm" &
+    pm_platform_helper "$GAMEDIR/bin.$DEVICE_ARCH/openmw_esmm"
+    if ! "openmw_esmm" --config-file "$GAMEDIR/openmw/openmw.cfg" --7zz "$controlfolder/7zzs.$DEVICE_ARCH"; then
+        pm_gptokeyb_finish
+
+        if [ "$PM_CAN_MOUNT" = "Y" ] && mountpoint -q "$MOUNT_POINT"; then
+          $ESUDO umount "$MOUNT_POINT"
+          echo "Unmounted $MOUNT_POINT"
+        fi
+        exit 0
+    fi
+    pm_gptokeyb_finish
 fi
 
 $GPTOKEYB2 "$GAME_EXECUTABLE" -c "$GAMEDIR/$GPTK_FILENAME" > /dev/null &
 pm_platform_helper "$GAMEDIR/$GAME_EXECUTABLE"
-LD_PRELOAD="$PRELOAD" $GAMEDIR/$GAME_EXECUTABLE
+LD_PRELOAD="$PRELOAD" ./$GAME_EXECUTABLE
 
 pm_finish
+
+if [ "$PM_CAN_MOUNT" = "Y" ] && mountpoint -q "$MOUNT_POINT"; then
+    $ESUDO umount "$MOUNT_POINT"
+    echo "Unmounted $MOUNT_POINT"
+fi
 
 if [ "$CFW_NAME" = "muOS" ]; then
     # THANKS FOR NOTHING
