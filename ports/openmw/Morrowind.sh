@@ -333,7 +333,7 @@ if [ ! -f "$GAMEDIR/skip_openmw_esmm" ] && [ -f "$GAMEDIR/bin.$DEVICE_ARCH/openm
 
     $GPTOKEYB "openmw_esmm" &
     pm_platform_helper "$GAMEDIR/bin.$DEVICE_ARCH/openmw_esmm"
-    if ! "openmw_esmm" --config-file "$GAMEDIR/openmw/openmw.cfg" --7zz "$controlfolder/7zzs.$DEVICE_ARCH"; then
+    if ! "openmw_esmm" --openmw-cfg-dir "$GAMEDIR/openmw/" --7zz "$controlfolder/7zzs.$DEVICE_ARCH"; then    
         pm_gptokeyb_finish
 
         if [ "$PM_CAN_MOUNT" = "Y" ] && mountpoint -q "$MOUNT_POINT"; then
