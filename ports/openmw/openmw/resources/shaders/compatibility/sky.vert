@@ -1,6 +1,6 @@
 #version 120
 
-#include "lib/core/vertex.glsl"
+#include "lib/core/vertex.h.glsl"
 
 #include "lib/sky/passes.glsl"
 

@@ -1,3 +1,5 @@
+#version 120
+
 #include "lib/core/vertex.h.glsl"
 
 uniform mat4 projectionMatrix;

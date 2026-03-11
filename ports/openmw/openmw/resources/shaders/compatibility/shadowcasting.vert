@@ -6,8 +6,8 @@ varying float alphaPassthrough;
 
 uniform int colorMode;
 uniform bool useTreeAnim;
-uniform bool useDiffuseMapForShadowAlpha;
-uniform bool alphaTestShadows;
+uniform bool useDiffuseMapForShadowAlpha = true;
+uniform bool alphaTestShadows = true;
 
 void main(void)
 {

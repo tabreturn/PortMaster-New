@@ -8,7 +8,7 @@
     #extension GL_EXT_gpu_shader4: require
 #endif
 
-#include "lib/core/vertex.glsl"
+#include "lib/core/vertex.h.glsl"
 #if @diffuseMap
 varying vec2 diffuseMapUV;
 #endif

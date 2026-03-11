@@ -2,7 +2,7 @@
 
 varying vec2 uv;
 
-#include "lib/core/fragment.glsl"
+#include "lib/core/fragment.h.glsl"
 
 void main()
 {

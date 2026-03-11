@@ -1,12 +1,12 @@
 #version 120
 
-#include "lib/core/vertex.glsl"
+#include "lib/core/vertex.h.glsl"
 
 uniform vec3 color;
 uniform vec3 trans;
 uniform vec3 scale;
 uniform bool useNormalAsColor;
-uniform bool useAdvancedShader;
+uniform bool useAdvancedShader = false;
 
 centroid varying vec4 passColor;
 varying vec3 vertexNormal;
