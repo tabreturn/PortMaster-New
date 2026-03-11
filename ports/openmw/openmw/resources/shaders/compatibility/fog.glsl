@@ -1,5 +1,5 @@
 #if @skyBlending
-#include "lib/core/fragment.h.glsl"
+#include "lib/core/fragment.glsl"
 
 uniform float skyBlendingStart;
 #endif

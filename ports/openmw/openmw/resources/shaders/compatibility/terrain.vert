@@ -8,7 +8,7 @@
     #extension GL_EXT_gpu_shader4: require
 #endif
 
-#include "lib/core/vertex.h.glsl"
+#include "lib/core/vertex.glsl"
 varying vec2 uv;
 varying float euclideanDepth;
 varying float linearDepth;

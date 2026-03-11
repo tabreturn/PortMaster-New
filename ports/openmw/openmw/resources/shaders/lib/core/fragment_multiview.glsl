@@ -4,7 +4,7 @@
 #extension GL_OVR_multiview2 : require
 #extension GL_EXT_texture_array : require
 
-#include "lib/core/fragment.h.glsl"
+#include "lib/core/fragment.glsl"
 
 uniform sampler2DArray reflectionMap;
 

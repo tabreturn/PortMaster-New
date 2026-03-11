@@ -10,7 +10,7 @@
 
 #define PER_PIXEL_LIGHTING 1
 
-#include "lib/core/vertex.h.glsl"
+#include "lib/core/vertex.glsl"
 
 #if @diffuseMap
 varying vec2 diffuseMapUV;

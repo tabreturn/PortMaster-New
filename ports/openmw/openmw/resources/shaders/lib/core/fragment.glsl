@@ -1,5 +1,3 @@
-#version 120
-
 #include "lib/core/fragment.h.glsl"
 
 uniform sampler2D reflectionMap;

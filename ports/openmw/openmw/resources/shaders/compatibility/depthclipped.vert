@@ -3,7 +3,7 @@
 varying vec2 diffuseMapUV;
 varying float alphaPassthrough;
 
-#include "lib/core/vertex.h.glsl"
+#include "lib/core/vertex.glsl"
 #include "vertexcolors.glsl"
 
 void main()

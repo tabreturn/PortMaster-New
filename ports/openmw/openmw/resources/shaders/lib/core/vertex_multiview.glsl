@@ -6,7 +6,7 @@
 
 layout(num_views = @numViews) in;
 
-#include "lib/core/vertex.h.glsl"
+#include "lib/core/vertex.glsl"
 
 uniform mat4 projectionMatrixMultiView[@numViews];
 

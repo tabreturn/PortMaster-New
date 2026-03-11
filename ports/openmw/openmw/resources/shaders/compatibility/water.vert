@@ -1,6 +1,6 @@
 #version 120
 
-#include "lib/core/vertex.h.glsl"
+#include "lib/core/vertex.glsl"
 
 varying vec4  position;
 varying float linearDepth;
