@@ -1,4 +1,5 @@
 #!/bin/bash
+# PORTMASTER: minetest.zip, Minetest.sh
 
 XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
@@ -35,40 +36,15 @@ export DEVICE_ARCH="${DEVICE_ARCH:-aarch64}"
 export LD_LIBRARY_PATH="$GAMEDIR/libs.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
-[ "$CFW_NAME" = "AmberELEC" -o "$CFW_NAME" = "muOS" ] && rm -f "$GAMEDIR/libs.$DEVICE_ARCH/libcurl.so.4"
-
-if [[ $CFW_NAME == *"ArkOS"* || $CFW_NAME == *"AeUX"* ]]; then
-    export LD_LIBRARY_PATH="$GAMEDIR/libs.ArkOS:$LD_LIBRARY_PATH"
-fi
-
 CUR_TTY=/dev/tty0
 
-# Define the archive file name
-ARCHIVE_FILE="data.tar.gz"
-
-# Check if the archive file exists
-if [[ -f "$ARCHIVE_FILE" ]]; then
-   echo "Extracting game data, this can take a few minutes..." > "$CUR_TTY"
-   
-   # Extract the archive and check if the extraction was successful
-   if zcat "$ARCHIVE_FILE" | tar -xv; then
-       echo "Extraction successful." > "$CUR_TTY"
-       $ESUDO rm -f "$ARCHIVE_FILE"
-   else
-       echo "Error: Extraction failed." > "$CUR_TTY"
-	   sleep 5
-       exit 1
-   fi
-fi
-
-[ "$CFW_NAME" = "AmberELEC" -o "$CFW_NAME" = "muOS" ] && [ -f "$GAMEDIR/libs.$DEVICE_ARCH/libcurl.so.4" ] && rm -f "$GAMEDIR/libs.$DEVICE_ARCH/libcurl.so.4"
 ifconfig lo up
 if [ "$CFW_NAME" = "ROCKNIX" ]; then
 	swaymsg seat seat0 hide_cursor 0
 fi
-chmod +x ./bin/minetest
-$GPTOKEYB "minetest" -c "$GAMEDIR/minetest.gptk.$ANALOG_STICKS" &
-./bin/minetest
+chmod +x ./bin/luanti
+$GPTOKEYB "luanti" -c "$GAMEDIR/minetest.gptk.$ANALOG_STICKS" &
+./bin/luanti
 if [ "$CFW_NAME" = "ROCKNIX" ]; then
 	swaymsg seat seat0 hide_cursor 1000
 fi
