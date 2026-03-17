@@ -11,7 +11,6 @@ echo "GAMEDIR is set to: $GAMEDIR"
 # Patch failure function
 patch_failure() {
     mv "$LOGFILE" "$LOGERR"
-    $ESUDO umount "$DOTNETDIR"
     $ESUDO umount "$TOOLKIT"
     echo "Patching process failed."
     exit 1
@@ -30,21 +29,9 @@ else
     patch_failure
 fi
 
-# Mount the dotnet runtime
-DOTNETDIR="$HOME/mono"
-DOTNETFILE="$controlfolder/libs/dotnet-8.0.12.squashfs"
-if [ -f "$DOTNETFILE" ]; then
-    $ESUDO mkdir -p "$DOTNETDIR"
-    $ESUDO umount "$DOTNETFILE" || true
-    $ESUDO mount "$DOTNETFILE" "$DOTNETDIR"
-else
-    echo "This port requires the Dotnet runtime. Please download it."
-    sleep 2
-    patch_failure
-fi
 
 # Exports
-export PATH="$DOTNETDIR:$TOOLKIT/gmtools:$TOOLKIT/utmt-cli:$PATH"
+export PATH="$TOOLKIT/gmtools:$PATH"
 export LD_LIBRARY_PATH="/usr/lib:$TOOLKIT/libs:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 export DATADIR="$GAMEDIR/assets"
@@ -142,7 +129,6 @@ process_game() {
     sleep 1
     
     # Unmount runtimes
-    $ESUDO umount "$DOTNETDIR"
     $ESUDO umount "$TOOLKIT"
 	
     # Final completion message
