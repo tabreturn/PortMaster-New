@@ -34,11 +34,8 @@ $ESUDO umount "$monofile" || true
 $ESUDO mount "$monofile" "$monodir"
 
 # Setup savedir
-$ESUDO rm -rf ~/.local/share/SteelAssault
-$ESUDO rm -rf ~/.config/SteelAssault
-mkdir -p ~/.local/share
-ln -sfv "$GAMEDIR/savedata" ~/.local/share/SteelAssault
-ln -sfv "$GAMEDIR/savedata" ~/.config/SteelAssault
+bind_directories ~/.local/share/SteelAssault "$GAMEDIR/savedata"
+bind_directories ~/.config/SteelAssault "$GAMEDIR/savedata"
 
 # Remove all the dependencies in favour of system libs - e.g. the included 
 # newer version of FNA with patcher included
