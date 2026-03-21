@@ -30,7 +30,7 @@ export XDG_DATA_HOME="$CONFDIR"
 
 DEVICE_ARCH="${DEVICE_ARCH:-aarch64}"
 
-bind_directories ~/.config/ /$directory/ports/flare/conf/.config/flare
+bind_directories ~/.config/flare /$directory/ports/flare/conf/.config/flare
 
 $ESUDO chmod 666 /dev/uinput
 $GPTOKEYB "flare.$DEVICE_ARCH" xbox360 &
