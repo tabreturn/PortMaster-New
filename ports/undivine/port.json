@@ -34,7 +34,6 @@
     ],
     "availability": "paid",
     "reqs": [
-      "!lowres",
       "analog_1"
     ],
     "arch": [
