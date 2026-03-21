@@ -12,7 +12,7 @@ Thanks to `Wendeoo` for developing this game. Buy it on [Steam](https://store.st
 |A|Confirm / Jump|
 |B|Back / Conjure|
 |X|Sword Attack|
-|Y|Interaction with certain objects|
+|Y|Interact|
 |R1|Dash|
 |R2|Long Jump|
 |L1|Change Throw|
