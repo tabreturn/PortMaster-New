@@ -1978,7 +1978,7 @@
 +end)
 --- original/objects/player.lua
 +++ modified/objects/player.lua
-@@ -1,971 +1,1050 @@
+@@ -1,971 +1,1083 @@
 -Player = {}
 -
 -function Player:new(o)
@@ -2956,6 +2956,18 @@
 +-- 8 is generous for typical values and costs nothing when ghosts are inactive.
 +local GHOST_POOL_SIZE = 8
 +
++-- Localize frequently-called math globals.
++-- In LuaJIT, global table lookups (math.abs etc.) in hot per-frame paths
++-- cost more than upvalue reads. These run every frame during air movement.
++local math_abs   = math.abs
++local math_min   = math.min
++local math_max   = math.max
++local math_floor = math.floor
++
++-- Pre-computed constants — avoid re-doing these divisions every frame.
++local GRAVITY_SLIDE = 0.15 / 2   -- was 0.15/2 in move_update
++local WALL_VEL_MULT = 0.75 / 2   -- was 0.75/2 in walljump / grounded_update
++
 +function Player:new(o)
 +    o = o or {}
 +
@@ -3004,8 +3016,13 @@
 +    -- unbounded table growth, GC pressure, and growing per-frame loop costs.
 +    -- The pool allocates 8 plain data tables once and reuses them forever.
 +    -- Ghosts are drawn directly in Player:render() — zero scene.entities overhead.
-+    self.ghost_pool      = {}
-+    self.ghost_pool_head = 1
++    self.ghost_pool         = {}
++    self.ghost_pool_head    = 1
++    self.ghost_active_count = 0    -- skip pool loop entirely when no ghosts alive
++    self.flip_enabled       = SAVE.FLIP  -- cached at init; refreshed at super entry
++    self.moth_jump_enabled  = SAVE.MOTH_JUMP  -- cached; avoids global lookup every frame
++    self.pick_enabled       = SAVE.PICK       -- cached; avoids global lookup every frame
++    self.wall_coyote_ticks  = 0  -- counts down after leaving a wall; allows late walljump
 +    for i = 1, GHOST_POOL_SIZE do
 +        self.ghost_pool[i] = {
 +            active   = false,
@@ -3020,10 +3037,6 @@
 +            offset_y = 0,
 +        }
 +    end
-+
-+    -- Wall cling/coyote time for wall jumps
-+    self.wall_cling_timer = 0
-+    self.wall_cling_duration = 0.1  -- Grace period in seconds (6 frames at 60fps)
 +
 +    _, self.sm = self.ent:add_comp(StateManager, {
 +        state=self.fancy_fall and 'fancy_fall' or 'enter',
@@ -3114,7 +3127,7 @@
 +                            -- end
 +                        end
 +                    else
-+                        scene.fade = math.max(scene.fade - 2*FADE_RATE, 0)
++                        scene.fade = math_max(scene.fade - 2*FADE_RATE, 0)
 +                        FADE = scene.fade
 +                    end
 +                end,
@@ -3159,7 +3172,7 @@
 +                        --     end
 +                        -- end
 +                    else
-+                        scene.fade = math.max(scene.fade - 2*FADE_RATE, 0)
++                        scene.fade = math_max(scene.fade - 2*FADE_RATE, 0)
 +                        FADE = scene.fade
 +                    end
 +                end,
@@ -3285,14 +3298,20 @@
 +                        sm:change_state('super_loop')
 +                    end)
 +                    self.sprite.offset_y = -5
++                    -- Refresh all SAVE caches in case they changed since init
++                    self.flip_enabled      = SAVE.FLIP
++                    self.moth_jump_enabled = SAVE.MOTH_JUMP
++                    self.pick_enabled      = SAVE.PICK
 +                end,
 +                update=function(sm)
 +                    self:air_update(sm)
-+                    if SAVE.FLIP and SAVE.TICK_COUNT % GHOST_EVERY_X_TICKS == 0 and (math.abs(self.vel_x) > 2 or self.ghosting) then
++                    if self.flip_enabled and SAVE.TICK_COUNT % GHOST_EVERY_X_TICKS == 0 and (math_abs(self.vel_x) > 2 or self.ghosting) then
 +                        self.ghosting = true
-+                        -- Claim next pool slot (overwrites oldest ghost if pool is full)
 +                        local g = self.ghost_pool[self.ghost_pool_head]
 +                        self.ghost_pool_head = self.ghost_pool_head % GHOST_POOL_SIZE + 1
++                        if not g.active then
++                            self.ghost_active_count = self.ghost_active_count + 1
++                        end
 +                        g.active   = true
 +                        g.x        = self.ent.x
 +                        g.y        = self.ent.y
@@ -3326,11 +3345,13 @@
 +                end,
 +                update=function(sm)
 +                    self:air_update(sm)
-+                    if SAVE.FLIP and SAVE.TICK_COUNT % GHOST_EVERY_X_TICKS == 0 and (math.abs(self.vel_x) > 2 or self.ghosting) then
++                    if self.flip_enabled and SAVE.TICK_COUNT % GHOST_EVERY_X_TICKS == 0 and (math_abs(self.vel_x) > 2 or self.ghosting) then
 +                        self.ghosting = true
-+                        -- Claim next pool slot (overwrites oldest ghost if pool is full)
 +                        local g = self.ghost_pool[self.ghost_pool_head]
 +                        self.ghost_pool_head = self.ghost_pool_head % GHOST_POOL_SIZE + 1
++                        if not g.active then
++                            self.ghost_active_count = self.ghost_active_count + 1
++                        end
 +                        g.active   = true
 +                        g.x        = self.ent.x
 +                        g.y        = self.ent.y
@@ -3437,10 +3458,10 @@
 +                        sm:change_state("pre_climb_jump_loop")
 +                    end)
 +                    if down('a') then
-+                        self.vel_x = -math.abs(self.vel_x)
++                        self.vel_x = -math_abs(self.vel_x)
 +                        self.object.facing = -1
 +                    elseif down('d') then
-+                        self.vel_x = math.abs(self.vel_x)
++                        self.vel_x = math_abs(self.vel_x)
 +                        self.object.facing = 1
 +                    end
 +                end,
@@ -3621,7 +3642,7 @@
 +                    if s.fade_out > 0 then
 +                        s.fade_out = s.fade_out - 1
 +                    else
-+                        scene.fade = math.max(scene.fade - 2*FADE_RATE, 0)
++                        scene.fade = math_max(scene.fade - 2*FADE_RATE, 0)
 +                        FADE = scene.fade
 +                    end
 +                end,
@@ -3679,7 +3700,7 @@
 +    if not self.wall then
 +        return
 +    end
-+    self.vel_y = vel_y + math.min(self.wall.move_y_amount * 0.75/2, 0)
++    self.vel_y = vel_y + math_min(self.wall.move_y_amount * WALL_VEL_MULT, 0)
 +    self.vel_x = vel_x * self.wall_direction + self.wall.move_x_amount
 +    self.sm:change_state(state or 'walljump')
 +    if state then
@@ -3752,7 +3773,7 @@
 +        end
 +    end
 +
-+    if math.abs(other.ent.x - self.ent.x) == (self.w + other.w)/2 then
++    if math_abs(other.ent.x - self.ent.x) == (self.w + other.w)/2 then
 +        if self.ent[Player].sm:attr('air') or (axis == 'x' and self.ent[Player].sm.state == 'push') then
 +            return self
 +        else
@@ -3797,7 +3818,7 @@
 +    if pressed('space') then
 +        local res = self.object:touch_floor()
 +        if res then
-+            self.vel_y = -4 + math.min(res.move_y_amount * 0.75/2, 0)
++            self.vel_y = -4 + math_min(res.move_y_amount * WALL_VEL_MULT, 0)
 +            self.vel_x = self.vel_x + res.move_x_amount
 +            sm:change_state('up')
 +            
@@ -3843,12 +3864,16 @@
 +        end
 +
 +        if pressed('space') then
-+            if self.hit_wall then
++            -- wall_coyote_ticks > 0 gives a short grace window after leaving a wall,
++            -- so a walljump input that arrives 1-6 frames late still fires correctly.
++            -- Walljump always takes priority over moth jump during the coyote window.
++            if self.hit_wall or self.wall_coyote_ticks > 0 then
 +                self:walljump(-3.6, 2, scene.heavy_walls and 0.5 or 0.65, 20)
-+            elseif SAVE.MOTH_JUMP then
++                self.wall_coyote_ticks = 0  -- consume the coyote window immediately
++            elseif self.moth_jump_enabled then
 +                sm:change_state('super')
 +            end
-+        elseif pressed('k') and SAVE.PICK and self.sm.state ~= 'after_climb_jump' then
++        elseif pressed('k') and self.pick_enabled and self.sm.state ~= 'after_climb_jump' then
 +            sm:change_state('pre_climb_jump')
 +        end
 +    end
@@ -3873,7 +3898,7 @@
 +                other=self.wall.ent
 +            }))
 +        end
-+        self.vel_y = self.vel_y + 0.15/2
++        self.vel_y = self.vel_y + GRAVITY_SLIDE
 +    else
 +        self.vel_y = self.vel_y + 0.15
 +    end
@@ -3922,6 +3947,7 @@
 +        self.wall = obj
 +        self.wall2 = obj2
 +        self.wall3 = obj3
++        self.wall_coyote_ticks = 0  -- touching wall resets coyote window
 +
 +        if self.sm:attr('air') then
 +            if self.sm.state == 'super' or self.sm.state == 'super_loop' then
@@ -3932,6 +3958,9 @@
 +        end
 +    else
 +        if self.sm.state == 'slide' then
++            -- Start coyote window: player just left the wall, give 6 ticks
++            -- to still fire a walljump (matches original wall_cling_duration intent)
++            self.wall_coyote_ticks = 6
 +            self.sm:change_state(self.vel_y > 0 and 'down' or 'up')
 +        end
 +    end
@@ -3941,30 +3970,36 @@
 +    self.left_lock = self.left_lock - 1
 +    self.right_lock = self.right_lock - 1
 +
++    if self.wall_coyote_ticks > 0 then
++        self.wall_coyote_ticks = self.wall_coyote_ticks - 1
++    end
++
 +    if self.ent.y > scene.kill_height and self.sm.state ~= 'squash' and self.sm.state ~= 'exit' then
 +        -- play_sound('Fall_Off_'..math.random(2))
 +        scene:restart(0, -1, true)
 +    end
 +
-+    -- Tick down active ghost pool slots
-+    local pool = self.ghost_pool
-+    for i = 1, GHOST_POOL_SIZE do
-+        local g = pool[i]
-+        if g.active then
-+            -- Frame stays frozen at snapshot taken at creation (matches original Particle behaviour)
-+            -- Alpha stays fixed at GHOST_ALPHA for entire life (matches original)
-+            g.life = g.life - 1
-+            if g.life <= 0 then
-+                g.active = false
++    -- Tick down active ghost pool slots — skipped entirely when none are active
++    if self.ghost_active_count > 0 then
++        local pool = self.ghost_pool
++        for i = 1, GHOST_POOL_SIZE do
++            local g = pool[i]
++            if g.active then
++                g.life = g.life - 1
++                if g.life <= 0 then
++                    g.active = false
++                    self.ghost_active_count = self.ghost_active_count - 1
++                end
 +            end
 +        end
 +    end
 +end
 +
 +function Player:render()
-+    -- Draw ghost trail directly — no scene.entities overhead, no allocation.
-+    -- Only sets graphics state when at least one ghost is active.
-+    local pool = self.ghost_pool
++    -- Skip entirely when no ghosts are alive — avoids all loop and state overhead
++    if self.ghost_active_count == 0 then return end
++
++    local pool  = self.ghost_pool
 +    local drawn = false
 +
 +    for i = 1, GHOST_POOL_SIZE do
@@ -3972,7 +4007,6 @@
 +        if g.active and g.frame >= 0 then
 +            local spr = self.sprite
 +            if not drawn then
-+                -- Set shader once before the first ghost draw
 +                if current_shader ~= spr.shader then
 +                    love.graphics.setShader(spr.shader)
 +                    current_shader = spr.shader
@@ -3993,7 +4027,6 @@
 +        end
 +    end
 +
-+    -- Only reset color if we actually drew something
 +    if drawn then
 +        love.graphics.setColor(1, 1, 1, 1)
 +    end
