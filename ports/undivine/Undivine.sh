@@ -38,7 +38,7 @@ if [ ! -f "$GAMEDIR/patchlog.txt" ] && [ -f "$GAMEDIR/assets/data.win" ]; then
 		export ESUDO
 		export PATCHER_FILE="$GAMEDIR/tools/patchscript"
 		export PATCHER_GAME="$(basename "${0%.*}")"
-		export PATCHER_TIME="10 minutes"
+		export PATCHER_TIME="5 minutes"
 		source "$controlfolder/utils/patcher.txt"
 		$ESUDO umount "$DOTNETDIR"
 	else
