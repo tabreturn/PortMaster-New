@@ -21,10 +21,6 @@ GAMEDIR="/$directory/ports/openjazz"
 cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
-export LD_PRELOAD=$GAMEDIR/libcrusty.${DEVICE_ARCH}.so:$LD_PRELOAD
-export CRUSTY_BLOCK_INPUT=1
-export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" 
-
 if [ -n "$(pgrep sway)" ]; then
   timeout 7 watch swaymsg '[app_id=OpenJazz] fullscreen enable' &
 fi
