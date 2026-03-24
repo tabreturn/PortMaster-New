@@ -3,7 +3,7 @@
 ## Installation
 This port comes with the demo! You can try the game and play up until you're required to leave the first town.
 
-To use the full version, buy the game on Steam or Itch.io and copy all the data to `ports/dokimon/assets`. On first run the game will be patched. If there is an update to the game simply copy the new data to `ports/dokimon/assets` and the patcher will run again.
+To use the full version, buy the game on Steam and use 'download_depot 2019300 2019301 4097741579869374219' and copy all the data to `ports/dokimon/assets`. On first run the game will be patched.
 
 https://store.steampowered.com/app/2019300/Dokimon_Quest/
 

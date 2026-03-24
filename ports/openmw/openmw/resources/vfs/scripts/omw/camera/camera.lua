@@ -182,6 +182,10 @@ local function updateCrosshair()
 end
 
 local function onUpdate(dt)
+    if dt <= 0 then
+        return
+    end
+
     camera.setExtraPitch(0)
     camera.setExtraYaw(0)
     camera.setExtraRoll(0)
@@ -239,22 +243,23 @@ return {
     interfaceName = 'Camera',
     ---
     -- @module Camera
+    -- @context player
     -- @usage require('openmw.interfaces').Camera
     interface = {
         --- Interface version is 1
         -- @field [parent=#Camera] #number version
         version = 1,
 
-        --- Return primary mode (MODE.FirstPerson or MODE.ThirdPerson).
+        --- Return the primary mode (MODE.FirstPerson or MODE.ThirdPerson).
         -- @function [parent=#Camera] getPrimaryMode
         -- @return #number @{openmw.camera#MODE}
         getPrimaryMode = function() return primaryMode end,
 
-        --- Get base third person distance (without applying angle and speed modifiers).
+        --- Get the base third person distance (without applying angle and speed modifiers).
         -- @function [parent=#Camera] getBaseThirdPersonDistance
         -- @return #number
         getBaseThirdPersonDistance = function() return third_person.baseDistance end,
-        --- Set base third person distance
+        --- Set the base third person distance
         -- @function [parent=#Camera] setBaseThirdPersonDistance
         -- @param #number value
         setBaseThirdPersonDistance = function(v) third_person.baseDistance = v end,

@@ -77,9 +77,7 @@ $ESUDO umount "$monofile" || true
 $ESUDO mount "$monofile" "$monodir"
 
 # Setup savedir
-$ESUDO rm -rf ~/.local/share/TowerFall
-mkdir -p ~/.local/share
-ln -sfv "$gamedir/savedata" ~/.local/share/TowerFall
+bind_directories ~/.local/share/TowerFall "$gamedir/savedata"
 
 # Remove all the dependencies in favour of system libs - e.g. the included 
 # newer version of FNA with patcher included
