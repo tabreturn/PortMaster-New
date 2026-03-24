@@ -3,7 +3,8 @@
   "name": "Minetest.zip",
   "items": [
     "Minetest.sh",
-    "minetest"
+	"minetest",
+    "data.tar.gz"
   ],
   "items_opt": [],
   "attr": {

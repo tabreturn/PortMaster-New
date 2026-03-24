@@ -38,6 +38,33 @@ export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
 CUR_TTY=/dev/tty0
 
+ARCHIVE_FILE="$GAMEDIR/data.tar.gz"
+SEVENZIP="${controlfolder}/7zzs.aarch64"
+
+if [[ -f "$ARCHIVE_FILE" ]]; then
+    echo "Extracting game data, this will take some time..." > "$CUR_TTY"
+
+    if "$SEVENZIP" x "$ARCHIVE_FILE"; then
+        TAR_FILE="${ARCHIVE_FILE%.gz}"
+
+        if "$SEVENZIP" x "$TAR_FILE" -o"./"; then
+            echo "Game data extracted successfully" > "$CUR_TTY"
+
+            # cleanup
+            rm -f "$ARCHIVE_FILE"
+            rm -f "$TAR_FILE"
+        else
+            echo "ERROR!!!  Failed to extract TAR contents." > "$CUR_TTY"
+            sleep 5
+            exit 1
+        fi
+    else
+        echo "ERROR!!!  Failed to decompress GZIP." > "$CUR_TTY"
+        sleep 5
+        exit 1
+    fi
+fi
+
 ifconfig lo up
 if [ "$CFW_NAME" = "ROCKNIX" ]; then
 	swaymsg seat seat0 hide_cursor 0
