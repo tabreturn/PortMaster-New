@@ -1978,7 +1978,7 @@
 +end)
 --- original/objects/player.lua
 +++ modified/objects/player.lua
-@@ -1,971 +1,1083 @@
+@@ -1,971 +1,1079 @@
 -Player = {}
 -
 -function Player:new(o)
@@ -3020,8 +3020,6 @@
 +    self.ghost_pool_head    = 1
 +    self.ghost_active_count = 0    -- skip pool loop entirely when no ghosts alive
 +    self.flip_enabled       = SAVE.FLIP  -- cached at init; refreshed at super entry
-+    self.moth_jump_enabled  = SAVE.MOTH_JUMP  -- cached; avoids global lookup every frame
-+    self.pick_enabled       = SAVE.PICK       -- cached; avoids global lookup every frame
 +    self.wall_coyote_ticks  = 0  -- counts down after leaving a wall; allows late walljump
 +    for i = 1, GHOST_POOL_SIZE do
 +        self.ghost_pool[i] = {
@@ -3300,8 +3298,6 @@
 +                    self.sprite.offset_y = -5
 +                    -- Refresh all SAVE caches in case they changed since init
 +                    self.flip_enabled      = SAVE.FLIP
-+                    self.moth_jump_enabled = SAVE.MOTH_JUMP
-+                    self.pick_enabled      = SAVE.PICK
 +                end,
 +                update=function(sm)
 +                    self:air_update(sm)
@@ -3870,10 +3866,10 @@
 +            if self.hit_wall or self.wall_coyote_ticks > 0 then
 +                self:walljump(-3.6, 2, scene.heavy_walls and 0.5 or 0.65, 20)
 +                self.wall_coyote_ticks = 0  -- consume the coyote window immediately
-+            elseif self.moth_jump_enabled then
++            elseif SAVE.MOTH_JUMP then
 +                sm:change_state('super')
 +            end
-+        elseif pressed('k') and self.pick_enabled and self.sm.state ~= 'after_climb_jump' then
++        elseif pressed('k') and SAVE.PICK and self.sm.state ~= 'after_climb_jump' then
 +            sm:change_state('pre_climb_jump')
 +        end
 +    end
