@@ -63,6 +63,13 @@ else
     exit 1
 fi
 
+# Normalize CRLF -> LF on all extracted Lua files.
+# diab.exe is a Windows zip so its contents use CRLF line endings,
+# which causes `patch` to fail when comparing context lines.
+echo "Normalizing line endings..."
+find "$OUTDIR" -name "*.lua" -exec sed -i 's/\r//' {} +
+log_ok "Line endings normalized"
+
 echo ""
 echo "Applying patches..."
 echo ""
