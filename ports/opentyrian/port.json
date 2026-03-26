@@ -1,47 +1,29 @@
 {
   "version": 4,
-  "name": "gravitycircuit.zip",
+  "name": "opentyrian.zip",
   "items": [
-    "Gravity Circuit.sh",
-    "gravitycircuit"
+    "OpenTyrian.sh",
+    "opentyrian/"
   ],
   "items_opt": [],
   "attr": {
-    "title": "Gravity Circuit",
+    "title": "OpenTyrian",
     "porter": [
-      "Kompaan",
-      "Wark91",
-      "ImCoKeMaN"
+      "Christian_Haitian"
     ],
-    "desc": "Gravity Circuit - a flashy action packed 2d platformer in the spirit of console classics.",
+    "desc": "OpenTyrian is an open-source port of the DOS game Tyrian.  ",
     "desc_md": null,
-    "inst": "Drop GravityCircuit.exe from either your Epic, GOG or Steam copy of the game into /roms/ports/gravitycircuit/gamedata",
+    "inst": "OpenTyrian 2.1 files are already included as they were made freeware sometime ago.",
     "inst_md": null,
     "genres": [
-      "platformer"
+      "fps"
     ],
     "image": null,
-    "rtr": false,
+    "rtr": true,
     "exp": false,
     "runtime": [],
-    "store": [
-      {
-        "name": "Epic",
-        "gameurl": "https://store.epicgames.com/en-US/p/gravity-circuit-489baa",
-        "developerurl": ""
-      },
-      {
-        "name": "Steam",
-        "gameurl": "https://store.steampowered.com/app/858710/Gravity_Circuit/",
-        "developerurl": "https://store.steampowered.com/search/?developer=Domesticated%20Ant%20Games"
-      },
-      {
-        "name": "GOG",
-        "gameurl": "https://www.gog.com/en/game/gravity_circuit",
-        "developerurl": "https://www.gog.com/en/games?developers=domesticated-ant-games"
-      }
-    ],
-    "availability": "paid",
+    "store": [],
+    "availability": "full",
     "reqs": [],
     "arch": [
       "aarch64",
