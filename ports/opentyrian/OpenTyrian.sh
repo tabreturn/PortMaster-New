@@ -35,9 +35,10 @@ fi
 bind_directories ~/.config/opentyrian $GAMEDIR/
 
 cd $GAMEDIR
+> "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 $GPTOKEYB opentyrian.${DEVICE_ARCH} -c ./opentyrian.gptk &
 pm_platform_helper "$GAMEDIR/opentyrian.${DEVICE_ARCH}"
-$GAMEDIR/opentyrian.${DEVICE_ARCH} --data=$GAMEDIR/data 2>&1 | tee $GAMEDIR/log.txt
+$GAMEDIR/opentyrian.${DEVICE_ARCH} --data=$GAMEDIR/data
 
 if [[ $whichos == *"ArkOS"* ]]; then
   cp /home/ark/.asoundrcbak /home/ark/.asoundrc
