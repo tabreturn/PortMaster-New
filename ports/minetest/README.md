@@ -1,4 +1,4 @@
-This port contains [Luanti / Minetest] (https://www.luanti.org/) and a Minecraft-like game [Mineclonia](https://codeberg.org/mineclonia/mineclonia). More games, mods, and texture packs can be downloaded within the Minetest client.
+This port contains [Luanti / Minetest](https://www.luanti.org/) and a Minecraft-like game [Mineclonia](https://codeberg.org/mineclonia/mineclonia). More games, mods, and texture packs can be downloaded within the Minetest client.
 
 # Notes
 - **Touch screen**
