@@ -15,13 +15,15 @@
 
 ## Installation
 
+The game can be played via the Steam Linux versions, or the Steam / itch.io macOS versions of the game. The windows version is not currently portable.
+
 ### Steam Linux Instructions
 
 Buy the game on steam and copy linux game assets to gamedata folder
 
 After purchasing the game use steam console command below for the full version:
 
-`download_depot 3166150 3166153 7362828488398565453`
+`download_depot 3166150 3166153 845234008669328543`
 
 To get the **demo** use this `Steam Console` command:
 
