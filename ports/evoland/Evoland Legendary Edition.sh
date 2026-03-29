@@ -73,6 +73,11 @@ export LD_LIBRARY_PATH="$GAMEDIR/libs.aarch64:$LD_LIBRARY_PATH"
 export LIBGL_NOERROR=1
 export MESA_NO_ERROR=1
 
+# Apply language from patcher selection
+if [ -f "$GAMEDIR/gamedata/.lang" ]; then
+    export LANG="$(cat "$GAMEDIR/gamedata/.lang")"
+fi
+
 # Run it — AOT compiled binary (compiled on-device during patching)
 $GPTOKEYB "evoland" &
 pm_platform_helper "$GAMEDIR/gamedata/evoland" > /dev/null
