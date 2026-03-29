@@ -7,6 +7,8 @@ platformer, and more. Contains both Evoland 1 and 2.
 Both the Steam version and GOG version are supported:
 https://store.steampowered.com/app/1020470/Evoland_Legendary_Edition/
 https://www.gog.com/en/game/evoland_legendary_edition
+The patcher will automatically patch the bytecode and compress
+textures on first launch. It takes about 10-30 minutes.
 
 ### Steam Instructions
 * Open Steam console: `steam://open/console`
@@ -15,13 +17,15 @@ https://www.gog.com/en/game/evoland_legendary_edition
   and all `.pak` files into the port's `gamedata` folder. On Windows
   this folder will be `C:\Program Files (x86)\Steam\steamapps\content\app_1020470\depot_1020471`
 
-### GOG Instructions
-From the installed **Linux** or **Windows** version, copy `sdlboot.dat`,
-`evo1.pak`, `evo1-extra.pak`, `evo2.pak`, and `evo2-extra.pak` into the
-port's `gamedata` folder.
-
-The patcher will automatically patch the bytecode and compress
-textures on first launch. It takes about 10-30 minutes.
+### GOG (recommended)
+Place the GOG offline installer files into `evoland/gamedata/`:
+```
+evoland/
+    gamedata/
+        setup_evoland_legendary_edition_1.0_(57388).exe
+        setup_evoland_legendary_edition_1.0_(57388)-1.bin
+```
+The patcher will automatically extract the game files, patch the bytecode, and compile for your device on first launch.
 
 ## Building
 The source code for building this port can be obtained by

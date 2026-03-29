@@ -20,20 +20,25 @@ get_controls
 GAMEDIR="/$directory/ports/evoland"
 
 # Check for game files — need sdlboot.dat + at least one pak
-if [ ! -f "$GAMEDIR/gamedata/sdlboot.dat" ]; then
-    pm_message "Game files not found. Copy sdlboot.dat and all .pak files into the evoland/gamedata/ folder."
-    sleep 15
-    exit 1
-fi
+# Allow GOG installer as an alternative (patcher will extract it)
+HAS_GOG_INSTALLER="no"
+for file in "$GAMEDIR"/gamedata/setup_evoland_legendary_edition_1.0*.exe "$GAMEDIR"/setup_evoland_legendary_edition_1.0*.exe; do
+    if [ -f "$file" ]; then
+        HAS_GOG_INSTALLER="yes"
+        break
+    fi
+done
 
-if [ ! -f "$GAMEDIR/gamedata/evo2.pak" ]; then
-    pm_message "PAK files not found. Copy evo1.pak, evo1-extra.pak, evo2.pak, evo2-extra.pak into evoland/gamedata/"
-    sleep 15
-    exit 1
+if [ ! -f "$GAMEDIR/gamedata/sdlboot.dat" ] || [ ! -f "$GAMEDIR/gamedata/evo2.pak" ]; then
+    if [ "$HAS_GOG_INSTALLER" = "no" ]; then
+        pm_message "Game files not found. Place the GOG installer (.exe and .bin) or copy sdlboot.dat and all .pak files into evoland/gamedata/"
+        sleep 15
+        exit 1
+    fi
 fi
 
 # Run patcher if needed (version must match)
-PATCH_VERSION="2"
+PATCH_VERSION="1"
 if [ ! -f "$GAMEDIR/gamedata/.patched_complete" ] || [ "$(cat "$GAMEDIR/gamedata/.patched_complete")" != "$PATCH_VERSION" ]; then
     export PATCHER_FILE="$GAMEDIR/patch/patch.bash"
     export PATCHER_GAME="Evoland Legendary Edition"
@@ -67,11 +72,6 @@ export LD_LIBRARY_PATH="$GAMEDIR/libs.aarch64:$LD_LIBRARY_PATH"
 # Mesa optimizations
 export LIBGL_NOERROR=1
 export MESA_NO_ERROR=1
-
-# Set game language from patcher choice (user can also edit .lang manually)
-if [ -f "$GAMEDIR/gamedata/.lang" ]; then
-    export LANG="$(cat "$GAMEDIR/gamedata/.lang")"
-fi
 
 # Run it — AOT compiled binary (compiled on-device during patching)
 $GPTOKEYB "evoland" &

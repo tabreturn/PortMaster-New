@@ -63,10 +63,78 @@ fail() {
     exit 1
 }
 
-# --- Step 1: Verify input files ---
+# --- Step 1: Extract GOG installer if present ---
 
 echo "=== Evoland Legendary Edition Patcher ==="
 echo ""
+
+INSTALLER_EXE_GLOB="setup_evoland_legendary_edition_1.0*.exe"
+INSTALLER_FILE_GLOB="setup_evoland_legendary_edition_1.0*"
+
+# Look for GOG installer in gamedata/ or port root
+INSTALLER_FILE=""
+for dir in "$GAMEDATA" "$GAMEDIR"; do
+    for file in "$dir"/$INSTALLER_EXE_GLOB; do
+        if [ -f "$file" ]; then
+            INSTALLER_FILE="$file"
+            break 2
+        fi
+    done
+done
+
+if [ -n "$INSTALLER_FILE" ]; then
+    echo "Step 1: Found GOG installer: $(basename "$INSTALLER_FILE")"
+
+    # Move any installer files from port root to gamedata/
+    for file in "$GAMEDIR"/$INSTALLER_FILE_GLOB; do
+        if [ -f "$file" ] && [ "$(dirname "$file")" != "$GAMEDATA" ]; then
+            mv -fv "$file" "$GAMEDATA/"
+        fi
+    done
+
+    # Find innoextract
+    INNOEXTRACT=""
+    if [ -x "$TOOLS/innoextract" ]; then
+        INNOEXTRACT="$TOOLS/innoextract"
+    elif command -v innoextract >/dev/null 2>&1; then
+        INNOEXTRACT="innoextract"
+    else
+        fail "innoextract not found. Install it or place an innoextract binary in tools/"
+    fi
+
+    echo "  Extracting game files..."
+    mkdir -p "$TMP/gog_extract"
+    cd "$TMP/gog_extract"
+
+    "$INNOEXTRACT" \
+        -I sdlboot.dat \
+        -I evo1.pak \
+        -I evo1-extra.pak \
+        -I evo2.pak \
+        -I evo2-extra.pak \
+        "$GAMEDATA"/$INSTALLER_EXE_GLOB \
+        || fail "innoextract failed"
+
+    # Move extracted game files to gamedata/
+    for file in sdlboot.dat evo1.pak evo1-extra.pak evo2.pak evo2-extra.pak; do
+        if [ -f "$file" ]; then
+            mv -fv "$file" "$GAMEDATA/"
+        fi
+    done
+
+    cd "$GAMEDIR"
+    rm -rf "$TMP/gog_extract"
+
+    # Clean up installer files
+    echo "  Cleaning up installer files..."
+    rm -f "$GAMEDATA"/$INSTALLER_FILE_GLOB
+
+    echo "Step 1: GOG extraction... OK"
+else
+    echo "Step 1: No GOG installer found (using pre-copied game files)"
+fi
+
+# --- Verify input files ---
 
 [ -f "$GAMEDATA/sdlboot.dat" ] || fail "sdlboot.dat not found in gamedata/"
 [ -f "$GAMEDATA/evo1.pak" ] || fail "evo1.pak not found in gamedata/"
@@ -95,9 +163,11 @@ else
     SUBSTITUTED="$TMP/evoland_substituted.hl"
     PATCHED="$TMP/evoland_patched.hl"
 
-    # Phase 1: Haxe function substitution (GlDriver GLES constructor)
+    # Phase 1: Haxe function substitution
     "$TOOLS/hl-substitute" "$ORIG" "$TOOLS/el_patches.hl" -o "$SUBSTITUTED" \
         'h3d.impl.$GlDriver.__constructor__' \
+        'evo1.fight.boss.$Part.updateAll' \
+        'evo1.$Part.updateAll' \
         || fail "hl-substitute failed"
 
     # Phase 2: Bytecode patches (steam stubs, GLES string fixes)
@@ -290,7 +360,7 @@ else
     echo "Step 5: Repack PAK files... OK"
 fi
 
-echo "2" > "$GAMEDATA/.patched_complete"
+echo "1" > "$GAMEDATA/.patched_complete"
 
 echo ""
 echo "=== Patching complete ==="

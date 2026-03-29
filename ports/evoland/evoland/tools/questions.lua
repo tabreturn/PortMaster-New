@@ -4,14 +4,14 @@ return {
         question = "Select game language:",
         options = {
             {"en", "English"},
-            {"fr", "Français"},
-            {"de", "Deutsch"},
-            {"es", "Español"},
-            {"ja", "日本語"},
-            {"ko", "한국어"},
-            {"ru", "Русский"},
-            {"zh", "中文(简体)"},
-            {"zh-TW", "中文(繁體)"}
+            {"fr", "French"},
+            {"de", "German"},
+            {"es", "Spanish"},
+            {"ja", "Japanese"},
+            {"ko", "Korean"},
+            {"ru", "Russian"},
+            {"zh", "Chinese (Simplified)"},
+            {"zh-TW", "Chinese (Traditional)"}
         }
     }
 }

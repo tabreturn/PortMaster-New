@@ -13,8 +13,8 @@
     ],
     "desc": "Evoland Legendary Edition contains both Evoland 1 and 2. Travel through the history of gaming as gameplay and graphics evolve from 2D to 3D across multiple genres.",
     "desc_md": null,
-    "inst": "See the readme for details",
-    "inst_md": "### Steam Instructions\n* Open Steam console: `steam://open/console`\n* Copy and paste command: `download_depot 1020470 1020471`\n* Open the folder where this depot was downloaded and copy `sdlboot.dat` and all `.pak` files into the port's `gamedata` folder.\n### GOG Instructions\nFrom the installed **Linux** or **Windows** version, copy `sdlboot.dat`, `evo1.pak`, `evo1-extra.pak`, `evo2.pak`, and `evo2-extra.pak` into the port's `gamedata` folder.\n\nThe patcher will automatically patch the bytecode and compress textures on first launch. This takes about 10-30 minutes.\n",
+    "inst": "Place the GOG installer files (setup_evoland_legendary_edition_1.0_(57388).exe and .bin) into evoland/gamedata/. Alternatively, copy sdlboot.dat and all .pak files from a Steam Linux install into evoland/gamedata/.",
+    "inst_md": "The patcher will automatically patch the bytecode and compress textures on first launch. This takes about 10-30 minutes.\n\n### Steam Instructions\n* Open Steam console: `steam://open/console`\n* Copy and paste command: `download_depot 1020470 1020471`\n* Open the folder where this depot was downloaded and copy `sdlboot.dat` and all `.pak` files into the port's `gamedata` folder.\n### GOG Instructions\nPlace the GOG installer files (setup_evoland_legendary_edition_1.0_(57388).exe and .bin) into evoland/gamedata/.\n",
     "genres": [
       "action",
       "rpg",
