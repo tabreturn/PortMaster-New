@@ -42,7 +42,7 @@ elif [ -f "$DATADIR/$LINUX_BINARY" ]; then
 
 elif [ -f "$DATADIR/ratcheteer-dx-mac.zip" ]; then
   echo "Extracting RatcheteerDX.app"
-  $ESUDO unzip -o -d "$DATADIR/" "$DATADIR/ratcheteer-dx-mac.zip"
+  $ESUDO unzip -o -d "$DATADIR/" "$DATADIR/ratcheteer-dx-mac.zip" -x '*Frameworks*'
   rm -f "$DATADIR/ratcheteer-dx-mac.zip"
 
   echo "Using macOS version"
