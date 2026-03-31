@@ -37,9 +37,7 @@
         }
     ],
     "availability": "paid",
-    "reqs": [
-      "opengl"
-    ],
+    "reqs": [],
     "arch": [
       "aarch64"
     ],
