@@ -11,7 +11,7 @@
     "porter": [
       "Ganimoth"
     ],
-    "desc": "A post-apocalyptic arcade shooter. Collect fuel and dodge enemy fire as you fight back against the evil Scorpio gang. Mixes cars, shmups and themes that would have been right at home in 80's anime and arcades..",
+    "desc": "A post-apocalyptic arcade shooter. Collect fuel and dodge enemy fire as you fight back against the evil Scorpio gang. Mixes cars, shmups and themes that would have been right at home in 80's anime and arcades.",
     "desc_md": null,
     "inst": "Purchase the game on Steam and copy all game files into assets folder.",
     "inst_md": "Purchase the game on [Steam](https://store.steampowered.com/app/1880840/Dead_End_City/) and copy all game files into `assets` folder.",
