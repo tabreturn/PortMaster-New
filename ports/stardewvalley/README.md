@@ -33,7 +33,7 @@ You must have a copy of the [compatibility version](https://www.stardewvalley.ne
     4. An installer dialog will pop up, click the "Select beta channel" drop down menu and select "compatibility"
     5. Click "Install"
     
-2. **Install Stardew Valley via PortVaster**
+2. **Install Stardew Valley via PortMaster**
     1. Open the PortMaster app
     2. Choose All Ports
     3. Navigate to Stardew Valley
