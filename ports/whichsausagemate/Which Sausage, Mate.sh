@@ -1,5 +1,4 @@
 #!/bin/bash
-# PORTMASTER: whichsausagemate.zip, Which Sausage, Mate.sh
 
 XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
