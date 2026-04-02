@@ -118,112 +118,31 @@ install() {
     pm_message "Extraction complete"
     sleep 1
 
+    pm_message "Delete installer nox.cfg."
+    rm "$GAMEDIR/gamefiles/app/nox.cfg" || true
+
     pm_message "Delete installer files."
     rm -fR "$SRC"/$INSTALLER_EXE_GLOB
     sleep 1
   fi
 }
 
-convert_dialog() {
-  MARKER_FILE="$ASSET_DIR/converted_dialog.txt"
-  DIALOG_DIR="$ASSET_DIR/Dialog"
-  FFMPEG_BIN="$UTILDIR/ffmpeg.${DEVICE_ARCH}"
-
-  # -------------------------------------------------
-  # Skip if already converted
-  # -------------------------------------------------
-  if [ -f "$MARKER_FILE" ]; then
-    return 0
-  fi
-
-  # -------------------------------------------------
-  # Skip on 32-bit systems (ffmpeg is 64-bit only)
-  # -------------------------------------------------
-  if [ "$(getconf LONG_BIT)" = "32" ]; then
-    pm_message "32-bit system detected, skipping dialog audio conversion"
-    return 0
-  fi
-
-  # -------------------------------------------------
-  # Only run if game data exists
-  # -------------------------------------------------
-  if [ ! -f "$NEEDED" ]; then
-    pm_message "Game data not present, skipping dialog conversion"
-    return 0
-  fi
-
-  # -------------------------------------------------
-  # Preconditions
-  # -------------------------------------------------
-  if [ ! -x "$FFMPEG_BIN" ]; then
-    pm_message "ERROR: ffmpeg not found at $FFMPEG_BIN"
-    return 1
-  fi
-
-  if [ ! -d "$DIALOG_DIR" ]; then
-    pm_message "ERROR: Dialog directory not found"
-    return 1
-  fi
-
-  # -------------------------------------------------
-  # Gather WAV files
-  # -------------------------------------------------
-  shopt -s nullglob nocaseglob
-  wav_files=("$DIALOG_DIR"/*.wav)
-  total="${#wav_files[@]}"
-
-  if [ "$total" -eq 0 ]; then
-    pm_message "No dialog WAV files found, skipping conversion"
-    return 0
-  fi
-
-  pm_message "Part 2 of 2 - Converting dialog audio ($total files)"
-  sleep 1
-
-  i=0
-  PortMasterDialog "progress" "message" "$i" "$total"
-
-  # -------------------------------------------------
-  # Convert with progress updates
-  # -------------------------------------------------
-  for wav in "${wav_files[@]}"; do
-    tmp="${wav}.tmp"
-
-    if "$FFMPEG_BIN" -y \
-        -loglevel error \
-        -i "$wav" \
-        -ac 1 \
-        -ar 22050 \
-        -c:a pcm_s16le \
-        -f wav \
-        "$tmp"; then
-      mv "$tmp" "$wav"
-    else
-      rm -f "$tmp"
-      PortMasterDialog "progress_clear"
-      pm_message "ERROR converting $(basename "$wav")"
-      return 1
-    fi
-
-    i=$((i + 1))
-    PortMasterDialog "progress" "Converting dialog audio" "$i" "$total"
-  done
-
-  # -------------------------------------------------
-  # Finish up
-  # -------------------------------------------------
-  PortMasterDialog "progress_clear"
-  echo "Dialog audio converted to PCM on $(date)" > "$MARKER_FILE"
-
-  pm_message "Dialog audio conversion complete"
-  sleep 1
-}
-
 # -------------------------------------------------
 # Install game data
 # -------------------------------------------------
 install
-convert_dialog
+
+export NOX_FORCE_INTRO_AT_START=1
+MOVIE_MARKER_FILE="$ASSET_DIR/played_intro.txt"
+
+# -------------------------------------------------
+# Skip movie if already played once
+# -------------------------------------------------
+if [ -f "$MOVIE_MARKER_FILE" ]; then
+  export NOX_FORCE_INTRO_AT_START=0
+else
+  echo "Intro played on $(date)" > "$MOVIE_MARKER_FILE"
+fi
 
 # ---------------------------
 # Runtime environment
@@ -253,10 +172,17 @@ fi
 #export NOX_BAD_SERVER_IPS="127.1.1.1,127.1.1.2"
 export NOX_BAD_SERVER_NAMES="Kor) Newbies,Kor] Newbies"
 
-# NOX_LIMIT_RANGE_ON_RUN - useful for gamepads and steam deck 
+# NOX_LIMIT_RANGE_ON_RUN - useful for gamepads and steam deck
 # limits the range of the mouse when running but only if starting close to center or passing through center
-export NOX_LIMIT_RANGE_ON_RUN=1 #default is 0
-# export NOX_LIMIT_RANGE_ON_RUN_RADIUS=110 # default is 110 - the radius of the circle   
+export NOX_LIMIT_RANGE_ON_RUN_GAMEPAD=1
+export NOX_LIMIT_RANGE_ON_RUN_MOUSE=0
+export NOX_LIMIT_RANGE_ON_RUN_RADIUS=118 # default is 118 - the radius of the circle
+
+# Disable built-in gamepad support to use gptokeyb2 (might change in future but known to be stable)
+export NOX_GAMEPAD=1
+export NOX_GAMEPAD_EXIT=1
+export NOX_GAMEPAD_INI="$GAMEDIR/$GPTK_CFG"
+export NOX_HIDE_MAIN_RES_UI=1
 
 # ------------------------------------------------------------
 # Resolution selection rules:
@@ -289,13 +215,18 @@ NOX_GAME_FULLSCREEN=1
 if [ -n "$DISPLAY_WIDTH" ] && [ -n "$DISPLAY_HEIGHT" ]; then
     case "$DISPLAY_WIDTH$DISPLAY_HEIGHT" in
         (*[!0-9]*)
-            # Non-numeric input → keep defaults
+            # Non-numeric input - keep defaults
             ;;
         (*)
+            # Turn on linear scaling if display is larger than 1024x768
+            if [ "$DISPLAY_WIDTH" -gt 1024 ] || [ "$DISPLAY_HEIGHT" -gt 768 ]; then
+                export NOX_LINEAR_SCALING=1
+            fi
+
             # Calculate aspect ratio as a float
             ASPECT=$(awk "BEGIN { printf \"%.4f\", $DISPLAY_WIDTH / $DISPLAY_HEIGHT }")
 
-            # 4:3 ≈ 1.3333
+            # 4:3 - 1.3333
             if awk "BEGIN { exit !($ASPECT > 1.30 && $ASPECT < 1.36) }"; then
                 if [ "$DISPLAY_WIDTH" -lt 1024 ] && [ "$DISPLAY_HEIGHT" -lt 768 ]; then
                     NOX_GAME_WIDTH="$DISPLAY_WIDTH"
@@ -305,7 +236,7 @@ if [ -n "$DISPLAY_WIDTH" ] && [ -n "$DISPLAY_HEIGHT" ]; then
                     NOX_GAME_HEIGHT=768
                 fi
 
-            # 1:1 ≈ 1.0
+            # 1:1 - 1.0
             elif awk "BEGIN { exit !($ASPECT > 0.98 && $ASPECT < 1.02) }"; then
                 # Square resolution, capped
                 if [ "$DISPLAY_WIDTH" -lt 768 ]; then
@@ -336,16 +267,30 @@ if [ -n "$DISPLAY_WIDTH" ] && [ -n "$DISPLAY_HEIGHT" ]; then
     esac
 fi
 
+if [ "$DEVICE_NAME" = "RGB30" ] && [ "$DISPLAY_HEIGHT" = "720" ] && [ "$DISPLAY_WIDTH" = "720" ]; then
+  export NOX_LINEAR_SCALING=0
+  export NOX_INTEGER_SCALING=1
+  export NOX_GAME_WIDTH=640
+  export NOX_GAME_HEIGHT=640
+fi
+
+# force scaling options
+#export NOX_LINEAR_SCALING=1
+#export NOX_INTEGER_SCALING=0
+
 # Ensure asset directory exists
 mkdir -p "$ASSET_DIR"
 
 # If config does not exist in assets, copy it from game dir
 if [ ! -f "$ASSET_DIR/nox.cfg" ]; then
-  if [ -f "$GAMEDIR/nox.cfg" ]; then
-    cp "$GAMEDIR/nox.cfg" "$ASSET_DIR/nox.cfg"
-    echo "Copied $GAMEDIR/nox.cfg to $ASSET_DIR/nox.cfg"
+  if [ -n "$DISPLAY_WIDTH" ] && [ "$DISPLAY_WIDTH" -gt 1024 ] && [ -f "$GAMEDIR/nox.cfg.hires" ]; then
+    cp "$GAMEDIR/nox.cfg.hires" "$ASSET_DIR/nox.cfg"
+    echo "Copied $GAMEDIR/nox.cfg.hires to $ASSET_DIR/nox.cfg"
+  elif [ -f "$GAMEDIR/nox.cfg.default" ]; then
+    cp "$GAMEDIR/nox.cfg.default" "$ASSET_DIR/nox.cfg"
+    echo "Copied $GAMEDIR/nox.cfg.default to $ASSET_DIR/nox.cfg"
   else
-    echo "ERROR: Source config not found at $GAMEDIR/nox.cfg" >&2
+    echo "ERROR: Source config not found at $GAMEDIR/nox.cfg.default or $GAMEDIR/nox.cfg.hires" >&2
     exit 1
   fi
 fi
@@ -372,7 +317,7 @@ export LD_LIBRARY_PATH="$GAMEDIR/ffmpeg.${RUN_ARCH}:$LD_LIBRARY_PATH"
 # Help debug OpenAL issues
 #export ALSOFT_LOGLEVEL=3
 
-$GPTOKEYB2 "$BINARY" -c "$GAMEDIR/$GPTK_CFG" >/dev/null &
+#$GPTOKEYB2 "$BINARY" -c "$GAMEDIR/$GPTK_CFG" >/dev/null &
 
 #Custom build of gptokeyb2
 #$ESUDO env LD_PRELOAD=$controlfolder/libinterpose.${DEVICE_ARCH}.so $GAMEDIR/gptokeyb2.${DEVICE_ARCH} $ESUDOKILL2 "$BINARY" -c "$GAMEDIR/$GPTK_CFG" >/dev/null &

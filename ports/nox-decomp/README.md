@@ -5,7 +5,7 @@ Your name is Jack Mower, a 20th century dude who just happened to be sucked into
 The world is in danger and you have to save it! But before you embark on your epic 
 journey you must choose your path: warrior, wizard, or conjurer.
 
-Unofficial **Nox (2000)** port to Linux based on decompiled code from playnox.xyz and neuromancer/nox-decomp.
+Unofficial **Nox (2000)** source port to Linux based on decompiled code from playnox.xyz and neuromancer/nox-decomp.
 
 [sookyboo/nox-decomp](https://github.com/sookyboo/nox-decomp)
 
@@ -26,27 +26,40 @@ Thanks to OpenNox for implementing a modern lobby server which enables internet 
 
 Thanks to klops, JanTrueno, Dia, Fraxinus88, OGM, Ganimoth, NotYerAvgPorter, Hades-Arcadius, MrGiKILL and Cebion for contributing fixes, advice and testing.
 
+Thanks to szhublox and Lovyxia from the [NoX RPG Unofficial discord](https://discord.gg/4bYwu68) for testing, good suggestions and knowing the original game so well.
+
+Thanks to szhublox for the following:
+
+- finding the original decompiled binary version 1.2b with sha256: e6e1b56029f8871c25d0caf8bcedf7bf1699580d0dc24c90d79eb27e9d7e05b2
+- pairing on obliterate rendering fixes, finding where the spell renders and uncovering a hint of where to look for a fix.
+- test videos of force of nature, obliterate and mana drain problems.
+- fixing rendering for Ring of Fire spell.
+- fixing summon counter for lich lord.
+- helping to track down a fix for playing dialog audio without conversion
+- massive amounts of testing to get nox-decomp into a very well working and faithful to the original state!
+
 Also thanks to the PortMaster team for the work they do - porting is a lot of work!
 
 * * *
 
 ## Credits
 
--   **Westwood Studios** – for creating Nox.
--   **neuromancer** – original Linux port work in [nox-decomp](https://github.com/neuromancer/nox-decomp). [GitHub](https://github.com/neuromancer/nox-decomp)
--   **sookyboo** - Fixing ARM crashes, adding video support, internet game support, fixing cursor colours, fixing render issues
-- 	 **awesie** from playnox.xyz for originally publishing the source code
--   Everyone in the Nox community keeping the game alive.
+-  **Westwood Studios** – for creating Nox.
+-  **awesie** from playnox.xyz for originally publishing the source code
+-  **neuromancer** – original Linux port work in [nox-decomp](https://github.com/neuromancer/nox-decomp). [GitHub](https://github.com/neuromancer/nox-decomp)
+-  Sookyboo (for fixing 16bit cursor color, solo game fix, audio fixes, performance fixes, rendering fixes, game logic fixes, arm32bit crashes, adding video support, opennox lobby internet game support, windows support, steamdeck support, gamepad support)
+-  szhublox (finding original binary, spell rendering fixes, npc summon fixes, tons of testing)
+-  Everyone in the Nox community keeping the game alive.
 
 * * *
 
 ## Known Issues
+The game is fully playable on PortMaster, SteamDeck with flatpack, Linux and Windows for both single player and multiplayer and all classes warrior, wizard and conjurer!
 
-* Minor glitch on the last column of pixels on text only on some characters - barely noticeable - all text is legible.
-* Minor glitch on death rays appearing in shadows when they should be hidden from view.
-* Slightly slow when there are dozens of enemies on screen but this doesn't happen frequently.
-* Some slow downs in fade outs and fade ins. (This is due to the way that the game is being drawn and was present in the original game I think)
-* All graphics are totally corrupted in 8-bit color mode but work in 16-bit color mode but we don't use 8-bit color mode in this port.
+* Minor - 16-bit graphics work perfectly - 8-bit support has been removed
+* Minor - all text is legible - but there might be distortion based on your scaling settings and resolution enabling smoothing with NOX_LINEAR_SCALING on small consoles may fix.
+* Minor - On low power devices fade ins and fade outs are slightly slower
+* There has been a reported seg fault on Solo Quest on level 7 - we have not been able to replicate it but no other issues are known.
 
 ## Multiplayer
 "Multiplay->Westwood Online" menu item doesn't work anymore because the Westwood Studios company is no longer operating.
@@ -68,7 +81,8 @@ Copy the GOG installer "setup_nox_*.exe" into gamefiles directory. Then run the 
 Extraction of the GOG installer will take around 10 minutes and conversion of the dialog audio files will take 20min. 
 
 ## Tips
--   It is worth watching the game story video introduction once in the main menu by pressing "Play Intro"
+-   It is worth watching the game story video introduction once in the main menu by pressing "Play Intro" it does play once on the first launch.
+-   You can change how the left analogue stick works by pressing **START** + **L1** for mouse mode or **START** + **R1** for absolute mode or **START** + **R1** + **R2** for absolute mode with inverted run button
 -   Your device might be able to handle better graphics - when in the game go to main menu->options (**Select**) experiment with these:
   -   High Res Front Walls
   -   High Res Floors
@@ -229,22 +243,23 @@ This layer is intended to let you manage and cast spells quickly without reachin
 
 While holding **Start**, the face buttons and D-Pad control map functions and quick save/load:
 
-| Button (Start held) | Keyboard            | Action in Nox                   |
-|---------------------|---------------------|---------------------------------|
-| **D-Pad Left**      | `F4`                | Quick load                      |
-| **D-Pad Right**     | `F2`                | Quick save                      |
-| **X**               | `2`                 | Zoom **out** minimap            |
-| **A**               | `Tab`               | Toggle minimap                  |
-| **B**               | `1`                 | Zoom **in** minimap             |
-| **R2**              | `T`                 | Set Trap                        |
-| **L2**              | `Z`                 | Poison Potion                   |
-| **L1**              | `delete`            | Decrease gamma                  |
-| **R1**              | `insert`            | Increase gamma                  |
-| **Right Analog ↑**  | `F1`                | Open/close console              |
-| **Right Analog →**  | cycle cheats        | Cycle cheats in console         |
-| **Right Analog ←**  | cycle cheats        | Cycle cheats in console         |
-| **Right Analog ↓**  | apply active cheat  | Apply selected cheat in console |
-| **Y**               | cancel active cheat | cancel active cheat             |
+| Button (Start held) | Keyboard                   | Action in Nox                                                           |
+|---------------------|----------------------------|-------------------------------------------------------------------------|
+| **D-Pad Left**      | `F4`                       | Quick load                                                              |
+| **D-Pad Right**     | `F2`                       | Quick save                                                              |
+| **X**               | `2`                        | Zoom **out** minimap                                                    |
+| **A**               | `Tab`                      | Toggle minimap                                                          |
+| **B**               | `1`                        | Zoom **in** minimap                                                     |
+| **R2**              | `T`                        | Set Trap                                                                |
+| **L2**              | `Z`                        | Poison Potion                                                           |
+| **L1**              | mouse mode                 | Left Analogue Stick Mouse Mode                                          |
+| **R1**              | absolute mode              | Left Analogue Stick Mouse Mode Absolute Mode                            |
+| **R1** + **R2**     | absolute mode inverted run | Left Analogue Stick Mouse Mode Absolute Mode invert run button function |
+| **Right Analog ↑**  | `F1`                       | Open/close console                                                      |
+| **Right Analog →**  | cycle cheats               | Cycle cheats in console                                                 |
+| **Right Analog ←**  | cycle cheats               | Cycle cheats in console                                                 |
+| **Right Analog ↓**  | apply active cheat         | Apply selected cheat in console                                         |
+| **Y**               | cancel active cheat        | cancel active cheat                                                     |
 
 This layer centralises all “meta” controls (saving, loading, console, and map) on the controller.
 
@@ -289,8 +304,7 @@ These are the default assumed values for these env vars if not present:
 ```
 export NOX_NO_INTERNET_SERVERS=0 # 1 switches off internet access but keeps LAN access, 0 allows internet access
 
-export NOX_LOBBY_HOST=nox.nwca.xyz
-export NOX_LOBBY_PORT=8088
+export NOX_LOBBY_LIST=nox.nwca.xyz:8088,noxdecomp.qzz.io,noxdecomp2.qzz.io
 export NOX_LOBBY_PATH="/api/v0/games/list"
 
 export NOX_LOBBY_CONNECT_TIMEOUT=2000 # in milliseconds
@@ -343,8 +357,26 @@ export NOX_CAPTURE_INPUT=0   # prints out real user mouse input but mostly usele
 ```
 export NOX_SKIP_INTRO_MOVIES=0 # default is 1 - skip the logo movies at the start of the game
 
-# NOX_LIMIT_RANGE_ON_RUN - useful for gamepads and steam deck 
+# NOX_LIMIT_RANGE_ON_RUN_GAMEPAD - useful for gamepads and steam deck 
 # limits the range of the mouse when running but only if starting close to center or passing through center
-export NOX_LIMIT_RANGE_ON_RUN=1 #default is 0
-export NOX_LIMIT_RANGE_ON_RUN_RADIUS=110 # default is 110 - the radius of the circle   
+export NOX_LIMIT_RANGE_ON_RUN_MOUSE=0 #default is 0
+export NOX_LIMIT_RANGE_ON_RUN_GAMEPAD=1 #default is 1
+export NOX_LIMIT_RANGE_ON_RUN_RADIUS=110 # default is 110 - the radius of the circle
+
+# Built in gamepad support
+export NOX_GAMEPAD=1
+export NOX_GAMEPAD_INI="$PWD/nox.gptk2.ini" # Mapping file based on gptokeyb2 must be present to work
+
+export NOX_GAMEPAD_EXIT=1 # when pressing start and select exit game 
+
+export NOX_GAMEPAD_AUTOSWAP_XBOX=1 # swap A and B automatically for xbox/nintendo controllers 
+export NOX_GAMEPAD_FLIP_ABXY=0 # manually swap A and B buttons
+export NOX_GAMEPAD_LOG=0 # for debbuging gamepad issues  
+
+export NOX_GAMEPAD_RIGHT_STICK_THRESHOLD=20000
+export NOX_GAMEPAD_RIGHT_STICK_CENTER_THRESHOLD=8000
+export NOX_GAMEPAD_RIGHT_STICK_REARM=1 # 1 enables one shot mode and 0 is repeat mode  
+
+export NOX_LINEAR_SCALING=1 # when scaling don't keep things pixel perfect but apply smoothing
+export NOX_INTEGER_SCALING=0 # only scale to the highest integer value that fits in the screen don't use floats to fit exactly on screen
 ```
