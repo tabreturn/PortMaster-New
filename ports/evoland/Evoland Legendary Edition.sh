@@ -16,6 +16,13 @@ source $controlfolder/control.txt
 [ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
 get_controls
 
+# Block unsupported operating systems
+if [ -f "/etc/trimui_device.txt" ]; then
+    pm_message "This Operating System is not supported by PortMaster.  Please install either Knulli or muOS.  Thank You."
+    sleep 15
+    exit 1
+fi
+
 # Variables
 GAMEDIR="/$directory/ports/evoland"
 
