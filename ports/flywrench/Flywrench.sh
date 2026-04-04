@@ -38,8 +38,8 @@ if [ -f ./assets/data.win ]; then
 	# Make a savedir
 	mkdir -p "$SAVEDIR"
 	# Copy Directories and Files
-	[ -d "$DATADIR/readOnlyFiles" ] && cp "$DATADIR/readOnlyFiles" "$SAVEDIR/"
-	[ -d "$DATADIR/themes" ] && cp "$DATADIR/themes" "$SAVEDIR/"
+	[ -d "$DATADIR/readOnlyFiles" ] && cp -r "$DATADIR/readOnlyFiles" "$SAVEDIR/"
+	[ -d "$DATADIR/themes" ] && cp -r "$DATADIR/themes" "$SAVEDIR/"
 	cp "$DATADIR/"*txt "$SAVEDIR/"
 	# Apply a patch
 	$controlfolder/xdelta3 -d -s "$GAMEDIR/assets/data.win" "$PATCHDIR/flywrench.xdelta" "$GAMEDIR/assets/game.droid"
