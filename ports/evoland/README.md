@@ -4,9 +4,10 @@ from 2D to 3D across multiple genres including action-adventure, RPG,
 platformer, and more. Contains both Evoland 1 and 2.
 
 ## Installation
-Both the Steam version and GOG version are supported:
+The Steam, GOG, and Epic Games Store versions are all supported:
 https://store.steampowered.com/app/1020470/Evoland_Legendary_Edition/
 https://www.gog.com/en/game/evoland_legendary_edition
+https://store.epicgames.com/en-US/p/evoland-legendary-edition
 The patcher will automatically patch the bytecode and compress
 textures on first launch. It takes about 10-30 minutes.
 
@@ -26,6 +27,21 @@ evoland/
         setup_evoland_legendary_edition_1.0_(57388)-1.bin
 ```
 The patcher will automatically extract the game files, patch the bytecode, and compile for your device on first launch.
+
+### Epic Games Store
+From your Epic Games installation folder, copy `sdlboot.dat` and all
+`.pak` files into the port's `gamedata` folder:
+```
+evoland/
+    gamedata/
+        sdlboot.dat
+        evo1.pak
+        evo1-extra.pak
+        evo2.pak
+        evo2-extra.pak
+```
+On Windows the installation folder is typically
+`C:\Program Files\Epic Games\EvolandLegendaryEdition`.
 
 ## Building
 The source code for building this port can be obtained by
