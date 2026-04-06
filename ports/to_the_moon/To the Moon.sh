@@ -43,7 +43,7 @@ export LD_LIBRARY_PATH="$GAMEDIR/libs:$LD_LIBRARY_PATH"
 WOG_FILE=$(ls to_the_moon_*.sh 2> /dev/null | head -n 1)
 
 if [ -f ""$WOG_FILE"" ]; then
-    unzip -o "$WOG_FILE" > "$CUR_TTY"
+    "$controlfolder/7zzs.$DEVICE_ARCH" x -aoa "$WOG_FILE" > "$CUR_TTY"
     if [ -d "data/noarch/game" ]; then
         $ESUDO mv -f data/noarch/game/* "$GAMEDIR/gamedata/" || { echo "Failed to move game directory." > "$CUR_TTY"; sleep 5; exit 1; }
     else

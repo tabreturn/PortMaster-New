@@ -47,7 +47,7 @@ gog_game_file="$gamedir/gamedata/gog_towerfall_ascension_2.5.0.9.sh"
 if [ -f "$gog_game_file" ]; then
     temporary="${gog_game_file%.sh}.gz"
     mv "$gog_game_file" "$temporary"
-    unzip "$temporary" 'data/noarch/game/*' -d "$gamedir/gamedata"
+    "$controlfolder/7zzs.$DEVICE_ARCH" x "$temporary" -o"$gamedir/gamedata" 'data/noarch/game/*'
     mv "$gamedir/gamedata/data/noarch/game"/* "$gamedir/gamedata"
     rm -rf "$gamedir/gamedata/data"  # Remove the extracted directory after moving if needed
     rm -f "$temporary"  # Remove the gz file after extraction if needed
@@ -58,7 +58,7 @@ gog_dlc_file="$gamedir/gamedata/gog_towerfall_ascension_dark_world_2.3.0.5.sh"
 if [ -f "$gog_dlc_file" ]; then
     temporary="${gog_dlc_file%.sh}.gz"
     mv "$gog_dlc_file" "$temporary"
-    unzip "$temporary" 'data/noarch/game/*' -d "$gamedir/gamedata"
+    "$controlfolder/7zzs.$DEVICE_ARCH" x "$temporary" -o"$gamedir/gamedata" 'data/noarch/game/*'
     mv "$gamedir/gamedata/data/noarch/game"/* "$gamedir/gamedata"
     rm -rf "$gamedir/gamedata/data"  # Remove the extracted directory after moving if needed
     rm -f "$temporary"  # Remove the gz file after extraction if needed
