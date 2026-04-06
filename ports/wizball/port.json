@@ -1,24 +1,40 @@
 {
-  "version": 2,
-  "name": "WizBall.zip",
-  "items": ["WizBall.sh", "wizball/"],
+  "version": 4,
+  "name": "wizball.zip",
+  "items": [
+    "WizBall.sh",
+    "wizball"
+  ],
   "items_opt": [],
-  "md5": {},
   "attr": {
-    "title": "WizBall",
+    "title": "Wizball",
+    "porter": [
+      "Craig Chandler"
+    ],
     "desc": "A remake of the classic Commodore 64 Wizball game by Sensible Software.",
+    "desc_md": null,
     "inst": "Ready to run!",
-    "genres": ["Arcade", "Action"],
-    "porter": "Craig Chandler",
-    "rtr": true,
-    "runtime": [],
-    "reqs": {},
+    "inst_md": null,
+    "genres": [
+      "action",
+      "arcade"
+    ],
     "image": {
       "screenshot": "screenshot.png",
       "covers": ["cover.png"],
       "thumbnail": null,
       "video": null
     },
-    "arch": ["aarch64", "armhf"]
+    "rtr": true,
+    "exp": false,
+    "runtime": [],
+    "store": [],
+    "availability": "full",
+    "reqs": [],
+    "arch": [
+      "aarch64",
+      "armhf"
+    ],
+    "min_glibc": ""
   }
 }
