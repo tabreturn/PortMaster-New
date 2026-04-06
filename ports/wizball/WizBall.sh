@@ -27,7 +27,7 @@ fi
 cd "$GAMEDIR" || { echo "FATAL: cannot cd to $GAMEDIR" > /tmp/wizball_fatal.txt; exit 1; }
 
 # Simple redirect to logfile - avoid process substitution (unreliable on embedded shells)
-exec > "$GAMEDIR/log.txt" 2>&1
+> "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 echo "GAMEDIR=$GAMEDIR"
 echo "CFW_NAME=${CFW_NAME}"
 echo "DEVICE_ARCH=${DEVICE_ARCH}"
