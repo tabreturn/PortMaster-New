@@ -382,6 +382,7 @@ HWEOF
     mark_done "compiled" "${V_COMPILE}-${PERF_TIER}-${MEM_TIER}"
     echo "Compilation complete! OK"
 fi
+rm -f "$GAMEDATA/.patch-needs-recompile"
 echo ""
 
 # --- Asset cascade invalidation ---
@@ -705,6 +706,5 @@ else
 fi
 echo ""
 
-rm -f "$GAMEDATA/.patch-needs-recompile"
 touch "$GAMEDATA/.patched_complete"
 echo "Patching completed successfully!"
