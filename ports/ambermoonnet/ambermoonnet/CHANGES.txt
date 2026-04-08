@@ -1,0 +1,27 @@
+Ambermoon.net PortMaster -- Changes from upstream
+
+- Swapped GLFW -> SDL2 (Silk.NET.Input.Sdl, Silk.NET.Windowing.Sdl)
+- Added DebugES/ReleaseES build configurations to game and renderer .csproj files
+- Fixed ReleaseES missing Silk.NET.OpenGLES package reference in renderer
+- Cross-compiled to ARM64 with dotnet publish
+- Ran ConcatFiles to embed versions.dat/diffs.dat into binary
+- InvariantGlobalization -- fixes crash on devices without ICU locale data
+- SDL_VIDEO_EGL_ALLOW_GETDISPLAY_FALLBACK=1 -- EGL init fallback for headless compositors
+- NativeLibrary.SetDllImportResolver -- reads SDL2_LIBRARY env var to let launch script override bundled SDL2
+- GLES version check 3.0 -> 2.0 -- gl4es reports 2.1
+- GLSL version clamped to #version 300 es -- gl4es falsely reports 1.00
+- GLSL precision highp float/int qualifiers added for GLES conformance
+- WindowMode.FullsizedWindow default for GLES -- config not found on first launch
+- Catch FramebufferSize failure, fall back to window.Size
+- DISPLAY_WIDTH/DISPLAY_HEIGHT env var resolution override -- VideoMode.Resolution unreliable under Westonpack
+- GetDisplaySize() fallback chain: env vars -> VideoMode.Resolution -> Monitor.Bounds -> window.Size
+- ChangeResolution fallback when VideoMode.Resolution is null -- window was never resized
+- Initial window created at display size for GLES builds -- fixes wrong resolution on first launch
+- Resolution diagnostic logging to log.txt
+- Westonpack crusty_x11egl -- headless EGL compositor for muOS/KNULLI/RocknixOS
+- Probe for native Mali EGL/GLES2/SDL2 -- bypasses gl4es
+- Launch script passes DISPLAY_WIDTH/DISPLAY_HEIGHT through to game process
+- ambermoon.cfg -- handheld-tuned defaults (fullscreen, no patcher, no intros, battle speed 50)
+- Ambermoon.net.gptk -- gamepad-to-keyboard/mouse mapping (analog stick -> cursor, A/B -> click, d-pad -> arrows)
+- Binary split into 25 MB 7z volumes for PortMaster packaging
+- First-run 7z extraction in launch script
