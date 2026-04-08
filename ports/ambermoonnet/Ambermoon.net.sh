@@ -47,6 +47,8 @@ for p in /usr/lib64/libSDL2.so /usr/lib/libSDL2-2.0.so.0 /usr/lib/aarch64-linux-
   [ -f "$p" ] && SDL2_LIB="$p" && break
 done
 
+TEXTINPUTINTERACTIVE="Y"
+
 $GPTOKEYB "$BINARY" -c "$GAMEDIR/$BINARY.gptk" &
 pm_platform_helper "$GAMEDIR/$BINARY"
 
