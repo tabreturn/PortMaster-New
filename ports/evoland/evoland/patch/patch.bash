@@ -33,7 +33,6 @@ fi
 mkdir -p "$TMP"
 
 cleanup() {
-    restore_writes
     rm -rf "$TMP"
 }
 trap cleanup EXIT
@@ -42,7 +41,7 @@ trap 'kill 0 2>/dev/null; exit 1' HUP INT TERM
 # --- Version markers ---
 # Bump these to force a step to re-run on devices with stale markers.
 
-V_COMPILE="3"          # Step 2: el-patch-all + hl2llvm
+V_COMPILE="4"          # Step 2: el-patch-all + hl2llvm
 V_PAK_EXTRACT="1"
 V_OGG="1"
 V_PAK_REPACK="1"
@@ -64,31 +63,10 @@ fail() {
     exit 1
 }
 
-# Throttle dirty page cache to prevent FUSE OOM on devices like TrimUI Smart Pro.
-# The kernel can buffer more dirty data than the FUSE daemon can flush,
-# starving it of memory. Limiting dirty_bytes forces writers to block early.
-throttle_writes() {
-    if [ -w /proc/sys/vm/dirty_ratio ]; then
-        ORIG_DIRTY_RATIO=$(cat /proc/sys/vm/dirty_ratio)
-        ORIG_DIRTY_BG_RATIO=$(cat /proc/sys/vm/dirty_background_ratio)
-        echo 5 > /proc/sys/vm/dirty_ratio
-        echo 3 > /proc/sys/vm/dirty_background_ratio
-    fi
-}
-
-restore_writes() {
-    if [ -n "$ORIG_DIRTY_RATIO" ] && [ -w /proc/sys/vm/dirty_ratio ]; then
-        echo "$ORIG_DIRTY_RATIO" > /proc/sys/vm/dirty_ratio
-        echo "$ORIG_DIRTY_BG_RATIO" > /proc/sys/vm/dirty_background_ratio
-    fi
-}
-
 # --- Step 1: Extract GOG installer if present ---
 
 echo "=== Evoland Legendary Edition Patcher ==="
 echo ""
-
-throttle_writes
 
 INSTALLER_EXE_GLOB="setup_evoland_legendary_edition_1.0*.exe"
 INSTALLER_FILE_GLOB="setup_evoland_legendary_edition_1.0*"
@@ -125,12 +103,8 @@ if [ -n "$INSTALLER_FILE" ]; then
     fi
 
     echo "  Extracting game files..."
-    # Extract to FUSE filesystem directly (not tmpfs) — PAK files are too
-    # large for /dev/shm on memory-constrained devices. dirty_ratio throttle
-    # keeps the FUSE daemon from being overwhelmed.
-    GOG_TMP="$GAMEDATA/.gog_extract"
-    mkdir -p "$GOG_TMP"
-    cd "$GOG_TMP"
+    mkdir -p "$TMP/gog_extract"
+    cd "$TMP/gog_extract"
 
     "$INNOEXTRACT" \
         -I sdlboot.dat \
@@ -141,7 +115,7 @@ if [ -n "$INSTALLER_FILE" ]; then
         "$GAMEDATA"/$INSTALLER_EXE_GLOB \
         || fail "innoextract failed"
 
-    # Same-filesystem rename into gamedata/ (instant, no copy)
+    # Move extracted game files to gamedata/
     for file in sdlboot.dat evo1.pak evo1-extra.pak evo2.pak evo2-extra.pak; do
         if [ -f "$file" ]; then
             mv -fv "$file" "$GAMEDATA/"
@@ -149,7 +123,7 @@ if [ -n "$INSTALLER_FILE" ]; then
     done
 
     cd "$GAMEDIR"
-    rm -rf "$GOG_TMP"
+    rm -rf "$TMP/gog_extract"
 
     # Clean up installer files
     echo "  Cleaning up installer files..."
@@ -194,6 +168,8 @@ else
         'h3d.impl.$GlDriver.__constructor__' \
         'evo1.fight.boss.$Part.updateAll' \
         'evo1.$Part.updateAll' \
+        'h3d.scene.$DefaultRenderer.__constructor__' \
+        'h3d.pass.Blur.apply' \
         || fail "hl-substitute failed"
 
     # Phase 2: Bytecode patches (steam stubs, GLES string fixes)
@@ -386,7 +362,7 @@ else
     echo "Step 5: Repack PAK files... OK"
 fi
 
-echo "1" > "$GAMEDATA/.patched_complete"
+echo "2" > "$GAMEDATA/.patched_complete"
 
 echo ""
 echo "=== Patching complete ==="
