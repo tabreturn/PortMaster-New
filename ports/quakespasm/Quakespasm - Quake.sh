@@ -43,6 +43,15 @@ else
     GPTOKEYB_CONFIG="$GAMEDIR/quakespasm.gptk"
 fi
 
+# Sound fix for some devices running ArkOS and/or dArkOS
+if [[ "${CFW_NAME^^}" == *"ARKOS"* ]]; then
+    if [ ! -f ~/.asoundrc ] && [ -f ~/.asoundrcbak ]; then
+        $ESUDO cp ~/.asoundrcbak ~/.asoundrc
+        $ESUDO chmod ugo+rw ~/.asoundrc
+        sleep 0.5
+    fi
+fi
+
 $GPTOKEYB "quakespasm.${DEVICE_ARCH}" -c "$GPTOKEYB_CONFIG" &
 pm_platform_helper "$GAMEDIR/quakespasm.${DEVICE_ARCH}"
 ./quakespasm.${DEVICE_ARCH} -current +scr_showfps 1 +joy_enable 0 +r_oldwater 1 +r_particles 1 +r_shadows 0 +r_sky_quality 5 -noglsl

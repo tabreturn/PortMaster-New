@@ -54,6 +54,15 @@ if [ ! -f "$GAMEDIR/id1/pak1.pak" ]; then
     exit 1
 fi
 
+# Sound fix for some devices running ArkOS and/or dArkOS
+if [[ "${CFW_NAME^^}" == *"ARKOS"* ]]; then
+    if [ ! -f ~/.asoundrc ] && [ -f ~/.asoundrcbak ]; then
+        $ESUDO cp ~/.asoundrcbak ~/.asoundrc
+        $ESUDO chmod ugo+rw ~/.asoundrc
+        sleep 0.5
+    fi
+fi
+
 # Load directly into an expansion, a map, or a mod
 RUNMOD="-game qzone"
 
