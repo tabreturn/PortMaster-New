@@ -53,10 +53,19 @@ $GPTOKEYB "$BINARY" -c "$GAMEDIR/$BINARY.gptk" &
 pm_platform_helper "$GAMEDIR/$BINARY"
 
 # Mount Westonpack to provide a headless X11/EGL compositor.
-# Lazy-unmount first to clear any stale mount from a previous crashed session.
+# Kill stale processes and clean up from any previous crashed session.
 weston_dir="/tmp/westonpack"
+$ESUDO killall -9 wp_weston Xwayland 2>/dev/null || true
+sleep 0.5
+$ESUDO fuser -k "$weston_dir" 2>/dev/null || true
+$ESUDO fuser -k /tmp/.X*-lock 2>/dev/null || true
+$ESUDO rm -f /tmp/.X*-lock 2>/dev/null || true
 $ESUDO mkdir -p "$weston_dir"
+$ESUDO umount -f "$weston_dir" 2>/dev/null || true
 $ESUDO umount -l "$weston_dir" 2>/dev/null || true
+for loopdev in $($ESUDO losetup -j "$controlfolder/libs/weston_pkg_0.2.squashfs" 2>/dev/null | cut -d: -f1); do
+  $ESUDO losetup -d "$loopdev" 2>/dev/null || true
+done
 $ESUDO mount "$controlfolder/libs/weston_pkg_0.2.squashfs" "$weston_dir"
 
 $ESUDO env \
@@ -74,6 +83,10 @@ $ESUDO env \
   "$weston_dir/westonwrap.sh" headless noop kiosk crusty_x11egl \
   ./"$BINARY"
 
-$ESUDO umount "$weston_dir"
+$ESUDO umount -f "$weston_dir" 2>/dev/null || true
+$ESUDO umount -l "$weston_dir" 2>/dev/null || true
+for loopdev in $($ESUDO losetup -j "$controlfolder/libs/weston_pkg_0.2.squashfs" 2>/dev/null | cut -d: -f1); do
+  $ESUDO losetup -d "$loopdev" 2>/dev/null || true
+done
 
 pm_finish
