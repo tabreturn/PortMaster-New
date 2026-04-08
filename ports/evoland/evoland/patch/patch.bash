@@ -41,7 +41,7 @@ trap 'kill 0 2>/dev/null; exit 1' HUP INT TERM
 # --- Version markers ---
 # Bump these to force a step to re-run on devices with stale markers.
 
-V_COMPILE="4"          # Step 2: el-patch-all + hl2llvm
+V_COMPILE="5"          # Step 2: el-patch-all + hl2llvm
 V_PAK_EXTRACT="1"
 V_OGG="1"
 V_PAK_REPACK="1"
@@ -362,7 +362,7 @@ else
     echo "Step 5: Repack PAK files... OK"
 fi
 
-echo "2" > "$GAMEDATA/.patched_complete"
+echo "3" > "$GAMEDATA/.patched_complete"
 
 echo ""
 echo "=== Patching complete ==="
