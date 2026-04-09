@@ -52,7 +52,7 @@ WIZBALL_RENDERER_BACKEND=gles2
 # Start keymapper for this binary (kill-mode hotkey support)
 export LD_LIBRARY_PATH="$controlfolder:$LD_LIBRARY_PATH"
 $GPTOKEYB "$BIN" -c "./wizball.gptk" &
-SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig" ./$BIN
+./$BIN
 
 echo "Binary exited with code $?"
 
