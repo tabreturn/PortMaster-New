@@ -54,14 +54,14 @@ fi
 $ESUDO mount "$controlfolder/libs/${weston_runtime}.squashfs" "${weston_dir}"
 
 # probe native amberelec/arkos/rocknix libraries
-if [[ "$CFW_NAME" = "AmberELEC" || "$CFW_NAME" = *"ArkOS"* || "$CFW_NAME" = "ROCKNIX"]]; then
+#if [[ "$CFW_NAME" = "AmberELEC" || "$CFW_NAME" = *"ArkOS"* || "$CFW_NAME" = "ROCKNIX"]]; then
   for p in /usr/lib64/libEGL.so /usr/lib/libEGL.so /usr/lib/libEGL.so.1 /usr/lib/aarch64-linux-gnu/libEGL.so.1; 
   do [ -f "$p" ] && EGL_LIB="$p" && break; done
   for p in /usr/lib64/libGLESv2.so /usr/lib/libGLESv2.so /usr/lib/libGLESv2.so.2 /usr/lib/aarch64-linux-gnu/libGLESv2.so.2; 
   do [ -f "$p" ] && GLES_LIB="$p" && break; done
   for p in /usr/lib64/libSDL2.so /usr/lib/libSDL2-2.0.so.0 /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0 /usr/lib/libSDL2-2.0.so; 
   do [ -f "$p" ] && SDL2_LIB="$p" && break; done
-fi
+#fi
 
 # check for rocknix ...
 if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
