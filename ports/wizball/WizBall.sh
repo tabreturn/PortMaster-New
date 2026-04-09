@@ -39,7 +39,7 @@ export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 # export LD_LIBRARY_PATH="$GAMEDIR/libs.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
 
 BIN="wizball.${DEVICE_ARCH}"
-echo "BIN=$BIN  exists=$(test -f "$BIN" && echo yes || echo NO)"
+echo "BIN=$BIN
 
 # PortMaster helper (sets up env / permissions / etc.)
 pm_platform_helper "$BIN"
