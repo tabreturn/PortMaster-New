@@ -1,0 +1,17 @@
+[X] - acid.wav - acid attack
+[X] - chance.wav - chance spell
+[X] - crit.wav - critical hit
+[X] - die.wav - death sound
+[X] - explode.wav - explosion
+[X] - fall.wav - falling
+[X] - hit.wav - normal hit
+[X] - levelup.wav - level up fanfare
+[X] - mhit.wav - monster hit
+[X] - miss.wav - miss
+[X] - pick.wav - pick up item
+[X] - plink.wav - menu confirm ping
+[X] - spell.wav - spell scroll
+[X] - stairs.wav - stairs sound
+[X] - step.wav - step (random 0)
+[X] - step2.wav - step (random 1)
+[X] - step3.wav - step (random 2)

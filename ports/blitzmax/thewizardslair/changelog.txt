@@ -1,0 +1,160 @@
+Update Log (Colossus Edition v213 - Fifth Anniversary v5yo)
+
+- Updated helper libraries to match 2018 versions
+- Fixed a bunch of edge cases related to various bits
+- Steam achievements etc etc
+- Updated Lore book to read from a text file, now not hardcoded into exe
+- COMPLETELY REWRITTEN LORE BOOK
+
+Update Log (Mythical Edition v209 - Colossus Edition v213)
+
+- Fixed the scaler library AGAIN to fix an edge case
+- Updated all the helper libraries to match 2016 versions
+- Fixed a few hiccups in the code causing the game to crash.
+- Did a little bit of prep for Steam (if it ever gets greenlit!)
+
+Update Log (Mythical Edition v208 - Colossus Edition v209)
+
+- Fixed a bug in my scaler library eating performance.
+- Fixed the spawn locations of Daniel and Dalton so they're not accidentally spawning out of bounds.
+- Optimized the game's thing drawing code, increased speed of engine by about 40% or so.
+- Fixed a bug that was causing the player to only ever take 1 damage from enemies.
+- Fixed a bug where enemies were not moving smoothly.
+
+Update Log (Legendary Edition v207 - Mythical Edition v208)
+
+- The game is now free! do enjoy, but please consider donating via devlin.itch.io/wizardslair if you downloaded it from Desura.
+- Added smooth movement between tiles ingame and an option to enable/disable as desired.
+- Adjusted the rate of movement to accomodate the smooth movement.
+- Rebalanced a boss to not require the RNGods to praise you with perfect good luck.
+- Rebalanced drops (*again*) to make the better items less common.
+- Decreased number of items that drop on each floor to account for item rebalance
+- Tweaked some of the script a little, reworded a few things to make better sense.
+
+- FIXED kills from spell scrolls not triggering scripts (thanks Alex Sheppard for catching that!)
+- FIXED some Lore Book glitches
+- FIXED a bug where clearing the scores could clear your game progress and the "clear progress" option didn't work.
+- FIXED a bug in maze generation where the game could crash.
+- FIXED a bug in rare drop generation, where it would completely reset your stats because it tried to generate you as an item.
+
+Update Log (v206-Legendary Edition/v207)
+
+- FIXED a crash bug related to starvation
+- FIXED the joystick bug causing poor performance properly this time.
+- FIXED an ATI/AMD specific bug related to screenshot saving and "alpha halos" in gameplay screenshots.
+- Drastically changed decoration system - allows for destruction of dungeon floors
+- Added wall shading to the world to make it prettier and to give better contrast between wall and floor.
+- Added option to toggle wall shadows.
+- Made Zoo smaller to make it possible to complete, and made it less likely to appear in a game.
+- Made Displacer Zone equally as likely to appear in a game as Zoo
+- Revamped weapons and armour, added elemental damage and resistances.
+- New scroll : [Big Bang] causes a big explosion damaging enemies and destroying walls.
+- New scroll : [Rage of the Gods] deals holy damage to enemies.
+- New scroll : [Blizzard] scroll deals ice damage to enemies.
+- Changed scroll : [Blaze] is now called [Firestorm], and deals fire damage.
+- Changed scroll : [Death] has been increased to two tiles range.
+- Modified the Effect of [Chance] and [Old Quest Log] to trigger unique fixed effects if certain conditions are met.
+- [Old Quest Log] now has additional clues.
+- Explosion traps now damage enemies and destroy all walls adjacent to them.
+- New Trap: Fire traps deal fire damage based on DLvl.
+- New Trap: Ice traps deal ice damage based on DLvl.
+- Tweaked Sanctum a little for balance.
+- Rebalanced drops(again).
+- Added the Lore Book, the first five enemies are visible(with basic info), beat the game to unlock the rest!
+- Made Enter confirm name on character creation screen.
+- Removed something from the binary and put it in the data folder instead.
+
+Update Log (v205-v206)
+
+- Rebalanced everything's attack values to make it less near-impossible and more just plain "challenging"
+- Added a minor change that makes it more noticeable when/if you hit the defence cap (the number turns green when you hit maximum now)
+- Fixed a few minor glitches and removed some legacy code related to the controls.
+- Added an additional effect to the [Old Quest Log]
+- Updated the game's code to use a display scaler in full-screen mode instead of fixed resolutions.
+- Fixed an intermittent bug which caused poor performance on certain Windows systems.
+
+Update Log (v204-v205)
+
+- Changed Endgame situation and Warmaster conditions to be more challenging, you fight [the boss] after killing the wizard instead of in place of him.
+- Tweaked the Zoo to make it much more challenging.
+- Tweaked the Wraith and Lich to be a little to be less punishing.
+- Major Balance change: Armour is now effective by a percentage instead of a basic subtraction. Armours have been balanced and rebalanced. Defence caps out at 90%.
+- Fixed a little hiccup where the score page doesn't go back to the titlescreen when the A Button (JBtn0) on a controller is pressed.
+
+Update Log (v203-v204)
+
+- lots of balance tweaks, bug and content fixes
+- Weapons and armour are now automatically equipped if your equip slots are empty.
+- Added two new floor types: The Zoo and the Displacement Zone. they will appear randomly in the later floors(after DLvl 10) along with the Snake Pit and Labyrinth.
+- Added some more item drops to monsters. Kill stuff!
+- Added 3 new armours and rebalanced existing armour. New armours are: Half-Plate Mail, Chain Hauberk and Officer's Full Plate.
+- Added 8 new weapons : Guardian Mace, Twinblade, Glaive, Obsidian Dagger, Flamberge, Golden Axe, Katar and Demonslayer.
+- Added 5 new Monsters : Viper, Lich, Wraith, Spectral Skeleton and Twisted Displacer.
+
+Update Log (v201-v203)
+
+- Lots of minor tweaks, presentation changes and fixes for completeness.
+- Increased turns required to regenerate health from 6 to 10 turns.
+- Finalised a bunch of internal stuff, and a number of minor bug fixes.
+- Finished the tileset for the "Ice" floors(DLvl21-25)
+- Added Daniel and Dalton to the mazes, making the optional Warmaster ending available.
+- Completed the Sanctum scripting, it now behaves exactly as it should
+- Completed the Scores page, added an option to clear scores in the Options Menu
+- Fixed the tombstone page showing the floor you died on incorrectly.
+- Added Mushroom(turns a random item in your inv into a mushroom), Healing(heals about the same as a minor healing potion) and Surround traps(surrounds you with monsters from that floor).
+- Increased the Level Cap to 50.
+- Significantly increased the damage of most monsters.
+
+Update Log (v200-201)
+
+- Added a moves counter - this is work towards a feature linked to the game over screen too!
+- Lots of balancing tweaks to enemies, mostly buffing enemies to make them less hopeless at higher levels.
+- Improved the Game over screen a little. More to come on that front!
+- Trap Reveal now reveals the Stairs as well, to make it more useful.
+- Changed Minimap behaviour completely. To view the Minimap, go into the menu or Hold Tab!
+- Balanced the lesser potions to be more effective in end-game situations.
+- Added an option to show/hide the "Waiting..." message when skipping turns.
+* Restructured the Dungeon Generator function completely - Generators for each type of floor can now be easily edited.
+* Added Maze generation to the DLvl generator - DLvl 10 and 20 will be full-floor mazes!
+* Added an EXP bar, Food meter and modified the layout of the HUD.
+- Fixed a bug that makes joysticks work again in Linux.
+- Made the dungeon deeper by 4 floors- Sanctum is now at DLvl 30 instead of DLvl 26.
+
+Update Log (v199-200)
+
+- Changed the EXP display into a percentage > more % = less xp to level
+- Added a simple notification on the title screen that checks for updates(this is not an automatic updater yet, just a notification)
+- Made Spike Traps less brutal, instant kills at early levels is never fun (although totally cool for roguelikes)
+- Countless balancing tweaks to enemies, mostly they hit harder now, making the game more challenging.
+- Added a Damage display on the Stats, will tell you how much damage you're doing. (STR/3 + equipped weapon damage total.)
+- Updated the Snake Pit, DLvl 1-5 and DLvl 6-9 tilesets.
+- Fixed [Big Room](formerly [Flatten]) scrolls causing a null-tile glitch
+- Added an option to toggle the fog animation (some people don't like the anim)
+- Added rudimentary traps which run "scripts" instead of doing trap stuff.
+- Enhanced the dungeon decoration code.. shouldn't be glitchy like it used to be.
+- fundamentally changed the main graphics file(sprites.png) - this breaks old builds completely!
+- Added a pile of feedback effects for when stats change and certain events, such as stat gain/loss and traps.
+- Fixed a bug where Acid Jellies could disenchant [Magicbane].
+- Tweaked Spike trap to deal fixed damage instead of proportional to max HP.
+- Added [Item Reveal], works in the same manner as [Trap Reveal] but for items.
+- Removed [Nourish], changed [Elfbread] to max out your food instead.
+- Nerfed [Fruit Juice] to heal about half as much as it used to, so it's not just a copy of [Minor Health Potion].
+- Fixed a bug where performance would drop when no game controllers were connected (lesson: don't constantly poll for what's not there, or you're gonna have a bad time).
+- Fixed a bug where you could "step" out of animations.
+- Dropped the [Fortune Cookie] item because it was useless and added nothing to gameplay - Clues to getting certain things will now be given when using an [Old Quest Log].
+- Added the preliminary Story page
+
+Update Log (v198-199)
+
+- Fixed a bug with save files and them not saving all the game data properly (This has broken ALL older saves, If you're attached to your saves, Send me screenshots of your stats and inventory and i'll rebuild them for you)
+- Fixed a bug which appears to cause 100% CPU usage on some systems.
+- Tidied up UI and moved it's resources to a new folder (That means you should replace the install entirely, delete any old copies of the game you have installed)
+- Moved options file to save folder to keep root of game folder tidy
+- Preliminary re-balance of some monsters, nerfed most of the tougher ones, minos shouldn't murder you dead now, game *should* be winnable (please tell me if you manage it!)
+- Changed the chance of certain things happening - This means that some things are rarer, and others more common.
+- optimised the combat system (defence is better/more efficient)
+- Added some traps and the ability to destroy them.
+- Added [Trap Reveal] scroll (will reveal all traps on current floor)
+- Added Action Key confirm option (Will allow the player to wait on stairs or items)
+- Removed [Studded Leather Armour] and replaced with [Golden Plate Mail] (this is immune to acid jelly attacks)
+- [*SECRET*], [*SECRET*], [Magicbane] and [*SECRET*] are also immune to acid jelly attacks.
