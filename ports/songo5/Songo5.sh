@@ -19,7 +19,7 @@ get_controls
 # Adjust these to your paths and desired godot version
 GAMEDIR=/$directory/ports/songo5
 
-runtime="sbc_4_3_rcv8"
+runtime="sbc_4_3_rcv12"
 #godot_executable="godot43.$DEVICE_ARCH"
 pck_filename="Songo5.pck"
 gptk_filename="songo5.gptk"
@@ -31,9 +31,7 @@ gptk_filename="songo5.gptk"
 if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
 	GODOT_OPTS=${GODOT_OPTS//-f/}
     if ! glxinfo | grep "OpenGL version string"; then
-    pm_message "This Port does not support the libMali graphics driver. Switch to Panfrost to continue."
-    sleep 5
-    exit 1
+		pck_filename="SongoLibmaliWarning.pck"
     fi
 fi
 
@@ -54,18 +52,64 @@ USE_SONGO_VOL_TCP_SERVER="0"
 SONGO_CFW_NAME="NONE"
 if [[ "$CFW_NAME" = "muOS" ]] || [[ "$CFW_NAME" = "knulli" ]] || [[ "$CFW_NAME" = "ROCKNIX" ]]; then
 	SONGO_CFW_NAME="${CFW_NAME}"
-fi
-if [[ "$CFW_NAME" = "TrimUI" ]]; then
-	if [ -f /mnt/SDCARD/.system/version.txt ] && grep -q "NextUI" /mnt/SDCARD/.system/version.txt; then
-		SONGO_CFW_NAME="NextUI"
-	fi
+elif [ -f /mnt/SDCARD/.system/version.txt ] && grep -q "NextUI" /mnt/SDCARD/.system/version.txt; then
+	SONGO_CFW_NAME="NextUI"
+elif [ -f /mnt/SDCARD/spruce/spruce ]; then
+	SONGO_CFW_NAME="Spruce"
 fi
 
 if [[ "$SONGO_CFW_NAME" != "NONE" ]]; then
 	USE_SONGO_VOL_TCP_SERVER="1"
+	sh "${GAMEDIR}/runtime/volume-indicator/setup_vol_indicator" "${SONGO_CFW_NAME}"
 fi
+
+export SONGO_CFW_NAME
 export USE_SONGO_VOL_TCP_SERVER
-sh "${GAMEDIR}/runtime/volume-indicator/setup_vol_indicator" "${SONGO_CFW_NAME}"
+
+# Set up brightness commands (Based on IncognitoMans approach)
+export SYSFS_BL_BRIGHTNESS="$(find /sys/class/backlight/*/ -name brightness 2>/dev/null | head -n 1)"
+export SYSFS_BL_COMMAND="$(find /sys/kernel/debug/dispdbg/ -name command 2>/dev/null | head -n 1)"
+
+if [ -n "${SYSFS_BL_BRIGHTNESS}" ]; then
+  echo "Backlight TYPE2 detected! setting path/type."
+  export BL_TYPE="TYPE2"
+  export SYSFS_BL_POWER="$(find /sys/class/backlight/*/ -name bl_power )"
+  export SYSFS_BL_MAX="$(find /sys/class/backlight/*/ -name max_brightness 2>/dev/null | head -n 1)"
+elif [ -n "${SYSFS_BL_COMMAND}" ]; then
+  echo "Backlight TYPE1 detected! setting path/type."
+  export BL_TYPE="TYPE1"
+  export SYSFS_BL_NAME="$(find /sys/kernel/debug/dispdbg/ -name name 2>/dev/null | head -n 1)"
+  export SYSFS_BL_PARAM="$(find /sys/kernel/debug/dispdbg/ -name param 2>/dev/null | head -n 1)"
+  export SYSFS_BL_START="$(find /sys/kernel/debug/dispdbg/ -name start 2>/dev/null | head -n 1)"
+  export BL_COMMAND="setbl"
+  export BL_NAME="lcd0"
+else
+  echo "Backlight objects not found!"
+  export BL_TYPE="UNKNOWN"
+fi
+
+DEFAULT_GET_BRIGHTNESS_PATH="${GAMEDIR}/runtime/brightness/default/get_brightness"
+DEFAULT_SET_BRIGHTNESS_PATH="${GAMEDIR}/runtime/brightness/default/set_brightness"
+SONGO_GET_BRIGHTNESS_PATH="$DEFAULT_GET_BRIGHTNESS_PATH"
+SONGO_SET_BRIGHTNESS_PATH="$DEFAULT_SET_BRIGHTNESS_PATH"
+NO_BRIGHT_FADE_AVAILABLE='0'
+
+if [[ "$BL_TYPE" = "TYPE1" ]] && [[ -e "${GAMEDIR}/runtime/brightness/${SONGO_CFW_NAME}/get_brightness" ]]; then
+	# Type 2 updates the stored get value when cfw adjusts brightness, so for type 1 we have to explicitly check if
+	# brightness has been adjusted by the user
+	SONGO_GET_BRIGHTNESS_PATH="${GAMEDIR}/runtime/brightness/${SONGO_CFW_NAME}/get_brightness"
+fi
+
+if [ "$BL_TYPE" = "UNKNOWN" ]; then
+	NO_BRIGHT_FADE_AVAILABLE='1'
+fi
+
+export SONGO_GET_BRIGHTNESS_PATH
+export SONGO_SET_BRIGHTNESS_PATH
+export NO_BRIGHT_FADE_AVAILABLE
+
+export HIDE_MOUSE="true"
+
 cd $GAMEDIR
 
 
@@ -97,7 +141,8 @@ export SONGO_BINARIES_DIR="$GAMEDIR/runtime"
 $GPTOKEYB "$GAMEDIR/runtime/$runtime" -c "$GAMEDIR/$gptk_filename" &
 sleep 0.6 # For TSP only, do not move/modify this line.
 pm_platform_helper "$GAMEDIR/runtime/$runtime"
-"$GAMEDIR/runtime/$runtime" $GODOT_OPTS --main-pack "gamedata/Songo5.pck"
+
+LD_LIBRARY_PATH="$GAMEDIR/runtime/ffmpeg:$LD_LIBRARY_PATH" "$GAMEDIR/runtime/$runtime" $GODOT_OPTS --main-pack "gamedata/$pck_filename"
 
 if [ -f "${CONFDIR}godot/app_userdata/Songo #5/reset_values.sh" ]; then
 	echo "reset_values.sh found, resetting cfw config options to user preference"
@@ -111,8 +156,11 @@ fi
 #$ESUDO umount "${godot_dir}"
 #fi
 
-# Teardown volume indicator
-sh "${GAMEDIR}/runtime/volume-indicator/teardown_vol_indicator" "${SONGO_CFW_NAME}"
+if [[ "$SONGO_CFW_NAME" != "NONE" ]]; then
+	# Teardown volume indicator
+	sh "${GAMEDIR}/runtime/volume-indicator/teardown_vol_indicator" "${SONGO_CFW_NAME}"
+fi
+
 
 # Remove lid switch overrides if applied (EG: for rg35xx-SP)
 TARGETS=(

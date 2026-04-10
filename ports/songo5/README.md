@@ -13,7 +13,7 @@ Songo#5 is using Taglib under the MPL 1.1 License, for more details check songo5
 |B|Nav back in UI|
 |X|Shuffle play if viewing a song list|
 |Y|Open Quick Menu|
-|Start|Dismiss currently playing song if 'Song follow' is enabled|
+|Start|Dismiss currently playing song if 'Song follow' is enabled, put device into pseudo sleep if playing song|
 |Select|Return to currently playing song if 'Song follow' is enabled|
 
 
