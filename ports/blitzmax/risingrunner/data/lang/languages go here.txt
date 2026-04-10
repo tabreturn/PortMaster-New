@@ -1,0 +1,36 @@
+Languages go in this folder. Don't delete !English.lng or you'll break the game.
+Unlike other languages it is hardcoded as default to fill out the script when first starting the game.
+
+Have a custom language file that you want included with an update? I'm pretty open to this idea.
+Want to translate the game to a language not covered by the game's default character set?
+Contact me by email - david@wizardslair.co.uk - with subject "Translation: Rising Runner" and we can take it from there.
+
+To override the in-game font with one of your own (for not-ASCII(ISO-8859-15 compatible)-standard character sets) place an image(see example.png) with the same name as your language file.
+
+EXAMPLE:
+Your language file is japanese. It should have a PNG with the same name. If you want variable widths, create a .dat file - Place all of these in this folder labeled as below.
+Japanese.lng - The language file that requires a custom font
+Japanese.png - The custom font that should be used. The game expects that all glyphs are 8x8 and the entire image is 128x128 in a standard PNG format.
+Japanese.dat - A 256-byte file containing 1-byte widths(00-FF) of every character in the set.
+If you're having trouble getting the .dat file made, contact me and I will arrange to make one for you.
+
+Example.png is an example of which characters you can safely use - Edit only green tiles! The rest are used by core elements of the game and should not be edited.
+To best match the style of the game, your font should be :
+White with a black drop shadow.
+Use 1-bit Alpha transparency for all unused pixels(don't use a mask colour!)
+No larger than 7x7 pixels(use that last pixel of space for the shadow!).
+Should not use the colour control character (that's the chevron character - ^ - signified by a palette icon in the example png).
+Should not use unnecessary line breaks (signified by a bar - | - looks like an "enter" key in the example png).
+Should not use "Character 255" (icon is an X in the example png) - it is used in some places in lieu of nothing.
+
+Following all these rules will make for a happy font!
+
+If you think your translation is good enough for inclusion with the main game, please share it with me and I will review it and let you know.
+
+CREDITS FOR LANGUAGE FILES:
+
+English : David Williams (@magic_bane, http://devlin.itch.io) < this is me!
+
+French : Lore Studio (@lorestudio, http://lorestudio.fr)
+
+German : Thomas Faust (@someindiegames, http://buysomeindiegames.com/)
