@@ -1,0 +1,16 @@
+Before we start, some licence info.
+This is shared under a Creative Commons (Attribution-NonCommercial-ShareAlike 4.0 International)
+CC-BY-NC-SA 4.0 - https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Hello! This is a quick primer on how to get started with building this source package:
+
+FIRST OF ALL, these are programmed in BlitzMax which is *required* to build my games.
+You can get that at https://www.blitzmax.org - be sure to follow the instructions to get it working properly, otherwise the builds might fail, and come with no support or warranty, I'm assuming that you know what you're doing by poking around in the source code of my games.
+
+That said, the code should be largely readable and is unmodified from my own local files, with a few fluff files removed that aren't necessary to build.
+Once you have BlitzMax installed and working correctly, they will likely require modification to run on any target that isn't Windows or Linux - my games were specifically built with these in mind.
+That said - I have had these working on the Raspi target, though performance leaves something to be desired.
+
+BUILD INSTRUCTIONS - load the twl.bmx file in BlitzMax and hit the run button in the toolbar, and let it go, once complete it should launch the game.
+
+Other than that, have fun, and share what you do with me on twitter @magic_bane (https://www.twitter.com/magic_bane) !
