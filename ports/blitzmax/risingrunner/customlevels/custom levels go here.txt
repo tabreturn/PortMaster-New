@@ -1,0 +1,3 @@
+Custom levels go here.
+
+Don't try and load any weird levels or the game will probably crash!

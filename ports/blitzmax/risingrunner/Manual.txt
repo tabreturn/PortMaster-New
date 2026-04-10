@@ -1,0 +1,41 @@
+Some things to consider, and the manual:
+
+Controls are:
+
+Keyboard: 
+Arrow keys to navigate/move player.
+Space to confirm/interact with objects ingame.
+P to Pause game.
+Escape to cancel/exit game in a hurry.
+Press F12 for screenshots, it works in the Level Editor as well as the game itself.
+
+Controller (assuming Xbox 360 controller):
+Left Stick to navigate.
+A Button to confirm/interact ingame.
+B Button to cancel.
+START to Pause/Un-pause ingame
+BACK to quit game while Paused.
+
+FAQ:
+
+Q: How do I jump? 
+You can't. That's why it's called Rising /Runner/ and not something else.
+
+Q: How many languages are you going to support?
+Besides what I already have, as many as folks are willing to make.
+For non-english languages, you can override the font file - See documentation in data/lang for more info.
+
+Q: Where's the sound?
+Windows? Run the OpenAL installer included.
+Linux? Install (apt) package libopenal1.
+
+Q: The game runs like trash! Your game sucks!
+Windows? Update your drivers with ones supplied by your GPU maker, and update DirectX.
+Linux? Make sure you are using a supported GPU with OpenGL in your desktop environment.
+
+Q: The edges of the screen are cut off when I'm playing on my TV!
+Try changing your Overscan in your graphics driver settings or TV settings - If you don't have these settings, use Point Scaling mode.
+
+Report bugs directly to @magicbanegames on Twitter.
+If it needs a more detailed explanation, email me at david@wizardslair.co.uk
+
