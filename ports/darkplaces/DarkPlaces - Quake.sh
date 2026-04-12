@@ -48,6 +48,15 @@ else
     GPTOKEYB_CONFIG="$GAMEDIR/darkplaces.gptk"
 fi
 
+# Sound fix for some devices running ArkOS and/or dArkOS
+if [[ "${CFW_NAME^^}" == *"ARKOS"* ]]; then
+    if [ ! -f ~/.asoundrc ] && [ -f ~/.asoundrcbak ]; then
+        $ESUDO cp ~/.asoundrcbak ~/.asoundrc
+        $ESUDO chmod ugo+rw ~/.asoundrc
+        sleep 0.5
+    fi
+fi
+
 $GPTOKEYB "darkplaces-sdl.${DEVICE_ARCH}" -c "$GPTOKEYB_CONFIG" &
 pm_platform_helper "$GAMEDIR/darkplaces-sdl.${DEVICE_ARCH}"
 ./darkplaces-sdl.${DEVICE_ARCH} +exec controls.cfg
