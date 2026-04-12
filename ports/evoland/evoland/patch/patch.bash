@@ -42,7 +42,7 @@ trap 'kill 0 2>/dev/null; exit 1' HUP INT TERM
 # --- Version markers ---
 # Bump these to force a step to re-run on devices with stale markers.
 
-V_COMPILE="3"          # Step 2: el-patch-all + hl2llvm
+V_COMPILE="5"          # Step 2: el-patch-all + hl2llvm
 V_PAK_EXTRACT="1"
 V_OGG="1"
 V_PAK_REPACK="1"
@@ -194,6 +194,8 @@ else
         'h3d.impl.$GlDriver.__constructor__' \
         'evo1.fight.boss.$Part.updateAll' \
         'evo1.$Part.updateAll' \
+        'h3d.scene.$DefaultRenderer.__constructor__' \
+        'h3d.pass.Blur.apply' \
         || fail "hl-substitute failed"
 
     # Phase 2: Bytecode patches (steam stubs, GLES string fixes)
@@ -386,7 +388,7 @@ else
     echo "Step 5: Repack PAK files... OK"
 fi
 
-echo "1" > "$GAMEDATA/.patched_complete"
+echo "3" > "$GAMEDATA/.patched_complete"
 
 echo ""
 echo "=== Patching complete ==="
