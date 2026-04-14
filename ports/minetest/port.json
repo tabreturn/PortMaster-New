@@ -3,10 +3,8 @@
   "name": "minetest.zip",
   "items": [
     "Minetest.sh",
-	"minetest",
-	"license",
-    "data.tar.gz"
-  ],
+    "minetest"
+   ],
   "items_opt": [],
   "attr": {
     "title": "Luanti / Minetest - Mineclonia",
