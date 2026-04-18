@@ -5,7 +5,8 @@
 #   1. Bytecode patching (GLES string fixes, steam stubs)
 #   2. AOT compilation (hl2llvm → native binary)
 #   3. Audio optimization (OGG downsample)
-#   4. PAK repacking
+#   4. ASTC texture compression (evo2 futur/ only)
+#   5. PAK repacking
 #
 # Called by PortMaster patcher UI.
 
@@ -42,10 +43,11 @@ trap 'kill 0 2>/dev/null; exit 1' HUP INT TERM
 # --- Version markers ---
 # Bump these to force a step to re-run on devices with stale markers.
 
-V_COMPILE="5"          # Step 2: el-patch-all + hl2llvm
-V_PAK_EXTRACT="1"
+V_COMPILE="6"          # Step 2: el-patch-all + hl2llvm
+V_PAK_EXTRACT="2"
 V_OGG="1"
-V_PAK_REPACK="1"
+V_ASTC="1"
+V_PAK_REPACK="2"
 
 # --- Helpers ---
 
@@ -196,6 +198,7 @@ else
         'evo1.$Part.updateAll' \
         'h3d.scene.$DefaultRenderer.__constructor__' \
         'h3d.pass.Blur.apply' \
+        'hxd.res.Image.loadTexture' \
         || fail "hl-substitute failed"
 
     # Phase 2: Bytecode patches (steam stubs, GLES string fixes)
@@ -361,12 +364,92 @@ else
     echo "Step 4: Optimize audio... OK"
 fi
 
-# --- Step 5: Repack PAK files ---
+# --- Step 5a: Extract ASTC guide files (speeds up compression) ---
+
+V_GUIDES="1"
+GUIDE_DIR="$GAMEDATA/guides"
+
+if step_done "guides_extracted" "$V_GUIDES"; then
+    echo "Step 5a: Extract guides... already done. OK"
+else
+    if [ -f "$GAMEDIR/patch/guides.7z" ]; then
+        echo "Step 5a: Extracting ASTC guide files..."
+        mkdir -p "$GUIDE_DIR"
+        if command -v 7zz >/dev/null 2>&1; then
+            SEVENZIP=7zz
+        elif command -v 7z >/dev/null 2>&1; then
+            SEVENZIP=7z
+        else
+            SEVENZIP=""
+        fi
+        if [ -n "$SEVENZIP" ]; then
+            "$SEVENZIP" x "$GAMEDIR/patch/guides.7z" -o"$GUIDE_DIR" -y || \
+                echo "  WARNING: guide extraction failed, continuing without guides."
+        else
+            echo "  WARNING: 7z not found, skipping guide extraction."
+        fi
+    else
+        echo "Step 5a: No guide archive found, skipping."
+    fi
+    mark_done "guides_extracted" "$V_GUIDES"
+fi
+
+# --- Step 5b: ASTC texture compression (evo2 futur/ only) ---
+
+if step_done "astc" "$V_ASTC"; then
+    echo "Step 5b: ASTC compression... already done. OK"
+else
+    echo "Step 5b: ASTC compression..."
+
+    ASTC_MANIFEST="$TMP/astc_manifest.txt"
+    > "$ASTC_MANIFEST"
+    ASTC_OUT="$GAMEDATA/astc"
+    mkdir -p "$ASTC_OUT"
+
+    # Only evo2 paks, only files under futur/. Output paths mirror the
+    # in-PAK path (e.g. futur/chars/foo.astc) so runtime lookup of
+    # "./astc/<tex.name>.astc" resolves correctly.
+    for pak in evo2 evo2-extra; do
+        EXTRACTED="$GAMEDATA/${pak}_extracted/futur"
+        [ -d "$EXTRACTED" ] || continue
+
+        find "$EXTRACTED" \( -name "*.png" -o -name "*.jpg" \) -type f | sort | while read -r img; do
+            REL="${img#$GAMEDATA/${pak}_extracted/}"
+            case "$REL" in
+                *.png) BASE="${REL%.png}" ;;
+                *.jpg) BASE="${REL%.jpg}" ;;
+            esac
+            echo "$img|$ASTC_OUT/${BASE}.astc|srgb|8x8"
+        done >> "$ASTC_MANIFEST"
+    done
+
+    TOTAL=$(wc -l < "$ASTC_MANIFEST")
+
+    if [ "$TOTAL" -eq 0 ]; then
+        echo "  No futur/ textures to compress."
+    else
+        echo "  Encoding $TOTAL textures..."
+
+        GUIDE_ARGS=""
+        [ -d "$GUIDE_DIR/guides" ] && GUIDE_ARGS="-guide-dir $GUIDE_DIR/guides"
+        "$TOOLS/astcenc-batch" "$ASTC_MANIFEST" -quality medium -yflip -silent $GUIDE_ARGS \
+            || fail "astcenc-batch failed"
+
+        echo "  ASTC compression complete ($TOTAL textures)."
+    fi
+
+    rm -rf "$GUIDE_DIR"
+
+    mark_done "astc" "$V_ASTC"
+    echo "Step 5b: ASTC compression... OK"
+fi
+
+# --- Step 6: Repack PAK files ---
 
 if step_done "pak_repack" "$V_PAK_REPACK"; then
-    echo "Step 5: Repack PAK files... already done. OK"
+    echo "Step 6: Repack PAK files... already done. OK"
 else
-    echo "Step 5: Repack PAK files..."
+    echo "Step 6: Repack PAK files..."
 
     for pak in evo1 evo1-extra evo2 evo2-extra; do
         EXTRACTED="$GAMEDATA/${pak}_extracted"
@@ -385,10 +468,10 @@ else
     done
 
     mark_done "pak_repack" "$V_PAK_REPACK"
-    echo "Step 5: Repack PAK files... OK"
+    echo "Step 6: Repack PAK files... OK"
 fi
 
-echo "3" > "$GAMEDATA/.patched_complete"
+echo "4" > "$GAMEDATA/.patched_complete"
 
 echo ""
 echo "=== Patching complete ==="
