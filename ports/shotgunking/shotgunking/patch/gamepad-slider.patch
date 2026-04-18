@@ -1,0 +1,13 @@
+--- a/code/gamepad.lua
++++ b/code/gamepad.lua
+@@ -1540,8 +1540,8 @@
+ 		end
+ 		n = mid(0, n, 10)
+ 		
+-		if n~=opt_get(selectedButton.opt.id) then
+-			opt_set(selectedButton.opt.id,n)
++		if n~=SET[selectedButton.opt.nid] then
++			SET[selectedButton.opt.nid]=n
+ 			apply_option(selectedButton.opt.id)
+ 			sfx("tic",.5)
+ 		end
