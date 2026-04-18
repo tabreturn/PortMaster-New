@@ -12,7 +12,7 @@
       "tabreturn",
       "Ganimoth"
     ],
-    "desc": "n the facility, each step, each shot, each mistake costs precious energy. Rendered entirely in black and white, this mystery can be unravelled. The puzzle can be solved. Don't ask who tried to solve it before. Do the job. Find oxygen and sleep. Go deeper. And don't ask about Aaron.",
+    "desc": "In the facility, each step, each shot, each mistake costs precious energy. Rendered entirely in black and white, this mystery can be unravelled. The puzzle can be solved. Don't ask who tried to solve it before. Do the job. Find oxygen and sleep. Go deeper. And don't ask about Aaron.",
     "desc_md": null,
     "inst": "Purchase the game on store of your preference (GOG, Steam or Itch.io) and copy all game files into assets folder.",
     "inst_md": "Purchase the game on store of your preference ([GOG](https://www.gog.com/en/game/repose), [Steam](https://store.steampowered.com/app/3002510/REPOSE/) or [Itch.io](https://akuparagames.itch.io/repose)) and copy all game files into `assets` folder.",
