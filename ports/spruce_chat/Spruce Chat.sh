@@ -32,13 +32,15 @@ export SPRUCE_INPUT_MODE="sdl"
 # swap knobs: SPRUCE_SWAP_AB (A/B pair) and SPRUCE_SWAP_XY (X/Y pair).
 # Defaults (unset) = swap both, which matches Nintendo-labeled devices
 # on positional CFWs.
-#   muOS, ArkOS/dArkOS, ROCKNIX — fully label-based, disable both swaps.
+#   muOS, ArkOS/dArkOS, ROCKNIX, AmberELEC — fully label-based, disable
+#     both swaps.
 #   unofficialOS — hybrid: A/B positional (keep swap), X/Y label-based
 #     (disable XY swap only).
+#   Knulli — fully positional (SDL standard), defaults are correct.
 cfw_lower=$(printf '%s' "$CFW_NAME" | tr '[:upper:]' '[:lower:]')
 echo "spruce: CFW_NAME='$CFW_NAME' (lower='$cfw_lower')"
 case "$cfw_lower" in
-  *muos*|*arkos*|*rocknix*)
+  *muos*|*arkos*|*rocknix*|*amberelec*)
     export SPRUCE_SWAP_AB=0 SPRUCE_SWAP_XY=0 ;;
   *unofficial*|*uos*)
     export SPRUCE_SWAP_XY=0 ;;
