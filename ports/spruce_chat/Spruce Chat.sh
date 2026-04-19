@@ -72,9 +72,16 @@ MODEL="$GAMEDIR/models/qwen2.5-0.5b-instruct-q4_0.gguf"
 # Start llama-server in the background; chat.py shows a loading screen until it's ready
 SERVER_PID=""
 if [ -x "$GAMEDIR/llama-server" ] && [ -f "$MODEL" ]; then
+  # Disable llama.cpp's memory-fit safety check, which demands ~1024 MiB
+  # free RAM even though this model only needs ~500 MiB. Tight on 1 GB
+  # devices (e.g. RGB30) when the CFW uses more baseline RAM (dArkOS vs
+  # ArkOS). Set both the env var and the CLI flag (short + long form) so
+  # it takes effect regardless of which one the binary honors.
+  export LLAMA_ARG_FIT=off
   "$GAMEDIR/llama-server" \
     -m "$MODEL" \
     -c 1024 -t 4 -np 1 -ngl 0 -b 32 \
+    --fit off \
     --port 8086 --host 0.0.0.0 \
     > "$GAMEDIR/server.log" 2>&1 &
   SERVER_PID=$!
