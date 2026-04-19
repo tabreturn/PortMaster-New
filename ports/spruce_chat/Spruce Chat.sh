@@ -28,19 +28,26 @@ export XDG_DATA_HOME="$CONFDIR"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 export SPRUCE_INPUT_MODE="sdl"
 
-# muOS, ArkOS/dArkOS, and ROCKNIX controllerconfigs are label-based
-# (physical A → BUTTON_A); unofficialOS uses positional SDL semantics
-# (south → BUTTON_A). chat.py swaps face buttons by default for Nintendo-
-# labeled devices on positional CFWs; label-based CFWs need the swap
-# disabled.
+# SDL_GAMECONTROLLERCONFIG varies by CFW. chat.py has two independent
+# swap knobs: SPRUCE_SWAP_AB (A/B pair) and SPRUCE_SWAP_XY (X/Y pair).
+# Defaults (unset) = swap both, which matches Nintendo-labeled devices
+# on positional CFWs.
+#   muOS, ArkOS/dArkOS, ROCKNIX — fully label-based, disable both swaps.
+#   unofficialOS — hybrid: A/B positional (keep swap), X/Y label-based
+#     (disable XY swap only).
 cfw_lower=$(printf '%s' "$CFW_NAME" | tr '[:upper:]' '[:lower:]')
 echo "spruce: CFW_NAME='$CFW_NAME' (lower='$cfw_lower')"
-case "$cfw_lower" in *muos*|*arkos*|*rocknix*) export SPRUCE_SWAP_FACE_BUTTONS=0 ;; esac
+case "$cfw_lower" in
+  *muos*|*arkos*|*rocknix*)
+    export SPRUCE_SWAP_AB=0 SPRUCE_SWAP_XY=0 ;;
+  *unofficial*|*uos*)
+    export SPRUCE_SWAP_XY=0 ;;
+esac
 if [ -d /opt/muos ] || [ -d /mnt/mmc/MUOS ] || [ -d /mnt/sdcard/MUOS ] \
    || [ -d /mnt/mmc/muos ] || [ -e /opt/muos/script/var/global/device.txt ]; then
-  export SPRUCE_SWAP_FACE_BUTTONS=0
+  export SPRUCE_SWAP_AB=0 SPRUCE_SWAP_XY=0
 fi
-echo "spruce: SPRUCE_SWAP_FACE_BUTTONS=${SPRUCE_SWAP_FACE_BUTTONS:-1}"
+echo "spruce: SPRUCE_SWAP_AB=${SPRUCE_SWAP_AB:-1} SPRUCE_SWAP_XY=${SPRUCE_SWAP_XY:-1}"
 
 # chat.py auto-detects screen dimensions via SDL_GetCurrentDisplayMode when
 # SCREEN_WIDTH/SCREEN_HEIGHT aren't set. Export them here only to force a

@@ -84,8 +84,8 @@ C_ERR    = (230, 95, 95, 255)
 # Input — two modes:
 #   "raw" (default): read /dev/input/event* directly. Button type/code/value
 #       come from spruceOS platform cfg env vars (B_A, B_B, etc.).
-#   "sdl": use SDL2 GameController events. Used by PortMaster (launch.sh sets
-#       SPRUCE_INPUT_MODE=sdl). No platform cfg needed.
+#   "sdl": use SDL2 GameController events. Used by PortMaster, whose launcher
+#       ("Spruce Chat.sh") sets SPRUCE_INPUT_MODE=sdl. No platform cfg needed.
 INPUT_MODE = os.environ.get("SPRUCE_INPUT_MODE", "raw")
 EVENT_FMT = 'llHHI'
 EVENT_SZ = struct.calcsize(EVENT_FMT)
@@ -239,14 +239,28 @@ class InputSDL:
     """Polls SDL2 GameController events. PortMaster devices expose a gamepad
     via SDL_GAMECONTROLLERCONFIG set by control.txt, so button mapping is
     automatic across all supported handhelds."""
-    # Nintendo-style face button labels (PortMaster handheld convention).
-    # SDL uses Xbox naming where BUTTON_A is the bottom face button; on these
-    # devices the bottom button is physically labeled B and the right is A.
+    # Face-button label layout varies by CFW. Some CFWs ship a positional
+    # SDL_GAMECONTROLLERCONFIG (BUTTON_A = south) — on Nintendo-labeled
+    # handhelds we swap so app output matches the printed labels. Others
+    # ship label-based mappings (physical A → BUTTON_A) where no swap is
+    # correct. A/B and X/Y can even differ within one CFW (unofficialOS
+    # reports A/B positionally but X/Y by label), so the launcher controls
+    # each pair independently via SPRUCE_SWAP_AB and SPRUCE_SWAP_XY.
+    # Legacy SPRUCE_SWAP_FACE_BUTTONS still applies to both if set.
+    _legacy = os.environ.get("SPRUCE_SWAP_FACE_BUTTONS")
+    _swap_ab = os.environ.get("SPRUCE_SWAP_AB", _legacy if _legacy is not None else "1") != "0"
+    _swap_xy = os.environ.get("SPRUCE_SWAP_XY", _legacy if _legacy is not None else "1") != "0"
+    _FACE = {
+        "A": "B" if _swap_ab else "A",
+        "B": "A" if _swap_ab else "B",
+        "X": "Y" if _swap_xy else "X",
+        "Y": "X" if _swap_xy else "Y",
+    }
     _BTN = {
-        sdl2.SDL_CONTROLLER_BUTTON_A: "B",  # bottom
-        sdl2.SDL_CONTROLLER_BUTTON_B: "A",  # right
-        sdl2.SDL_CONTROLLER_BUTTON_X: "Y",  # left
-        sdl2.SDL_CONTROLLER_BUTTON_Y: "X",  # top
+        sdl2.SDL_CONTROLLER_BUTTON_A: _FACE["A"],
+        sdl2.SDL_CONTROLLER_BUTTON_B: _FACE["B"],
+        sdl2.SDL_CONTROLLER_BUTTON_X: _FACE["X"],
+        sdl2.SDL_CONTROLLER_BUTTON_Y: _FACE["Y"],
         sdl2.SDL_CONTROLLER_BUTTON_DPAD_UP: "UP",
         sdl2.SDL_CONTROLLER_BUTTON_DPAD_DOWN: "DOWN",
         sdl2.SDL_CONTROLLER_BUTTON_DPAD_LEFT: "LEFT",
