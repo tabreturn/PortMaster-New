@@ -1,0 +1,8 @@
+start = space
+r1 = n
+a = space
+b = space
+
+left_analog_left = a
+left_analog_right = d
+dpad = arrow_keys
