@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gamelist>
+<gameList>
 	<game>
 		<path>./Evoland Legendary Edition.sh</path>
 		<name>Evoland Legendary Edition</name>
@@ -9,4 +9,4 @@
 		<developer>Shiro Games</developer>
 		<genre>Action, RPG, Adventure, Indie</genre>
 	</game>
-</gamelist>
+</gameList>
