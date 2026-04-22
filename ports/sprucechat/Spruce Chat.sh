@@ -63,7 +63,7 @@ if [ ! -d "$GAMEDIR/python" ] && [ -f "$GAMEDIR/python.tar.gz" ]; then
   tar -xzf "$GAMEDIR/python.tar.gz" -C "$GAMEDIR" && rm "$GAMEDIR/python.tar.gz"
 fi
 if [ ! -d "$GAMEDIR/pysdl2" ] && [ -f "$GAMEDIR/pysdl2.tar.gz" ]; then
-  echo "First run: extracting pysdl2..."
+  pm_message "First run: extracting pysdl2..."
   tar -xzf "$GAMEDIR/pysdl2.tar.gz" -C "$GAMEDIR" && rm "$GAMEDIR/pysdl2.tar.gz"
 fi
 
