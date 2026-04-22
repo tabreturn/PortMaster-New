@@ -59,7 +59,7 @@ echo "spruce: SPRUCE_SWAP_AB=${SPRUCE_SWAP_AB:-1} SPRUCE_SWAP_XY=${SPRUCE_SWAP_X
 # aren't copying 2400+ small files one at a time. Extract once, then
 # discard the tarballs so we don't waste flash.
 if [ ! -d "$GAMEDIR/python" ] && [ -f "$GAMEDIR/python.tar.gz" ]; then
-  echo "First run: extracting Python runtime..."
+  pm_message "First run: extracting Python runtime..."
   tar -xzf "$GAMEDIR/python.tar.gz" -C "$GAMEDIR" && rm "$GAMEDIR/python.tar.gz"
 fi
 if [ ! -d "$GAMEDIR/pysdl2" ] && [ -f "$GAMEDIR/pysdl2.tar.gz" ]; then
