@@ -29,7 +29,7 @@ export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 $ESUDO chmod +x $GAMEDIR/gmlnext.aarch64
 
-# Assign configs and load the game. And yes, im shortening it to gmlnext to deal with gptokeyb2 not shutting down properly, live with it.
+# Assign configs and load the game. To deal with gptokeyb2 not shutting down properly I need to shorten the binary name. 
 $GPTOKEYB2 "gmlnext.aarch64" -c ./khimera.gptk &
 pm_platform_helper "$GAMEDIR/gmlnext.aarch64"
 ./gmlnext.aarch64 -c "$GMLOADER_JSON"
