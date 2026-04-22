@@ -55,6 +55,18 @@ echo "spruce: SPRUCE_SWAP_AB=${SPRUCE_SWAP_AB:-1} SPRUCE_SWAP_XY=${SPRUCE_SWAP_X
 # SCREEN_WIDTH/SCREEN_HEIGHT aren't set. Export them here only to force a
 # specific resolution (e.g. for debugging on a desktop).
 
+# First-run extraction: python + pysdl2 ship as tarballs so FTP users
+# aren't copying 2400+ small files one at a time. Extract once, then
+# discard the tarballs so we don't waste flash.
+if [ ! -d "$GAMEDIR/python" ] && [ -f "$GAMEDIR/python.tar.gz" ]; then
+  echo "First run: extracting Python runtime..."
+  tar -xzf "$GAMEDIR/python.tar.gz" -C "$GAMEDIR" && rm "$GAMEDIR/python.tar.gz"
+fi
+if [ ! -d "$GAMEDIR/pysdl2" ] && [ -f "$GAMEDIR/pysdl2.tar.gz" ]; then
+  echo "First run: extracting pysdl2..."
+  tar -xzf "$GAMEDIR/pysdl2.tar.gz" -C "$GAMEDIR" && rm "$GAMEDIR/pysdl2.tar.gz"
+fi
+
 # Bundled Python + SDL2 live inside the port
 export PYTHONHOME="$GAMEDIR/python"
 export PYTHONPATH="$GAMEDIR/python/lib/python3.11:$GAMEDIR/python/lib/python3.11/lib-dynload:$GAMEDIR/pysdl2"
