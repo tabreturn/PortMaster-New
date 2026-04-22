@@ -45,8 +45,8 @@ Not fast, but the streaming makes it feel alive. A short response takes 10-30 se
 
 - First launch takes extra time to assemble the model from chunks (~30s one-time).
 - The port bundles its own Python 3.11 and SDL2 (~40MB), so it works without any PortMaster runtime.
-- Chat history lives in `ports/spruce_chat/conf/chat_history.jsonl`.
+- Chat history lives in `ports/sprucechat/conf/chat_history.jsonl`.
 
 ## License
 
-SpruceChat is MIT. See `spruce_chat/licenses/` for the licenses of bundled dependencies.
+SpruceChat is MIT. See `sprucechat/licenses/` for the licenses of bundled dependencies.

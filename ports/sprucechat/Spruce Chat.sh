@@ -16,7 +16,7 @@ source $controlfolder/control.txt
 [ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
 get_controls
 
-GAMEDIR="/$directory/ports/spruce_chat"
+GAMEDIR="/$directory/ports/sprucechat"
 CONFDIR="$GAMEDIR/conf"
 
 mkdir -p "$CONFDIR"
