@@ -1,8 +1,8 @@
-\## How to make it work
+## Credits
+this game was orginally made by nicmagnier his itch profile is https://nicmagnier.itch.io 
 
 
 
-First go to https://nicmagnier.itch.io/unlevel and install the .love file then place that .love file in ports\\unlevel\\gamedata then it should work!
 
 
 
