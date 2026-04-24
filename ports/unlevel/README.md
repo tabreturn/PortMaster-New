@@ -24,5 +24,5 @@ First go to https://nicmagnier.itch.io/unlevel and install the .love file then p
 
 | R1     | Level Change  |
 
-| START  | Space  |
+| START  | Proceed/tilt  |
 
