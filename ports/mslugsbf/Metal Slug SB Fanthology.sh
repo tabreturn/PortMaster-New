@@ -29,16 +29,20 @@ $ESUDO chmod +x $GAMEDIR/gmloadernext.aarch64
 export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
-# Prepare game files
-if [ -f ./assets/data.win ]; then
-	# Apply a patch
-	$controlfolder/xdelta3 -d -s "$GAMEDIR/assets/data.win" -f "$GAMEDIR/tools/patch.xdelta" "$GAMEDIR/assets/game.droid" 2>&1
-	echo "Patch has been applied"
-	# Delete all redundant files
-	rm -f assets/*.{exe,dll,win}
-	# Zip all game files into the mslugsbf.port
-	zip -r -0 ./mslugsbf.port ./assets/
-	rm -Rf ./assets/
+# Check if patchlog.txt to skip patching
+if [ ! -f patchlog.txt ] || [ -f "$GAMEDIR/assets/data.win" ]; then
+    if [ -f "$controlfolder/utils/patcher.txt" ]; then
+        export PATCHER_FILE="$GAMEDIR/tools/patchscript"
+        export PATCHER_GAME="$(basename "${0%.*}")" # This gets the current script filename without the extension
+        export PATCHER_TIME="a minute"
+        export controlfolder
+        export ESUDO
+        export DEVICE_ARCH
+        source "$controlfolder/utils/patcher.txt"
+        $ESUDO kill -9 $(pidof gptokeyb)
+    else
+        pm_message "This port requires the latest version of PortMaster."
+    fi
 fi
 
 # Assign configs and load the game
