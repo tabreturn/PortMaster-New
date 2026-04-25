@@ -9,7 +9,7 @@ Thanks go to the game's orginal creator, [nicmagnier](https://nicmagnier.itch.io
 | ------ | ------------ |
 | D-PAD  | Move         |
 | A/B    | Tilt level   |
-| A      | Space        |
-| R1     | Skip level   |
+| R1/R2  | Skip level   |
+| L1/L2  | Restart      |
 | START  | Proceed/tilt |
-
+ 
