@@ -45,7 +45,7 @@ if [ ! -f "$GAMEDIR/gamedata/sdlboot.dat" ] || [ ! -f "$GAMEDIR/gamedata/evo2.pa
 fi
 
 # Run patcher if needed (version must match)
-PATCH_VERSION="4"
+PATCH_VERSION="5"
 if [ ! -f "$GAMEDIR/gamedata/.patched_complete" ] || [ "$(cat "$GAMEDIR/gamedata/.patched_complete")" != "$PATCH_VERSION" ]; then
     export PATCHER_FILE="$GAMEDIR/patch/patch.bash"
     export PATCHER_GAME="Evoland Legendary Edition"

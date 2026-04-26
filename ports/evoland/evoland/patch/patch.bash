@@ -43,7 +43,7 @@ trap 'kill 0 2>/dev/null; exit 1' HUP INT TERM
 # --- Version markers ---
 # Bump these to force a step to re-run on devices with stale markers.
 
-V_COMPILE="6"          # Step 2: el-patch-all + hl2llvm
+V_COMPILE="7"          # Step 2: el-patch-all + hl2llvm
 V_PAK_EXTRACT="2"
 V_OGG="1"
 V_ASTC="1"
