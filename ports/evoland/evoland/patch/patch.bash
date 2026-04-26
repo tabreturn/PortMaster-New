@@ -471,7 +471,7 @@ else
     echo "Step 6: Repack PAK files... OK"
 fi
 
-echo "4" > "$GAMEDATA/.patched_complete"
+echo "5" > "$GAMEDATA/.patched_complete"
 
 echo ""
 echo "=== Patching complete ==="
