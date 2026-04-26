@@ -29,8 +29,14 @@ shotgunking/
 ```
 
 ## Controls
-Standard gamepad controls — d-pad for movement, buttons for
-actions. Right stick to aim, right trigger to fire.
+D-pad moves the king, R2 fires the shotgun. Aiming depends on
+how many analog sticks your device has:
+
+- **Two sticks:** right stick aims (default).
+- **One stick:** the left stick is folded into aim — push it any
+  direction to aim there.
+- **No sticks:** hold **L2** to turn the d-pad into a mouse cursor,
+  then press **R2** (or **A**) to fire.
 
 ## Technical Details
 This port uses [Machismo](https://github.com/bmdhacks/machismo) to load the arm64 Mach-O binary on aarch64 Linux.
