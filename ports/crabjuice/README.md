@@ -17,6 +17,6 @@ If you like their work, please consider making a donation at [itch.io](https://d
 | Button    | Action        |
 | --------- | ------------- |
 | L-STICK   | Aim           |
-| A/B       | Jump / reel   |
+| A/B       | Jump & reel   |
 | R1/SELECT | Restart level |
 
