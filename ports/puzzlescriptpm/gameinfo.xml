@@ -5,7 +5,7 @@
     <name>Puzzle Script PM</name>
     <desc>Minimalist, text-based engine for creating grid-based puzzle games, often in the Sokoban style, where simple rules produce deep emergent gameplay. This port includes 50+ games and supports adding more.</desc>
     <releasedate>20131005T000000</releasedate>
-    <developer>increpare (Stephen Lavelle)</developer>
+    <developer>increpare</developer>
     <publisher>Self-Published</publisher>
     <genre>Puzzle</genre>
     <image>./puzzlescriptpm/screenshot.png</image>
