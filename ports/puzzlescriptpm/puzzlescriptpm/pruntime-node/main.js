@@ -221,7 +221,7 @@ function showMenu() {
   function drawMenu() {
     __menuPx.fill(COL_BG);
     menuFillRect(0, 0, SCREEN_W, headerH, COL_HEADER);
-    menuDrawText('PUZZLESCRIPT', 10, FONT_SCALE * 2, 0xFFFFFFFF, FONT_SCALE + 1);
+    menuDrawText('PUZZLESCRIPT', 10, FONT_SCALE * 3, 0xFFFFFFFF, FONT_SCALE + 1);
     menuDrawText(gamesList.length + ' GAMES', SCREEN_W - FONT_SCALE * 50, FONT_SCALE * 4, COL_TEXT, FONT_SCALE);
 
     for (let i = 0; i < visibleItems && i + scrollOffset < gamesList.length; i++) {
