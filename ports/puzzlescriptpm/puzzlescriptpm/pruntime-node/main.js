@@ -535,15 +535,57 @@ global.killAudioButton = function() {};
 global.showAudioButton = function() {};
 global.jumpToLine = function() {};
 global.printLevel = function() {};
-global.playSound = function() {};
+// playSound is defined by sfxr.js when engine loads
 global.toggleMute = function() {};
 global.makeGIF = function() {};
 global.saveClick = function() {};
 global.runClick = function() {};
 global.rebuildClick = function() {};
 
+// audio: real pcm generation + aplay playback
+const { execFile } = require('child_process');
+
 global.AudioContext = function() {
-  return { state: 'running', resume: function() { return { then: function(){} }; }, createBuffer: function() { return { getChannelData: function() { return []; } }; } };
+  return {
+    state: 'running',
+    resume: function() { return { then: function(){} }; },
+    createBuffer: function(channels, length, sampleRate) {
+      const data = new Float32Array(length);
+      return {
+        _data: data,
+        _sampleRate: sampleRate,
+        getChannelData: function() { return data; }
+      };
+    },
+    createBufferSource: function() {
+      return {
+        buffer: null,
+        connect: function() {},
+        start: function() {
+          if (this.buffer && this.buffer._data) {
+            const pcm = this.buffer._data;
+            const rate = this.buffer._sampleRate || 44100;
+            const buf = Buffer.alloc(pcm.length * 2);
+            for (let i = 0; i < pcm.length; i++) {
+              let s = Math.max(-1, Math.min(1, pcm[i]));
+              buf.writeInt16LE(Math.round(s * 32767), i * 2);
+            }
+            const proc = execFile('aplay', [
+              '-f', 'S16_LE', '-r', String(rate), '-c', '1', '-q'
+            ], function() {});
+            if (proc && proc.stdin) {
+              proc.stdin.write(buf);
+              proc.stdin.end();
+            }
+          }
+        }
+      };
+    },
+    createBiquadFilter: function() {
+      return { frequency: { value: 0 }, connect: function() {} };
+    },
+    destination: {}
+  };
 };
 global.webkitAudioContext = global.AudioContext;
 
@@ -625,13 +667,18 @@ var _origRedraw = redraw;
 redraw = function() { _origRedraw(); globalThis.__dirty = true; };
 
 window.requestAnimationFrame = function() {};
-playSound = function() {};
 
 titletemplate_controls.arrows = ".D-Pad to move....................";
 titletemplate_controls.action = ".A to action......................";
 titletemplate_controls.undorestart = ".B to undo, R1 to restart........";
 titletemplate_controls.undo = ".B to undo........................";
 titletemplate_controls.restart = ".R1 to restart....................";
+
+// expose to global for new Function() generated code and external access
+globalThis.playSound = playSound;
+globalThis.checkKey = checkKey;
+globalThis.update = update;
+globalThis.compile = compile;
 
 levelString = __gameSource;
 compile(['restart'], __gameSource);
