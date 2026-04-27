@@ -54,3 +54,4 @@ printf "\033[?25h" > /dev/tty0 2>/dev/null
 
 # cleanup
 pm_finish
+
