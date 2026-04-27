@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./JS Game Launcher.sh</path>
+    <name>JS Game Launcher</name>
+    <desc>A compatibility layer for JavaScript games to run without a browser using standard web APIs. Supports Canvas 2D, WebGL, WebAudio, Gamepad API, and more.</desc>
+    <developer>Luis Montes</developer>
+    <publisher>monteslu</publisher>
+    <genre>Utility</genre>
+  </game>
+</gameList>

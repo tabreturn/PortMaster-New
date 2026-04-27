@@ -1,0 +1,62 @@
+#!/bin/bash
+
+XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+
+if [ -d "/opt/system/Tools/PortMaster/" ]; then
+  controlfolder="/opt/system/Tools/PortMaster"
+elif [ -d "/opt/tools/PortMaster/" ]; then
+  controlfolder="/opt/tools/PortMaster"
+elif [ -d "$XDG_DATA_HOME/PortMaster/" ]; then
+  controlfolder="$XDG_DATA_HOME/PortMaster"
+else
+  controlfolder="/roms/ports/PortMaster"
+fi
+
+# pm
+source $controlfolder/control.txt
+[ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
+get_controls
+
+# variables
+GAMEDIR="/$directory/ports/jsgamelauncher"
+ROM="$GAMEDIR/games/demo/demo.jsg"
+
+# cd & logging
+cd "$GAMEDIR"
+> "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
+
+# exports
+export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
+
+# extract node binary on first run
+if [ ! -f "$GAMEDIR/node" ]; then
+  pm_message "Extracting node binary ..."
+  if "$controlfolder/7zzs.$DEVICE_ARCH" x "$GAMEDIR/node.7z" -o"$GAMEDIR" -y; then
+    chmod +x "$GAMEDIR/node"
+    rm -f "$GAMEDIR/node.7z"
+  else
+    pm_message "extraction failed!"
+    pm_finish
+    exit 1
+  fi
+fi
+# extract node_modules on first run
+if [ ! -d "$GAMEDIR/node_modules" ]; then
+  pm_message "Extracting node_modules ..."
+  if "$controlfolder/7zzs.$DEVICE_ARCH" x "$GAMEDIR/node_modules.7z" -o"$GAMEDIR" -y; then
+    rm -f "$GAMEDIR/node_modules.7z"
+  else
+    pm_message "extraction failed!"
+    pm_finish
+    exit 1
+  fi
+fi
+
+# run
+$GPTOKEYB "node" -c "$GAMEDIR/inputs.gptk" &
+pm_platform_helper "node"
+./node ./index.js -rom "$ROM" -fullscreen
+
+# cleanup
+pm_finish
+

@@ -1,0 +1,39 @@
+{
+  "version": 4,
+  "name": "jsgamelauncher.zip",
+  "items": [
+    "JS Game Launcher.sh",
+    "jsgamelauncher"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "JS Game Launcher",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "A compatibility layer for JavaScript games to run without a browser using standard web APIs. Supports Canvas 2D, WebGL, WebAudio, Gamepad API, and more. Run browser-targeted JS games on retro handhelds.",
+    "desc_md": null,
+    "inst": "Place .jsg game folders in roms/jsgames/. Each game needs a game.js (or main.js/index.js) and a .jsg file.",
+    "inst_md": null,
+    "genres": [
+      "utility"
+    ],
+    "image": {},
+    "rtr": true,
+    "exp": true,
+    "runtime": null,
+    "store": [
+      {
+        "name": "GitHub",
+        "gameurl": "https://github.com/monteslu/jsgamelauncher",
+        "developerurl": "https://github.com/monteslu"
+      }
+    ],
+    "availability": "free",
+    "reqs": [],
+    "arch": [
+      "aarch64"
+    ],
+    "min_glibc": ""
+  }
+}
