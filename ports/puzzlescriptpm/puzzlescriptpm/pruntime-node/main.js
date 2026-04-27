@@ -264,7 +264,8 @@ function showMenu() {
       } else if (key === KEY_X || key === KEY_SPACE || key === KEY_ENTER) {
         return gamesList[selection].file;
       } else if (key === KEY_ESC) {
-        return null;
+        flushSaves();
+        process.exit(0);
       }
     }
     if (needsRedraw) {
@@ -720,45 +721,28 @@ function pollInput() {
   return null;
 }
 
-// main loop (menu -> game -> menu -> ...)
+// main loop
 process.stderr.write('Entering game loop\n');
-let appRunning = true;
 
-while (appRunning) {
-  let playing = true;
-  while (playing) {
-    const start = Date.now();
+while (true) {
+  const start = Date.now();
 
-    const result = pollInput();
-    if (result === 'quit') { playing = false; break; }
+  const result = pollInput();
+  if (result === 'quit') break;
 
-    global.deltatime = FRAME_MS;
-    if (typeof global.update === 'function') global.update();
+  global.deltatime = FRAME_MS;
+  if (typeof global.update === 'function') global.update();
 
-    if (global.__dirty) {
-      flushDisplay(__framebuf);
-      global.__dirty = false;
-    }
-
-    if ((start % 2000) < FRAME_MS) flushSaves();
-
-    const elapsed = Date.now() - start;
-    if (elapsed < FRAME_MS) sleep(FRAME_MS - elapsed);
+  if (global.__dirty) {
+    flushDisplay(__framebuf);
+    global.__dirty = false;
   }
 
-  flushSaves();
+  if ((start % 2000) < FRAME_MS) flushSaves();
 
-  if (!gamesList) { appRunning = false; break; }
-
-  gameSource = selectGame();
-  if (!gameSource) { appRunning = false; break; }
-
-  global.__gameSource = gameSource;
-  global.__gameId = 'ps://' + gameId;
-  global.document.URL = global.__gameId;
-  global.levelString = gameSource;
-  global.compile(['restart'], gameSource);
-  process.stderr.write('Loaded: ' + gameId + '\n');
+  const elapsed = Date.now() - start;
+  if (elapsed < FRAME_MS) sleep(FRAME_MS - elapsed);
 }
 
+flushSaves();
 process.exit(0);
