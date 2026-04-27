@@ -52,6 +52,7 @@ if (gamesDir) {
     if (m) title = m[1].trim();
     gamesList.push({ file: gamesDir + fname, title: title });
   }
+  gamesList.sort(function(a, b) { return a.title.toLowerCase().localeCompare(b.title.toLowerCase()); });
   process.stderr.write('Found ' + gamesList.length + ' games\n');
 }
 
