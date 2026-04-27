@@ -4,17 +4,15 @@ Thanks to [increpare](https://www.increpare.com) for creating the fantastic Puzz
 
 ## Controls
 
-| Button     | Action                |
-| ---------- | --------------------- |
-| *Menu*     |                       |
-| UP/DOWN    | Up/down one entry     |
-| LEFT/RIGHT | Page up/down          |
-| SELECT     | Quit                  |
-| *In game*  |                       |
-| D-PAD      | Move                  |
-| X          | Action                |
-| B          | Undo                  |
-| R1         | Restart               |
-| SELECT     | Quit to selector menu |
-
-
+| Button     | Action            |
+| ---------- | ----------------- |
+| *Menu*     |                   |
+| UP/DOWN    | Up/down one entry |
+| LEFT/RIGHT | Page up/down      |
+| *In game*  |                   |
+| D-PAD      | Move              |
+| X          | Action            |
+| B          | Undo              |
+| R1         | Restart           |
+| *Anytime*  |                   |
+| SELECT     | Quit PuzzleScript |
