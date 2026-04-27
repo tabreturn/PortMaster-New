@@ -26,9 +26,16 @@ cd "$GAMEDIR"
 
 # extract node binary on first run
 if [ ! -f "$GAMEDIR/node" ]; then
-  "$controlfolder/7zzs.$DEVICE_ARCH" x "$GAMEDIR/node.7z" -o"$GAMEDIR" -y
-  chmod +x "$GAMEDIR/node"
-  rm -f "$GAMEDIR/node.7z"
+  echo "Extracting node binary..."
+  if "$controlfolder/7zzs.$DEVICE_ARCH" x "$GAMEDIR/node.7z" -o"$GAMEDIR" -y; then
+    echo "Extraction successful."
+    chmod +x "$GAMEDIR/node"
+    rm -f "$GAMEDIR/node.7z"
+  else
+    echo "Extraction failed!"
+    pm_finish
+    exit 1
+  fi
 fi
 
 # enable logging
@@ -44,9 +51,22 @@ printf "\033[2J" > /dev/tty0 2>/dev/null
 stty -echo < /dev/tty0 2>/dev/null
 
 # run
-$GPTOKEYB "node" -c "./inputs.gptk" &
-pm_platform_helper "node"
-./node ./pruntime-node/main.js ./games/
+if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
+  # pipe through sdl2fb for display
+  export SDL2FB=1
+  export XDG_RUNTIME_DIR=/var/run/0-runtime-dir
+  export WAYLAND_DISPLAY=wayland-1
+  export SDL_VIDEODRIVER=wayland
+  export SDL_APP_ID=sdl2fb
+  $GPTOKEYB "node" -c "./inputs.gptk" &
+  pm_platform_helper "box64"
+  ./node ./pruntime-node/main.js ./games/ | ./sdl2fb
+else
+  # direct framebuffer access (most firmware)
+  $GPTOKEYB "node" -c "./inputs.gptk" &
+  pm_platform_helper "node"
+  ./node ./pruntime-node/main.js ./games/
+fi
 
 # restore console
 stty echo < /dev/tty0 2>/dev/null

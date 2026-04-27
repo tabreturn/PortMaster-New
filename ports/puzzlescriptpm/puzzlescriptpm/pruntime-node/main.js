@@ -192,7 +192,7 @@ function menuDrawText(str, x, y, color, scale) {
 
 function flushDisplay(buf) {
   if (useStdout) {
-    process.stdout.write(buf);
+    fs.writeSync(1, buf, 0, FB_SIZE);
   } else {
     fs.writeSync(fbFd, buf, 0, FB_SIZE, 0);
   }
