@@ -24,9 +24,9 @@ CONFDIR="$GAMEDIR/conf/"
 # cd & permissions
 cd "$GAMEDIR"
 
-# extract node binary on first run
+# extract node binary on first run (a quick task, so no need for pm_message)
 if [ ! -f "$GAMEDIR/node" ]; then
-  echo "Extracting node binary..."
+  echo "Extracting node binary ..."
   if "$controlfolder/7zzs.$DEVICE_ARCH" x "$GAMEDIR/node.7z" -o"$GAMEDIR" -y; then
     echo "Extraction successful."
     chmod +x "$GAMEDIR/node"
@@ -41,10 +41,6 @@ fi
 # enable logging
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
-# exports
-#export LD_LIBRARY_PATH="/usr/lib:$GAMEDIR/lib:$GAMEDIR/lib:$LD_LIBRARY_PATH"
-#export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
-
 # suppress console text on framebuffer
 printf "\033[?25l" > /dev/tty0 2>/dev/null
 printf "\033[2J" > /dev/tty0 2>/dev/null
@@ -58,6 +54,7 @@ if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
   export WAYLAND_DISPLAY=wayland-1
   export SDL_VIDEODRIVER=wayland
   export SDL_APP_ID=sdl2fb
+  chmod +x ./sdl2fb
   $GPTOKEYB "node" -c "./inputs.gptk" &
   pm_platform_helper "box64"
   ./node ./pruntime-node/main.js ./games/ | ./sdl2fb
@@ -74,4 +71,3 @@ printf "\033[?25h" > /dev/tty0 2>/dev/null
 
 # cleanup
 pm_finish
-
