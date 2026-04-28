@@ -59,7 +59,7 @@ if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
   export SDL_VIDEODRIVER=wayland
   export SDL_APP_ID=jsgamelauncher
   export JSG_NO_EGL=1
-  # Override bundled SDL2 with system Wayland-capable one
+  # override bundled sdl2 with system wayland-capable one
   if [ -f /usr/lib/libSDL2-2.0.so.0 ]; then
     export LD_PRELOAD=/usr/lib/libSDL2-2.0.so.0
   fi
