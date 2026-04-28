@@ -72,7 +72,11 @@ if [ ! -f "$VERSION_FILE" ]; then
     echo "patch version file missing at $VERSION_FILE"
     exit 1
 fi
-WANT_VERSION="$(cat "$VERSION_FILE")"
+# Stick count is baked into the effective version so that moving the SD
+# card between a 1-stick and 2-stick device triggers a re-patch (which
+# adds or removes the one-stick aim mutation accordingly). Launch script
+# composes the same suffix when deciding whether to invoke the patcher.
+WANT_VERSION="$(cat "$VERSION_FILE").s${ANALOGSTICKS:-x}"
 
 if [ -f "$STAMP" ]; then
     HAVE_VERSION="$(cat "$STAMP")"
@@ -152,6 +156,82 @@ else
     # Post-check
     if ! grep -q "AUTO-PACE" "$CODE"; then
         echo "  auto-pace insert failed — landmark 'local fst=fast' not found"
+        exit 1
+    fi
+fi
+
+# ------------------------------------------------------------------
+# Apply the one-stick aim mutation to code/gamepad.lua.
+#
+# The shotgun is aimed with the right analog stick only. On single-stick
+# handhelds (RG40xx-v etc.) the player has no way to aim. We fold the
+# physical left stick into the aim vector so any lstick deflection drives
+# aim. Dpad still drives move_ctrl from its own path, so movement is
+# unaffected.
+#
+# The game's existing "leftStickX+/-" logical buttons are bound to BOTH
+# c:lstick:* AND c:dpad:* (see INPUT_ASSIGNEMENT), so reading those would
+# let the dpad trigger aim mode. We define lsxp/lsxn/lsyp/lsyn bound to
+# only c:lstick:* via a lazy defbtn at the aim site, and read those.
+#
+# Only applied on single-stick devices ($ANALOGSTICKS = 1). On 2-stick
+# devices the right stick already aims natively, and on 0-stick devices
+# the gptokeyb dpad-as-mouse overlay handles aim instead.
+#
+# Idempotent — sentinel "ONE-STICK".
+# ------------------------------------------------------------------
+GAMEPAD="$TMPDIR/code/gamepad.lua"
+if [ ! -f "$GAMEPAD" ]; then
+    echo "  code/gamepad.lua missing from extracted .sgr"
+    exit 1
+fi
+if [ "$ANALOGSTICKS" != "1" ]; then
+    echo "  code/gamepad.lua: skipping one-stick mutation (ANALOGSTICKS=${ANALOGSTICKS:-unset})"
+elif grep -q "ONE-STICK" "$GAMEPAD"; then
+    echo "  code/gamepad.lua already patched — skipping mutation"
+else
+    tr -d '\r' < "$GAMEPAD" | awk '
+    {
+        print
+        if (!done && /^\t\t\t\tlocal normR = sqrt\(smoothAim/) {
+            print "\t\t\t\t"
+            print "\t\t\t\t-- ONE-STICK: fold the physical left stick into aim so single-stick"
+            print "\t\t\t\t-- handhelds (RG40xx-v etc.) can aim. The default leftStickX+/- buttons"
+            print "\t\t\t\t-- are dpad-merged, so we lazy-bind lsxp/lsxn/lsyp/lsyn to JUST c:lstick:*"
+            print "\t\t\t\t-- and read those — dpad presses leave _Lx/_Ly at zero so movement is"
+            print "\t\t\t\t-- unaffected."
+            print "\t\t\t\tif not _ONE_STICK_INIT then"
+            print "\t\t\t\t\tdefbtn(\"lsxp\", 0, \"c:lstick:right\")"
+            print "\t\t\t\t\tdefbtn(\"lsxn\", 0, \"c:lstick:left\")"
+            print "\t\t\t\t\tdefbtn(\"lsyp\", 0, \"c:lstick:down\")"
+            print "\t\t\t\t\tdefbtn(\"lsyn\", 0, \"c:lstick:up\")"
+            print "\t\t\t\t\t_ONE_STICK_INIT = true"
+            print "\t\t\t\tend"
+            print "\t\t\t\tlocal _Lx = btnv(\"lsxp\") - btnv(\"lsxn\")"
+            print "\t\t\t\tlocal _Ly = btnv(\"lsyp\") - btnv(\"lsyn\")"
+            print "\t\t\t\tif _Lx ~= 0 or _Ly ~= 0 then"
+            print "\t\t\t\t\tlocal _xm = (btnv(\"rightStickX+\") - btnv(\"rightStickX-\")) + _Lx"
+            print "\t\t\t\t\tlocal _ym = (btnv(\"rightStickY+\") - btnv(\"rightStickY-\")) + _Ly"
+            print "\t\t\t\t\tlocal _nm = sqrt(_xm*_xm + _ym*_ym)"
+            print "\t\t\t\t\tif _nm > 1 then _xm, _ym = _xm/_nm, _ym/_nm end"
+            print "\t\t\t\t\tsmoothAim.x = lerp(smoothAim.x, _xm, 0.5)"
+            print "\t\t\t\t\tsmoothAim.y = lerp(smoothAim.y, _ym, 0.5)"
+            print "\t\t\t\t\tnormR = sqrt(smoothAim.x*smoothAim.x + smoothAim.y*smoothAim.y)"
+            print "\t\t\t\t\tnormL = 0"
+            print "\t\t\t\tend"
+            done = 1
+        }
+    }
+    END {
+        if (!done) {
+            print "ERROR: landmark not found in code/gamepad.lua" > "/dev/stderr"
+            exit 1
+        }
+    }
+    ' > "$GAMEPAD.new"
+    mv "$GAMEPAD.new" "$GAMEPAD"
+    if ! grep -q "ONE-STICK" "$GAMEPAD"; then
+        echo "  one-stick insert failed — landmark 'local normR = sqrt(smoothAim' not found"
         exit 1
     fi
 fi

@@ -29,8 +29,14 @@ fi
 
 # Audio optimization: re-encode OGG/WAV to 22050 Hz mono to reduce
 # decoded PCM memory (Sugar engine decodes all audio at startup).
-# Runs once on first launch via PortMaster's patcher framework.
-if [ ! -f "$GAMEDIR/gamedata/.patched" ]; then
+# Runs once on first launch via PortMaster's patcher framework. Re-runs
+# when the stick count changes (SD card moved between devices) so the
+# one-stick aim mutation gets added or removed accordingly. Suffix
+# format must match WANT_VERSION composition in patch/patch.bash.
+export ANALOGSTICKS
+WANT_PATCH_VERSION="$(cat "$GAMEDIR/patch/version" 2>/dev/null).s${ANALOGSTICKS:-x}"
+HAVE_PATCH_VERSION="$(cat "$GAMEDIR/gamedata/.patched" 2>/dev/null)"
+if [ "$HAVE_PATCH_VERSION" != "$WANT_PATCH_VERSION" ]; then
     PATCHER_TIME="~2 minutes"
 fi
 if [ -n "${PATCHER_TIME:-}" ]; then
@@ -46,7 +52,7 @@ if [ -n "${PATCHER_TIME:-}" ]; then
         sleep 5
         exit 1
     fi
-    if [ ! -f "$GAMEDIR/gamedata/.patched" ]; then
+    if [ "$(cat "$GAMEDIR/gamedata/.patched" 2>/dev/null)" != "$WANT_PATCH_VERSION" ]; then
         echo "Patching failed"
         sleep 5
         exit 1
@@ -68,7 +74,14 @@ $ESUDO "$GAMEDIR/tools/splash" "$GAMEDIR/splash.png" 8000 &
 # `shaderless` skips the CRT post-process shader — on Adreno (Snapdragon)
 # + Mesa the uniforms get silently eliminated and the final blit comes out
 # black even though the scene underneath draws fine. Wider-compat default.
-$GPTOKEYB "machismo" &
+# On stick-equipped devices the game uses xbox360 controller passthrough.
+# On stick-less devices, load a gptk that turns the dpad into a mouse
+# while L2 is held so the player can still aim the shotgun.
+if [ "$ANALOGSTICKS" = "0" ]; then
+    $GPTOKEYB2 "machismo" -c "$GAMEDIR/shotgunking/shotgunking.gptk" &
+else
+    $GPTOKEYB "machismo" &
+fi
 pm_platform_helper "$GAMEDIR/bin/machismo" > /dev/null
 $ESUDO env \
     SDL_GAMEPADMAPPINGS="$sdl_controllerconfig" \
