@@ -345,23 +345,32 @@ async function main() {
   let blitTexture = null;
   let flipYLoc = null;
 
-  // Try fbdev window surface BEFORE creating SDL window (order matters on Mali fbdev)
-  try {
-    console.log('Trying EGL: fbdev window surface');
-    const displayResult = createWebGL2Context(DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, { windowSurface: true });
-    displayGl = displayResult.gl;
-    displaySwapBuffers = displayResult.swapBuffers;
-    if (displayResult.setSwapInterval) {
-      displayResult.setSwapInterval(0);
-      console.log('Vsync disabled (swap interval 0)');
+  if (!process.env.JSG_NO_EGL) {
+    // Try fbdev window surface BEFORE creating SDL window (order matters on Mali fbdev)
+    // Skip on Wayland (ROCKNIX) — fbdev EGL conflicts with the compositor
+    if (!process.env.WAYLAND_DISPLAY) {
+      try {
+        console.log('Trying EGL: fbdev window surface');
+        const displayResult = createWebGL2Context(DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, { windowSurface: true });
+        displayGl = displayResult.gl;
+        displaySwapBuffers = displayResult.swapBuffers;
+        if (displayResult.setSwapInterval) {
+          displayResult.setSwapInterval(0);
+          console.log('Vsync disabled (swap interval 0)');
+        }
+        displayMakeCurrent = displayResult.makeCurrent;
+        setDisplayContext(displayGl, displaySwapBuffers);
+        console.log('EGL context created via fbdev window surface');
+      } catch (e) {
+        console.log('EGL fbdev failed:', e.message);
+        displayGl = null;
+        displaySwapBuffers = null;
+      }
+    } else {
+      console.log('Skipping fbdev EGL (Wayland detected)');
     }
-    displayMakeCurrent = displayResult.makeCurrent;
-    setDisplayContext(displayGl, displaySwapBuffers);
-    console.log('EGL context created via fbdev window surface');
-  } catch (e) {
-    console.log('EGL fbdev failed:', e.message);
-    displayGl = null;
-    displaySwapBuffers = null;
+  } else {
+    console.log('EGL disabled via JSG_NO_EGL');
   }
 
   // Create SDL window (after EGL on fbdev, so EGL owns the display)
@@ -375,7 +384,7 @@ async function main() {
   }
 
   // If fbdev failed, try native window handle (desktop X11/Wayland)
-  if (!displayGl) {
+  if (!displayGl && !process.env.JSG_NO_EGL) {
     try {
       appWindow.destroy();
       appWindow = sdl.video.createWindow({ width: DEFAULT_GAME_WIDTH, height: DEFAULT_GAME_HEIGHT, resizable: true, fullscreen, opengl: true });

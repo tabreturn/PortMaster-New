@@ -53,9 +53,24 @@ if [ ! -d "$GAMEDIR/node_modules" ]; then
 fi
 
 # run
-$GPTOKEYB "node" -c "$GAMEDIR/inputs.gptk" &
-pm_platform_helper "node"
-./node ./index.js -rom "$ROM" -fullscreen
+if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
+  export XDG_RUNTIME_DIR=/var/run/0-runtime-dir
+  export WAYLAND_DISPLAY=wayland-1
+  export SDL_VIDEODRIVER=wayland
+  export SDL_APP_ID=jsgamelauncher
+  export JSG_NO_EGL=1
+  # Override bundled SDL2 with system Wayland-capable one
+  if [ -f /usr/lib/libSDL2-2.0.so.0 ]; then
+    export LD_PRELOAD=/usr/lib/libSDL2-2.0.so.0
+  fi
+  $GPTOKEYB "node" -c "$GAMEDIR/inputs.gptk" &
+  pm_platform_helper "jsgamelauncher"
+  ./node ./index.js -rom "$ROM" -fullscreen
+else
+  $GPTOKEYB "node" -c "$GAMEDIR/inputs.gptk" &
+  pm_platform_helper "node"
+  ./node ./index.js -rom "$ROM" -fullscreen
+fi
 
 # cleanup
 pm_finish
