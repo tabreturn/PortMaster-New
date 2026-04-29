@@ -1,0 +1,8 @@
+XZ Utils (liblzma)
+https://tukaani.org/xz/
+
+License: Public Domain / LGPL-2.1-or-later
+
+The library liblzma is in the public domain unless stated otherwise in
+individual source files. The helper scripts and documentation are under
+various free software licenses.

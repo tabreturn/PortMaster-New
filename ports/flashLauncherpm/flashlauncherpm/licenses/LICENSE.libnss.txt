@@ -1,0 +1,8 @@
+NSS - Network Security Services (libnss3, libnspr4, libnssutil3, libplc4, libplds4, libsmime3, libssl3)
+https://firefox-source-docs.mozilla.org/security/nss/
+
+License: MPL-2.0
+
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.

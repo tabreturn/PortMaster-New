@@ -1,0 +1,11 @@
+Adobe AIR Runtime (bundled as captive runtime)
+Maintained by Harman International (https://airsdk.harman.com/)
+
+The Adobe AIR runtime is included as a captive runtime bundle as part of
+the FlashLauncherZJ application (https://github.com/StarCatL/FlashLauncherZJ).
+
+Adobe AIR is proprietary software. Redistribution is permitted under
+Harman's captive runtime licensing model, which allows developers to
+bundle the AIR runtime with their applications.
+
+Adobe, AIR, and Flash are trademarks of Adobe Inc.

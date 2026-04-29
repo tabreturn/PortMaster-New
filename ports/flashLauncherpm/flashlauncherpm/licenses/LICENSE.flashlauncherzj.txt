@@ -1,0 +1,8 @@
+FlashLauncherZJ
+https://github.com/StarCatL/FlashLauncherZJ
+
+Flash Player for Open Source Handheld Game Consoles
+Original author: StarCatL (星辰猫)
+
+This port is based on the FlashLauncherZJ project.
+No explicit license was provided in the original repository.

@@ -1,0 +1,8 @@
+Westonpack (weston_pkg_0.2 runtime used for X11 display)
+https://github.com/binarycounter/Westonpack
+
+License: MIT
+
+Westonpack is a PortMaster runtime that provides Weston compositor,
+Xwayland, and display infrastructure for running X11 applications
+on handheld Linux devices.

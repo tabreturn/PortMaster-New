@@ -1,0 +1,12 @@
+libpng
+http://www.libpng.org/
+
+License: libpng-2.0
+
+Copyright (c) 1995-2022 The PNG Reference Library Authors.
+Copyright (c) 2018-2022 Cosmin Truta.
+
+The PNG Reference Library is supplied "AS IS". The Contributing Authors
+and Group 42, Inc. disclaim all warranties, expressed or implied,
+including, without limitation, the warranties of merchantability and of
+fitness for any particular purpose.

@@ -1,0 +1,12 @@
+Cairo
+https://www.cairographics.org/
+
+License: LGPL-2.1-only OR MPL-1.1
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of either:
+  - the GNU Lesser General Public License as published by the Free
+    Software Foundation; either version 2.1 of the License, or (at your
+    option) any later version.
+or
+  - the Mozilla Public License Version 1.1
