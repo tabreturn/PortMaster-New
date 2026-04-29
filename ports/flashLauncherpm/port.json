@@ -1,0 +1,41 @@
+{
+  "version": 4,
+  "name": "flashlauncher.zip",
+  "items": [
+    "flashlauncher.sh",
+    "flashlauncher"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Flash Launcher",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "A Flash/SWF game player for handheld Linux devices. Based on FlashLauncherZJ by StarCatL, using Adobe AIR runtime with a Love2D game selection menu. Plays classic Flash games (SWF files) natively on ARM handhelds via PortMaster.",
+    "desc_md": null,
+    "inst": "Place .swf game files in ports/flashlauncher/programs/ (each in its own subfolder). Launch from Ports menu, select a game, and play.",
+    "inst_md": null,
+    "genres": [
+      "other"
+    ],
+    "image": {},
+    "rtr": true,
+    "exp": true,
+    "runtime": "love_11.5",
+    "store": [
+      {
+        "name": "GitHub",
+        "gameurl": "https://github.com/StarCatL/FlashLauncherZJ",
+        "developerurl": "https://github.com/StarCatL"
+      }
+    ],
+    "availability": "free",
+    "reqs": [
+      "weston_pkg_0.2"
+    ],
+    "arch": [
+      "aarch64"
+    ],
+    "min_glibc": ""
+  }
+}

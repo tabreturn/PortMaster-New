@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./flashlauncher.sh</path>
+    <name>Flash Launcher</name>
+    <desc>A Flash/SWF game player for handheld Linux devices. Based on FlashLauncherZJ by StarCatL. Uses Adobe AIR runtime with a Love2D game selection menu to play classic Flash games natively.</desc>
+    <developer>StarCatL</developer>
+    <publisher>StarCatL</publisher>
+    <genre>Utility</genre>
+  </game>
+</gameList>
