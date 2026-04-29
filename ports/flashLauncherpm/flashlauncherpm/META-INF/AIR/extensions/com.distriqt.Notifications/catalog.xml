@@ -1,0 +1,183 @@
+<?xml version="1.0" ?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+    <versions>
+        <swc version="1.2"/>
+        <compiler name="ActionScript Compiler" version="3.0.0" build="0"/>
+    </versions>
+    <features>
+        <feature-script-deps/>
+    </features>
+    <libraries>
+        <library path="library.swf">
+            <script name="com/distriqt/extension/notifications/AuthorisationStatus" mod="1723005244874">
+                <def id="com.distriqt.extension.notifications:AuthorisationStatus"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/Const" mod="1723074085556">
+                <def id="com.distriqt.extension.notifications:Const"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/Notification" mod="1723005244875">
+                <def id="com.distriqt.extension.notifications:Notification"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications:NotificationRepeatInterval" type="e"/>
+                <dep id="com.distriqt.extension.notifications:NotificationStyle" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/NotificationRepeatInterval" mod="1723005244875">
+                <def id="com.distriqt.extension.notifications:NotificationRepeatInterval"/>
+                <dep id="Object" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/NotificationStyle" mod="1723005244875">
+                <def id="com.distriqt.extension.notifications:NotificationStyle"/>
+                <dep id="Array" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/Notifications" mod="1723005244876">
+                <def id="com.distriqt.extension.notifications:Notifications"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Function" type="s"/>
+                <dep id="JSON" type="e"/>
+                <dep id="Object" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications:AuthorisationStatus" type="e"/>
+                <dep id="com.distriqt.extension.notifications:Const" type="e"/>
+                <dep id="com.distriqt.extension.notifications:Notification" type="s"/>
+                <dep id="com.distriqt.extension.notifications:Service" type="s"/>
+                <dep id="com.distriqt.extension.notifications.channels:Channel" type="e"/>
+                <dep id="com.distriqt.extension.notifications.channels:ChannelGroup" type="e"/>
+                <dep id="com.distriqt.extension.notifications.events:AuthorisationEvent" type="e"/>
+                <dep id="com.distriqt.extension.notifications.events:NotificationEvent" type="e"/>
+                <dep id="com.distriqt.extension.notifications.events:NotificationGroupEvent" type="e"/>
+                <dep id="flash.desktop:NativeApplication" type="e"/>
+                <dep id="flash.events:ErrorEvent" type="e"/>
+                <dep id="flash.events:Event" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+                <dep id="trace" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/Service" mod="1723005244876">
+                <def id="com.distriqt.extension.notifications:Service"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="__AS3__.vec:Vector" type="s"/>
+                <dep id="com.distriqt.extension.notifications.actions:Category" type="s"/>
+                <dep id="com.distriqt.extension.notifications.channels:Channel" type="s"/>
+                <dep id="com.distriqt.extension.notifications.channels:ChannelGroup" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/actions/Action" mod="1723005244876">
+                <def id="com.distriqt.extension.notifications.actions:Action"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/actions/Category" mod="1723005244876">
+                <def id="com.distriqt.extension.notifications.actions:Category"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="__AS3__.vec:Vector" type="s"/>
+                <dep id="com.distriqt.extension.notifications.actions:Action" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/builders/ActionBuilder" mod="1723005244876">
+                <def id="com.distriqt.extension.notifications.builders:ActionBuilder"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications.actions:Action" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/builders/CategoryBuilder" mod="1723005244877">
+                <def id="com.distriqt.extension.notifications.builders:CategoryBuilder"/>
+                <dep id="Error" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications.actions:Action" type="s"/>
+                <dep id="com.distriqt.extension.notifications.actions:Category" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/builders/ChannelBuilder" mod="1723005244877">
+                <def id="com.distriqt.extension.notifications.builders:ChannelBuilder"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications.channels:Channel" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/builders/NotificationBuilder" mod="1723005567881">
+                <def id="com.distriqt.extension.notifications.builders:NotificationBuilder"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Date" type="s"/>
+                <dep id="Error" type="e"/>
+                <dep id="Math" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications:Notification" type="s"/>
+                <dep id="com.distriqt.extension.notifications:NotificationRepeatInterval" type="e"/>
+                <dep id="com.distriqt.extension.notifications:NotificationStyle" type="s"/>
+                <dep id="com.distriqt.extension.notifications.builders:PathHelper" type="e"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/builders/NotificationStyleBuilder" mod="1723005567882">
+                <def id="com.distriqt.extension.notifications.builders:NotificationStyleBuilder"/>
+                <dep id="Error" type="e"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications:NotificationStyle" type="s"/>
+                <dep id="com.distriqt.extension.notifications.builders:PathHelper" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/builders/PathHelper" mod="1723005567882">
+                <def id="com.distriqt.extension.notifications.builders:PathHelper"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="com.distriqt.extension.notifications:Notifications" type="e"/>
+                <dep id="flash.filesystem:File" type="e"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/channels/Channel" mod="1723005244877">
+                <def id="com.distriqt.extension.notifications.channels:Channel"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/channels/ChannelGroup" mod="1723005244877">
+                <def id="com.distriqt.extension.notifications.channels:ChannelGroup"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/events/AuthorisationEvent" mod="1723005244878">
+                <def id="com.distriqt.extension.notifications.events:AuthorisationEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/events/NotificationEvent" mod="1723005244878">
+                <def id="com.distriqt.extension.notifications.events:NotificationEvent"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Number" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/distriqt/extension/notifications/events/NotificationGroupEvent" mod="1723005244878">
+                <def id="com.distriqt.extension.notifications.events:NotificationGroupEvent"/>
+                <dep id="Array" type="s"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="String" type="s"/>
+                <dep id="flash.events:Event" type="i"/>
+            </script>
+            <digests>
+                <digest type="SHA-256" signed="false" value="0f9d4939ab44e561fea73b5c85634ac80d7b91f595fd7d20b5d247d72b9fa6ba"/>
+            </digests>
+        </library>
+    </libraries>
+</swc>

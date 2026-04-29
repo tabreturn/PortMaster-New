@@ -1,0 +1,85 @@
+<extension xmlns="http://ns.adobe.com/air/extension/50.2">
+	<id>com.distriqt.StatusBar</id>
+	<versionNumber>0.9.0</versionNumber>
+	<platforms>
+
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.statusbar.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.statusbar.StatusBarExtension</initializer>
+				<finalizer>com.distriqt.extension.statusbar.StatusBarExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-ARM64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.statusbar.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.statusbar.StatusBarExtension</initializer>
+				<finalizer>com.distriqt.extension.statusbar.StatusBarExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x86">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.statusbar.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.statusbar.StatusBarExtension</initializer>
+				<finalizer>com.distriqt.extension.statusbar.StatusBarExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.statusbar.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.statusbar.StatusBarExtension</initializer>
+				<finalizer>com.distriqt.extension.statusbar.StatusBarExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libStatusBar.a</nativeLibrary>
+				<initializer>StatusBarExtInitializer</initializer>
+				<finalizer>StatusBarExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="iPhone-x86">
+			<applicationDeployment>
+				<nativeLibrary>libStatusBar.a</nativeLibrary>
+				<initializer>StatusBarExtInitializer</initializer>
+				<finalizer>StatusBarExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<!-- <platform name="appleTV-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libStatusBar.a</nativeLibrary>
+				<initializer>StatusBarExtInitializer</initializer>
+				<finalizer>StatusBarExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform> -->
+
+		<platform name="MacOS-x86-64">
+			<applicationDeployment>
+				<nativeLibrary>StatusBar.framework</nativeLibrary>
+				<initializer>StatusBarExtInitializer</initializer>
+				<finalizer>StatusBarExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="Windows-x86">
+			<applicationDeployment>
+				<nativeLibrary>StatusBar.dll</nativeLibrary>
+				<initializer>StatusBarExtInitializer</initializer>
+				<finalizer>StatusBarExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Windows-x86-64">
+			<applicationDeployment>
+				<nativeLibrary>StatusBar.dll</nativeLibrary>
+				<initializer>StatusBarExtInitializer</initializer>
+				<finalizer>StatusBarExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="default"> 
+			<applicationDeployment /> 
+		</platform>
+		
+	</platforms>
+</extension>

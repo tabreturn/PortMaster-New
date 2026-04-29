@@ -1,0 +1,70 @@
+<extension xmlns="http://ns.adobe.com/air/extension/33.1">
+	<id>com.distriqt.Notifications</id>
+	<versionNumber>7.0.0</versionNumber>
+	<platforms>
+
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.notifications.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.notifications.NotificationsExtension</initializer>
+				<finalizer>com.distriqt.extension.notifications.NotificationsExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-ARM64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.notifications.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.notifications.NotificationsExtension</initializer>
+				<finalizer>com.distriqt.extension.notifications.NotificationsExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x86">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.notifications.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.notifications.NotificationsExtension</initializer>
+				<finalizer>com.distriqt.extension.notifications.NotificationsExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x64">
+			<applicationDeployment>
+				<nativeLibrary>com.distriqt.notifications.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.notifications.NotificationsExtension</initializer>
+				<finalizer>com.distriqt.extension.notifications.NotificationsExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libNotifications.a</nativeLibrary>
+				<initializer>NotificationsExtInitializer</initializer>
+				<finalizer>NotificationsExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="iPhone-x86">
+			<applicationDeployment>
+				<nativeLibrary>libNotifications.a</nativeLibrary>
+				<initializer>NotificationsExtInitializer</initializer>
+				<finalizer>NotificationsExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="Windows-x86">
+			<applicationDeployment>
+				<nativeLibrary>Notifications.dll</nativeLibrary>
+				<initializer>NotificationsExtInitializer</initializer>
+				<finalizer>NotificationsExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Windows-x86-64">
+			<applicationDeployment>
+				<nativeLibrary>Notifications.dll</nativeLibrary>
+				<initializer>NotificationsExtInitializer</initializer>
+				<finalizer>NotificationsExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="default"> 
+			<applicationDeployment /> 
+		</platform>
+		
+	</platforms>
+</extension>

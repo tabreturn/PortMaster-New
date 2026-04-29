@@ -1,0 +1,63 @@
+<extension xmlns="http://ns.adobe.com/air/extension/33.1">
+	<id>com.distriqt.Debug</id>
+	<versionNumber>3.2.1</versionNumber>
+	<platforms>
+
+		<platform name="Android-ARM">
+			<applicationDeployment>
+				<nativeLibrary>distriqt.extension.debug.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.debug.DebugExtension</initializer>
+				<finalizer>com.distriqt.extension.debug.DebugExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-ARM64">
+			<applicationDeployment>
+				<nativeLibrary>distriqt.extension.debug.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.debug.DebugExtension</initializer>
+				<finalizer>com.distriqt.extension.debug.DebugExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x86">
+			<applicationDeployment>
+				<nativeLibrary>distriqt.extension.debug.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.debug.DebugExtension</initializer>
+				<finalizer>com.distriqt.extension.debug.DebugExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="Android-x64">
+			<applicationDeployment>
+				<nativeLibrary>distriqt.extension.debug.android.jar</nativeLibrary>
+				<initializer>com.distriqt.extension.debug.DebugExtension</initializer>
+				<finalizer>com.distriqt.extension.debug.DebugExtension</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libDebug.a</nativeLibrary>
+				<initializer>DebugExtInitializer</initializer>
+				<finalizer>DebugExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="iPhone-x86">
+			<applicationDeployment>
+				<nativeLibrary>libDebug.a</nativeLibrary>
+				<initializer>DebugExtInitializer</initializer>
+				<finalizer>DebugExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="MacOS-x86-64">
+			<applicationDeployment>
+				<nativeLibrary>Debug.framework</nativeLibrary>
+				<initializer>DebugExtInitializer</initializer>
+				<finalizer>DebugExtFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+
+		<platform name="default"> 
+			<applicationDeployment /> 
+		</platform>
+		
+	</platforms>
+</extension>
