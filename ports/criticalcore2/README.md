@@ -5,7 +5,7 @@ Thanks to Benjamin Halko for creating this game and releasing it under MIT licen
 --
 
 
-Note about username: You can game the leaderboard username by editing the `save.ini` file in `saves` folder. 
+Note about username: You can change the leaderboard username by editing the `save.ini` file in `saves` folder. 
 
 ## Controls
 
