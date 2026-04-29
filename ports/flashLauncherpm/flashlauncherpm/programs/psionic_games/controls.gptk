@@ -18,10 +18,10 @@ left_analog_right = mouse_movement_right
 
 mouse_slow_scale = 50
 
-l1 = r
-l2 = \"
-r1 = m
-r2 = \"
+l1 = m
+l2 = r
+r1 = mouse_left
+r2 = mouse_right
 
 deadzone_mode = axial
 deadzone = 1000
