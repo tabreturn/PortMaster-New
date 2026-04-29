@@ -2,8 +2,9 @@
 
 A Flash/SWF game player for handheld Linux devices via PortMaster.
 
-Based on [FlashLauncherZJ](https://github.com/StarCatL/FlashLauncherZJ) by StarCatL.
+Based on [FlashLauncherZJ](https://github.com/StarCatL/FlashLauncherZJ) by the fantastic StarCatL.
 
+DO NOT EXPECT every Flash game ever to run. Maybe like 50%. I'm not sure. No Flixel games ran for me, etc.
 
 ## Adding games
 
@@ -11,8 +12,8 @@ Place SWF files in `flashlauncherpm/programs/` -- each in its own subfolder:
 
 ```
 flashlauncherpm/programs/
-├── mygame/
-│   └── mygame.swf
+├── somegame/
+│   └── somegame.swf
 ├── anothergame/
 │   ├── anothergame.swf
 │   └── controls.gptk
@@ -24,17 +25,16 @@ You can grab the `swf` files for `alien_hominid`, `flyguy`, `marvin_spectrum`, a
 
 ## Menu controls
 
-| Button       | Action        |
-|--------------|---------------|
-| UP/DOWN      | Navigate list |
-| LEFT/RIGHT   | Page up/down  |
-| A            | Launch game   |
-| SELECT       | Quit menu     |
-| SELECT+START | In-game quit  |
-| L-STICK      | In-game mouse |
-| R1           | In-game click |
+| Button       | Action             |
+|--------------|--------------------|
+| UP/DOWN      | Menu navigate list |
+| LEFT/RIGHT   | Menu page up/down  |
+| A            | Menu launch        |
+| SELECT       | Menu quit          |
+| L-STICK      | In-game mouse      |
+| R1           | In-game click      |
+| SELECT+START | In-game quit       |
 
-- Press SELECT after a game loads to scale it to fit the screen.
-- Place a `controls.gptk` file in a game's folder to override the default mapping.
-- If no `controls.gptk` exists, the default `flash.gptk` is used.
+- Place a `controls.gptk` file in a game's folder to override the default mapping ...
+- ... if no `controls.gptk` exists, the default `flash.gptk` is used.
 
