@@ -1,0 +1,25 @@
+start = enter
+select = esc
+
+a = a
+b = s
+x = d
+y = w
+
+up = up
+down = down
+left = left
+right = right
+
+left_analog_up = mouse_movement_up
+left_analog_down = mouse_movement_down
+left_analog_left = mouse_movement_left
+left_analog_right = mouse_movement_right
+
+l1 = mouse_left
+r1 = mouse_left
+
+deadzone_mode = axial
+deadzone = 1000
+deadzone_scale = 7
+mouse_scale = 10
