@@ -1,0 +1,8 @@
+select = esc
+
+up = up
+down = down
+
+left_analog_up = up
+left_analog_down = down
+
