@@ -19,6 +19,9 @@ flashlauncherpm/programs/
 └── ...
 ```
 
+You can grab the `swf` files for `alien_hominid`, `flyguy`, `marvin_spectrum`, and `wasted_sky` from the Ruffle demo repo: https://github.com/ruffle-rs/demo/tree/master/swfs
+
+
 ## Menu controls
 
 | Button       | Action        |
