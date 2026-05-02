@@ -231,7 +231,7 @@
         }
     },
     "pyxel_2.4.6_python_3.11.squashfs": {
-        "name": "Pyxel 2.3.18",
+        "name": "Pyxel 2.4.6",
         "default": "aarch64",
         "arch": {
             "aarch64": "pyxel_2.4.6_python_3.11_aarch64.squashfs",
