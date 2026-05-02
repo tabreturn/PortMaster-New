@@ -16,10 +16,14 @@
     "genres": [
       "rpg"
     ],
+	"availability": "free",
     "image": "screenshot.png",
     "rtr": false,
     "exp": false,
-    "runtime": null,
+    "runtime": [
+      "dotnet-8.0.12.squashfs",
+      "gmtoolkit.squashfs"
+    ],
     "reqs": [],
 	"arch": ["aarch64"]
   }
