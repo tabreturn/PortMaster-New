@@ -30,16 +30,11 @@ cd "$GAMEDIR" || { echo "FATAL: cannot cd to $GAMEDIR" > /tmp/wizball_fatal.txt;
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 echo "GAMEDIR=$GAMEDIR"
 echo "CFW_NAME=${CFW_NAME}"
-echo "DEVICE_ARCH=${DEVICE_ARCH}"
 
 # SDL controller mapping provided by PortMaster
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
-# If you ever ship extra libs, uncomment this and use libs.aarch64 / libs.armhf
-# export LD_LIBRARY_PATH="$GAMEDIR/libs.${DEVICE_ARCH}:$LD_LIBRARY_PATH"
-
-BIN="wizball.${DEVICE_ARCH}"
-echo "BIN=$BIN  exists=$(test -f "$BIN" && echo yes || echo NO)"
+BIN="wizball.aarch64"
 
 # PortMaster helper (sets up env / permissions / etc.)
 pm_platform_helper "$BIN"
