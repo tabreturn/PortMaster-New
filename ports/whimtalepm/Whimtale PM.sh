@@ -70,6 +70,9 @@ if [[ "$CFW_NAME" = "ROCKNIX" ]]; then
   pm_platform_helper "jsgamelauncher"
   ./node ./index.js -rom "$ROM" -fullscreen
 else
+  export JSG_NO_EGL=1
+  SYSTEM_SDL2=$(ls /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.* 2>/dev/null | head -1)
+  [ -n "$SYSTEM_SDL2" ] && export LD_PRELOAD="$SYSTEM_SDL2"
   $GPTOKEYB "node" -c "$GAMEDIR/inputs.gptk" &
   pm_platform_helper "node"
   ./node ./index.js -rom "$ROM" -fullscreen
