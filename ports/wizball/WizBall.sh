@@ -36,8 +36,10 @@ export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
 BIN="wizball.aarch64"
 
+echo "BIN=$BIN  exists=$(test -f "$BIN" && echo yes || echo NO)"
+
 # PortMaster helper (sets up env / permissions / etc.)
-pm_platform_helper "$BIN"
+pm_platform_helper "$GAMEDIR/$BIN"
 cd $GAMEDIR
 chmod +x "$BIN"
 
