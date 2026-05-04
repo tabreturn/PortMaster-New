@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./Whimtale PM.sh</path>
+    <name>Whimtale PM</name>
+    <desc>Runtime for Whimtale, a small engine and fantasy console for simple, interactive, narrative-driven worlds, inspired by Bitsy but with its own approach.</desc>
+    <developer>ct.js</developer>
+    <publisher>ct.js</publisher>
+    <genre>Fantasy console</genre>
+  </game>
+</gameList>

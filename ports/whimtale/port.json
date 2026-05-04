@@ -1,0 +1,39 @@
+{
+  "version": 4,
+  "name": "whimtalepm.zip",
+  "items": [
+    "Whimtale PM.sh",
+    "whimtalepm"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Whimtale PM",
+    "porter": [
+      "tabreturn"
+    ],
+    "desc": "Runtime for Whimtale, a small engine and fantasy console for simple, interactive, narrative-driven worlds, inspired by Bitsy but with its own approach.",
+    "desc_md": null,
+    "inst": "Place .whim or .whimsy game files in whimtalepm/games/",
+    "inst_md": "Place `.whim` or `.whimsy` game files in `whimtalepm/games/`",
+    "genres": [
+      "utility"
+    ],
+    "image": {},
+    "rtr": false,
+    "exp": true,
+    "runtime": null,
+    "store": [
+      {
+        "name": "Whimtale",
+        "gameurl": "https://whimsy.rocks",
+        "developerurl": "http://ctjs.rocks"
+      }
+    ],
+    "availability": "free",
+    "reqs": [],
+    "arch": [
+      "aarch64"
+    ],
+    "min_glibc": ""
+  }
+}
