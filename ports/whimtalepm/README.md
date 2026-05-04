@@ -2,7 +2,7 @@
 
 A PortMaster player for [Whimtale](https://whimtale.com) games -- a fantasy console for making tiny pixel-art adventure games. Based on [jsgamelauncher](https://github.com/monteslu/jsgamelauncher) by Luis Montes.
 
-Drop `.whim` or `.whimsy` game files into the `whimtale/games` folder and play; the port provides a menu for selecting and running them.
+Drop `.whim` or `.whimsy` game files into the `whimtalepm/games` folder and play; the port provides a menu for selecting and running them.
 
 
 ## Controls
