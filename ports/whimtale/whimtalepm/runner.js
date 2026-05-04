@@ -611,6 +611,15 @@ function drawMenu() {
   ctx.textAlign = 'center';
   ctx.fillText('WHIMTALE PLAYER', GAME_W / 2, 40);
 
+  if (gameFiles.length === 0) {
+    ctx.fillStyle = '#ff4444';
+    ctx.font = '14px "PixelCode"';
+    ctx.fillText('No .whim/.whimsy games', GAME_W / 2, GAME_H / 2 - 12);
+    ctx.fillText('found in games/', GAME_W / 2, GAME_H / 2 + 12);
+    ctx.textAlign = 'left';
+    return;
+  }
+
   ctx.textAlign = 'left';
   if (selectedIdx < menuScroll) menuScroll = selectedIdx;
   if (selectedIdx >= menuScroll + MENU_VISIBLE) menuScroll = selectedIdx - MENU_VISIBLE + 1;
@@ -926,13 +935,9 @@ async function init() {
   }
 
   if (gameFiles.length === 0) {
-    const known = ['games/The Sleeper in the Gulf.whim', 'games/Sweets-n-bakes fair.whimsy'];
-    for (const name of known) {
-      try { const resp = await fetch(name); if (resp.ok) gameFiles.push({ filename: name, name: name.replace(/^games\//, '').replace(/\.(whim|whimsy)$/, '') }); } catch (_) {}
-    }
+    console.log('No .whim/.whimsy games found in games/');
   }
 
-  if (gameFiles.length === 1) await startGame(gameFiles[0]);
   requestAnimationFrame(gameLoop);
 }
 
