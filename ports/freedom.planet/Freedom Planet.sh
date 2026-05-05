@@ -46,6 +46,9 @@ else
 fi
 
 export BOX86_DYNAREC=1
+if ! glxinfo | grep -q "OpenGL version string" || [[ $CFW_NAME == *"ArkOS"* ]]; then
+  export BOX86_FORCE_ES=31
+fi
 
 if [ ! -f "$GAMEDIR/gamedata/freedomplanet/bin32/oga_controls" ]; then
   cp -f $GAMEDIR/oga_controls* .
