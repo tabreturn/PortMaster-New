@@ -1,3 +1,9 @@
-- patch in-game instructions to match gamepad
-- font_add_sprite(30 -> 32,...)
+- gml_Object_cont_Create_0.gml  
+  fText = font_add_sprite(sFont, 32, 1, 1);
+
+- gml_RoomCC_room42_210_Create  
+  text = "  D-PAD - Move   B - Undo   R1 - Reset";
+
+- swap image
+  see TODO_sPrompt_0.png
 
