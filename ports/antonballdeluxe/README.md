@@ -1,6 +1,6 @@
 ## Notes
 
-Thank You to SummitSphere for creating this game! Check out the game on Steam here: https://store.steampowered.com/app/1382320/Antonball_Deluxe/
+Thank You to SummitSphere for creating this game! Check out the game on Steam here: https://store.steampowered.com/app/1382320/Antonball_Deluxe/  
 Also, shout-out to Fraxinus88 for assisting with several issues.
 
 
