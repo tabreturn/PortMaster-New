@@ -353,6 +353,8 @@ async function main() {
         console.log('Trying EGL: fbdev window surface');
         const displayResult = createWebGL2Context(DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, { windowSurface: true });
         displayGl = displayResult.gl;
+        displayGl._width = DEFAULT_GAME_WIDTH;
+        displayGl._height = DEFAULT_GAME_HEIGHT;
         displaySwapBuffers = displayResult.swapBuffers;
         if (displayResult.setSwapInterval) {
           displayResult.setSwapInterval(0);
@@ -494,6 +496,7 @@ async function main() {
   globalThis.innerWidth = appWindow.pixelWidth;
   globalThis.innerHeight = appWindow.pixelHeight;
   console.log('canvas', canvas.width, canvas.height);
+
   if (!canvas.getBoundingClientRect) {
     canvas.getBoundingClientRect = () => {
       return {
@@ -631,16 +634,19 @@ async function main() {
 
     if (displaySwapBuffers) {
       // 2D canvas game — blit via GL
+      // Use EGL surface size for viewport (not SDL window size — device hw scaler handles the rest)
+      const surfW = displayGl._width || canvas.width;
+      const surfH = displayGl._height || canvas.height;
       if (showFPS) {
         drawFPS(ctx);
       }
       const pixels = canvas.data();
       const bindFB = displayGl._origBindFramebuffer || displayGl.bindFramebuffer.bind(displayGl);
       bindFB(displayGl.FRAMEBUFFER, null);
-      displayGl.viewport(0, 0, winW, winH);
+      displayGl.viewport(0, 0, surfW, surfH);
       displayGl.clearColor(0, 0, 0, 1);
       displayGl.clear(displayGl.COLOR_BUFFER_BIT);
-      displayGl.viewport(drawX, winH - drawY - drawHeight, drawWidth, drawHeight);
+      displayGl.viewport(0, 0, surfW, surfH);
       displayGl.useProgram(blitProgram);
       displayGl.uniform1f(flipYLoc, 1.0); // Canvas pixels are top-down, flip Y
       displayGl.bindVertexArray(blitVAO);
@@ -656,7 +662,8 @@ async function main() {
     }
 
     // SDL fallback (no native GL handle — e.g. Knulli fbdev)
-    let buffer;
+    // dstRect scaling not supported on all SDL backends, so we scale manually
+    let srcPixels;
     if (canvas._isWebGL) {
       const gl = canvas._glCtx;
       const w = canvas.width;
@@ -676,20 +683,38 @@ async function main() {
           pixels[botOff + i] = tmp;
         }
       }
-      buffer = Buffer.from(pixels.buffer);
+      srcPixels = pixels;
     } else {
       if (showFPS) {
         drawFPS(ctx);
       }
-      buffer = Buffer.from(canvas.data().buffer);
+      srcPixels = canvas.data();
+    }
+
+    // Manual nearest-neighbor scale to window size (bypasses broken SDL dstRect)
+    const srcW = canvas.width, srcH = canvas.height;
+    const dstW = winW, dstH = winH;
+    if (!launcherDraw._outBuf || launcherDraw._outBuf.length !== dstW * dstH * 4) {
+      launcherDraw._outBuf = Buffer.alloc(dstW * dstH * 4);
+    }
+    const outBuf = launcherDraw._outBuf;
+    const srcU32 = new Uint32Array(srcPixels.buffer, srcPixels.byteOffset, srcW * srcH);
+    const dstU32 = new Uint32Array(outBuf.buffer, outBuf.byteOffset, dstW * dstH);
+    // Black fill
+    dstU32.fill(0xFF000000);
+    // Scale into draw region
+    for (let y = 0; y < drawHeight; y++) {
+      const sy = (y * srcH / drawHeight) | 0;
+      const srcRow = sy * srcW;
+      const dstRow = (drawY + y) * dstW + drawX;
+      for (let x = 0; x < drawWidth; x++) {
+        dstU32[dstRow + x] = srcU32[srcRow + ((x * srcW / drawWidth) | 0)];
+      }
     }
     imageDrawTime += (performance.now() - startImageDrawTime);
 
     const startWindowRenderTime = performance.now();
-    await appWindow.render(canvas.width, canvas.height, canvas.width * 4, 'rgba32', buffer, {
-      scaling: 'nearest',
-      dstRect: { x: drawX, y: drawY, width: drawWidth, height: drawHeight },
-    });
+    await appWindow.render(dstW, dstH, dstW * 4, 'rgba32', outBuf);
     windowRenderTime += (performance.now() - startWindowRenderTime);
   }
 

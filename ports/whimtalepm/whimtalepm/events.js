@@ -31,6 +31,8 @@ export default function initialize(appWindow) {
   globalThis.document = globalThis.document || {};
   let keyDownListeners = [];
   let keyUpListeners = [];
+  globalThis._jsg_keyDownListeners = keyDownListeners;
+  globalThis._jsg_keyUpListeners = keyUpListeners;
   let loadingEvents = [];
   let resizeEvents = [];
   globalThis.close = () => {
