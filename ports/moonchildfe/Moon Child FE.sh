@@ -22,7 +22,7 @@ GAMEDIR="/$directory/ports/moonchildfe"
 
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
-$ESUDO chmod +x "$GAMEDIR/moonchildfe"
+$ESUDO chmod +x "$GAMEDIR/MoonChildFE"
 
 cd "$GAMEDIR"
 
