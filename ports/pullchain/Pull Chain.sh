@@ -16,25 +16,26 @@ source $controlfolder/control.txt
 [ -f "${controlfolder}/mod_${CFW_NAME}.txt" ] && source "${controlfolder}/mod_${CFW_NAME}.txt"
 get_controls
 
-# Variables
+# variables
 GAMEDIR="/$directory/ports/pullchain"
 
-# CD and set log
+# cd and set log
 cd $GAMEDIR
 > "$GAMEDIR/log.txt" && exec > >(tee "$GAMEDIR/log.txt") 2>&1
 
-# Ensure executable permissions
+# ensure executable permissions
 $ESUDO chmod +x "$GAMEDIR/gmloadernext.aarch64"
 $ESUDO chmod +x "$GAMEDIR/tools/patchscript"
 
-# Exports
+# exports
 export LD_LIBRARY_PATH="$GAMEDIR/lib:$GAMEDIR/libs:$LD_LIBRARY_PATH"
 export SDL_GAMECONTROLLERCONFIG="$sdl_controllerconfig"
 
-# Assign gptokeyb and load the game
+# assign gptokeyb and execute game
 $GPTOKEYB "gmloadernext.aarch64" -c "pullchain.gptk" &
 pm_platform_helper "$GAMEDIR/gmloadernext.aarch64" >/dev/null
 ./gmloadernext.aarch64 -c gmloader.json
 
-# Cleanup
+# cleanup
 pm_finish
+
