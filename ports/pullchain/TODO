@@ -4,6 +4,6 @@
 - gml_RoomCC_room42_21x_Create  
   text = "  D-PAD - Move   B - Undo   R1 - Reset";
 
-- swap image
-  see TODO_sPrompt_0.png
+- swap sprite name sPrompt_0 for:
+  TODO_sPrompt_0.png
 
